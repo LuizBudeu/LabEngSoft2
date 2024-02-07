@@ -12,18 +12,17 @@ export const Login = () => {
       password: password,
     }; // Create the POST requuest
 
-    const response = await fetch("http://localhost:8000/api/token/", {
-      method: "POST",
-      body: JSON.stringify({
+    const response = await axios.post("http://localhost:8000/api/token/", {
         username: 'admin',
         password: 'admin123'  
-      }),
-      headers: {
-        "Content-type": "application/json;"
-      }
-    });
+      },
+    );
 
-    const data = response;
+    const data = response.data;
+    localStorage.clear();
+    localStorage.setItem("access_token", data.access);
+    localStorage.setItem("refresh_token", data.refresh);
+
 
     // axios.post(
     //   "http://localhost:8000/api/token/",
