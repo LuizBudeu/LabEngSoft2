@@ -1,4 +1,4 @@
-Developer setup:
+# Developer setup
 
 Em um terminal:
 
@@ -28,3 +28,6 @@ Backend API em `http://127.0.0.1:8000/`
 
 Frontend em `http://localhost:3000/`
 
+# Rodar com Docker
+- Buildar a imagem com `docker build -t rafnak1/labengsoft:app .`
+- Rodar com orquestração: `docker compose up`
