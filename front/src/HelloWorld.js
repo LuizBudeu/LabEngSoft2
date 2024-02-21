@@ -4,16 +4,6 @@ import axios from 'axios';
 function HelloWorld() {
   const [message, setMessage] = useState('');
 
-  // useEffect(() => {
-  //   axios.get('http://localhost:8000/api/hello-world/')
-  //     .then(response => {
-  //       setMessage(response.data.message);
-  //     })
-  //     .catch(error => {
-  //       console.log(error);
-  //     });
-  // }, []);
-
   useEffect(() => {
     axios.post('http://localhost:8000/api/token/', {
       username: 'admin',
