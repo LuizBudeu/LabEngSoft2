@@ -5,7 +5,7 @@ import { useState } from "react"; // Define the Login function.
 export const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  // Create the submit method.
+
   const submit = async (e) => {
     e.preventDefault();
     const user = {

@@ -1,15 +1,20 @@
 
 from django.urls import path, include
-from . import views
 from rest_framework_simplejwt import views as jwt_views
+
+from .views.hello_world import hello_world
+from .views.home import home
+from .views.usuario import create as usuario_create
 
 
 urlpatterns = [
-    path('hello-world/', views.hello_world, name='hello_world'),
-    path('home/', views.home, name ='home'),
-    path('token/', 
+    path('hello-world/', hello_world, name='hello_world'),
+    path('home/', home, name ='home'),
+    path('usuario/create/', usuario_create, name ='usuario_create'),
+
+    path('token/',  
         jwt_views.TokenObtainPairView.as_view(), 
-        name ='token_obtain_pair'),
+        name ='token_obtain_pair'), 
     path('token/refresh/', 
         jwt_views.TokenRefreshView.as_view(), 
         name ='token_refresh'),
