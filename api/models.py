@@ -2,12 +2,12 @@ from django.db import models
 
 
 OCUPACAO_CHOICES = [
-        (0, "Cliente"),
-        (1, "Médico"),
-        (2, "Nutricionista"),
-        (3, "Preparador físico"),
-        (4, "Administrador"),
-    ]
+    (0, "Cliente"),
+    (1, "Médico"),
+    (2, "Nutricionista"),
+    (3, "Preparador físico"),
+    (4, "Administrador"),
+]
 
 class Usuario(models.Model):
     email = models.CharField(max_length=100)
