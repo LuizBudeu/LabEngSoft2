@@ -1,6 +1,7 @@
 // Import the react JS packages
 import axios from "axios";
 import { useState } from "react"; // Define the Login function.
+
 export const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -10,7 +11,7 @@ export const Login = () => {
     const user = {
       username: username,
       password: password,
-    }; // Create the POST requuest
+    }; // Create the POST request
 
     const response = await axios.post("http://localhost:8000/api/token/", {
         username: 'admin',
@@ -42,7 +43,7 @@ export const Login = () => {
     <div className="Auth-form-container">
       <form className="Auth-form" onSubmit={submit}>
         <div className="Auth-form-content">
-          <h3 className="Auth-form-title">Sign In</h3>
+          <h3 className="Auth-form-title">Login</h3>
           <div className="form-group mt-3">
             <label>Username</label>
             <input
