@@ -26,7 +26,7 @@ export const SignIn = () => {
         logradouro: '',
         numero: '',
         complemento: '',
-        ocupacao: 0
+        ocupacao: 0 // Cliente
     })
 
     // Create user
