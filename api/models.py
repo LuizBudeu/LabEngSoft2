@@ -88,6 +88,17 @@ class RelatorioNutricionista(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+class AvaliacaoNutricional(models.Model):
+    relatorio_nutricionista = models.ForeignKey(RelatorioNutricionista, on_delete=models.CASCADE)
+    paciente = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    gosta = models.CharField(max_length=300, blank=True, null=True)
+    desgosta = models.CharField(max_length=300, blank=True, null=True)
+    alergias = models.CharField(max_length=300, blank=True, null=True)
+    doencas = models.CharField(max_length=300, blank=True, null=True)
+    objetivo = models.CharField(max_length=100, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
 class TreinoFisico(models.Model):
     treino = models.CharField(max_length=300)
     created_at = models.DateTimeField(auto_now_add=True)
