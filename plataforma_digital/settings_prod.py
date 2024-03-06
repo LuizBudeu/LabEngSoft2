@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 from datetime import datetime, timedelta
+import os
+
+DB_PASSWORD = os.environ["DB_PASSWORD"]
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -100,7 +103,7 @@ DATABASES = {
         'ENGINE': 'mssql',
         'NAME': 'MyDatabase',
         'USER': 'labengsoft@labengsoft',
-        'PASSWORD': 'REDACTED',
+        'PASSWORD': DB_PASSWORD,
         'HOST': 'labengsoft.database.windows.net',
         'PORT': '1433',
         'OPTIONS': {
