@@ -29,5 +29,6 @@ Backend API em `http://127.0.0.1:8000/`
 Frontend em `http://localhost:3000/`
 
 # Rodar com Docker
-- Buildar a imagem com `docker build -t rafnak1/labengsoft:app .`
+- Buildar a imagem da API com `docker build -t rafnak1/labengsoft:api .`
+- Buildar a imagem do hosting com `docker build -t rafnak1/labengsoft:hosting ./front`
 - Rodar com orquestração: `docker compose up`

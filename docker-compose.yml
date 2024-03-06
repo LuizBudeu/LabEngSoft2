@@ -1,5 +1,9 @@
 services:
-  app:
-    image: rafnak1/labengsoft:app
+  hosting:
+    image: rafnak1/labengsoft:hosting
+    ports: 
+      - '3000:3000'
+  api:
+    image: rafnak1/labengsoft:api
     ports: 
       - '8000:8000'
