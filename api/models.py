@@ -2,7 +2,7 @@ from django.db import models
 
 
 OCUPACAO_CHOICES = [
-    (0, "Cliente"),
+    (0, "Paciente"),
     (1, "Médico"),
     (2, "Nutricionista"),
     (3, "Preparador físico"),
@@ -40,8 +40,8 @@ class Consulta(models.Model):
         (3, 'Vencida')
     ]
 
-    paciente = models.ForeignKey(Usuario, on_delete=models.CASCADE)
-    profissional = models.IntegerField(choices=OCUPACAO_CHOICES)
+    paciente = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='usuario')
+    profissional = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='profissional')
     horario = models.DateTimeField()
     duracao_em_minutos = models.IntegerField(blank=True, null=True)
     status = models.IntegerField(choices=CONSULTA_CHOICES)
