@@ -24,11 +24,16 @@ class Usuario(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-class DadosBancarios(models.Model):
-    paciente = models.ForeignKey(Usuario, on_delete=models.CASCADE)
-    numero_do_cartao = models.CharField(max_length=16)
-    validade = models.CharField(max_length=5)   # E.g.:  01/32
-    cvv = models.CharField(max_length=3)
+class Paciente(models.Model):
+    DIABETES_CHOICES = [
+        (0, "Não possui"),
+        (1, "Tipo 1"),
+        (2, "Tipo 2")
+    ]
+
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    alergias = models.CharField(max_length=200)
+    tipo_diabetes = models.IntegerField(choices=DIABETES_CHOICES)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -37,7 +42,8 @@ class Consulta(models.Model):
         (0, 'Agendada'),
         (1, 'Cancelada'),
         (2, 'Realizada'),
-        (3, 'Vencida')
+        (3, 'Vencida'),
+        (4, 'Pendente')
     ]
 
     paciente = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='usuario')
