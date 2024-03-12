@@ -3,8 +3,9 @@ import HelloWorld from "./HelloWorld";
 
 import './App.css';
 import { BrowserRouter, Route, Routes, Redirect } from "react-router-dom";
-import { Login } from "./components/login";
-import { Home } from "./components/home";
+import { Login } from "./interface/login";
+import { Home } from "./interface/home";
+import { Perfil } from "./interface/paciente/perfil";
 import { NavBar } from "./components/navbar"
 import { SignIn } from "./components/signin";
 
@@ -22,6 +23,7 @@ function App() {
       <Route path="/" element={<Home/>}/>
       <Route path="/login" element={<Login/>}/>
       <Route path="/signin" element={<SignIn/>}/>
+      <Route path="/paciente/perfil" element={<Perfil/>}/>
     </Routes>
   </BrowserRouter>
   );

@@ -21,6 +21,9 @@ export const NavBar = () => {
         <li>
           <Link to="/signin">Sign In</Link>
         </li>
+        <li>
+          <Link to="/paciente/perfil">Perfil</Link>
+        </li>
       </ul>
     </div>
   );
