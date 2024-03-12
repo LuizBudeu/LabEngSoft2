@@ -61,4 +61,26 @@ def update_perfil(request):
 
     body = json.loads(request.body.decode('utf-8'))
 
-    return Response(body)
+    try:
+        usuario = Usuario.objects.get(id=body['user_id'])
+        usuario.nome = body['nome']
+        usuario.data_de_nascimento = body['data_de_nascimento']
+        usuario.genero = body['genero']
+        usuario.cep = body['cep']
+        usuario.logradouro = body['logradouro']
+        usuario.numero = body['numero']
+        usuario.complemento = body['complemento']
+        usuario.save()
+    except Usuario.DoesNotExist:
+        raise ParseError(f"Usuário com id={body['user_id']} não foi encontrado")
+
+    try:
+        paciente = Paciente.objects.get(id=body['user_id'])
+        paciente.alergias = body['alergias']
+        paciente.tipo_diabetes = body['tipo_diabetes']
+        paciente.save()
+
+    except Paciente.DoesNotExist:
+        raise ParseError(f"Paceinte com id={body['user_id']} não foi encontrado")
+
+    return Response("Paciente atualizado")
