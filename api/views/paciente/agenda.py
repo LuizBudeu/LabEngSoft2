@@ -25,12 +25,16 @@ def agenda(request):
         # status__in=[0, 4]
         horario__gt=datetime.date.today()
     ).order_by('horario').values(
+        'id',
         'profissional_id',
         'profissional__nome',
         'profissional__ocupacao',
+        'profissional__logradouro',
+        'profissional__numero',
+        'profissional__complemento',
         'horario',
         'duracao_em_minutos',
         'status'
     )
 
-    return Response({'message': consultas})
+    return Response(consultas)
