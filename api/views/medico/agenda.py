@@ -24,18 +24,20 @@ def agenda(request: HttpRequest) -> Response:
 
     # Validations
     try: 
-        start_date = datetime.strptime(data['start_date'], '%Y-%m-%d')
-        end_date = datetime.strptime(data['end_date'], '%Y-%m-%d')
+        start_date = datetime.strptime(data.get('start_date'), '%Y-%m-%d')
+        end_date = datetime.strptime(data.get('end_date'), '%Y-%m-%d')
     except ValueError:
         raise ParseError('Datas inical e final precisam estar no formato YYYY-mm-dd')
 
     try: 
-        usuario = Usuario.objects.get(id=data['user_id'])
+        usuario = Usuario.objects.get(id=data.get('user_id'))
     except Usuario.DoesNotExist:
-        raise ParseError(f"Usuário com id={data['user_id']} não foi encontrado")
+        raise ParseError(f"Usuário com id={data.get('user_id')} não foi encontrado")
 
     consultas = Consulta.objects.filter(
         profissional=usuario,
+        horario__gte=start_date,
+        horario__lte=end_date
     )
 
     return Response({'message': consultas.values()})
