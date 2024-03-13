@@ -24,8 +24,8 @@ def agenda(request: HttpRequest) -> Response:
 
     # Validations
     try: 
-        start_date = datetime.strptime(data.get('start_date'), '%Y-%m-%d')
-        end_date = datetime.strptime(data.get('end_date'), '%Y-%m-%d')
+        start_date = datetime.strptime(data.get('start_date', ''), '%Y-%m-%d')
+        end_date = datetime.strptime(data.get('end_date', ''), '%Y-%m-%d')
     except ValueError:
         raise ParseError('Datas inical e final precisam estar no formato YYYY-mm-dd')
 

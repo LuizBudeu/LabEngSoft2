@@ -8,12 +8,3 @@ from api.models import Consulta
 def consulta(request):
     
     return Response({'message': 'Connected.'})
-
-
-@api_view(['POST'])
-def salvaRelatorio(request):
-    """
-    Salva um relatório médico.
-    """
-    
-    return Response({'message': 'Connected.'})
