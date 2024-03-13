@@ -9,6 +9,7 @@ import { NavBar } from "./components/navbar";
 import { SignIn } from "./components/signin";
 import { EditPerfil } from "./interface/paciente/perfil_edit";
 import { MedicoHome } from "./interface/medico/home";
+import { PreparadorHome } from "./interface/preparador/PreparadorHome";
 
 function App() {
     return (
@@ -21,6 +22,7 @@ function App() {
                 <Route path="/paciente/perfil" element={<Perfil />} />
                 <Route path="/paciente/perfil/edit" element={<EditPerfil />} />
                 <Route path="/medico" element={<MedicoHome />} />
+                <Route path="/preparador" element={<PreparadorHome />} />
             </Routes>
         </BrowserRouter>
     );
