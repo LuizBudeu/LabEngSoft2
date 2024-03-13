@@ -91,7 +91,7 @@ class Dieta(models.Model):
     descricao_curta = models.CharField(max_length=100, blank=True, null=True)
     descricao = models.CharField(max_length=300, blank=True, null=True)
     duracao_em_dias = models.IntegerField(blank=True, null=True)
-    calorias = models.IntegerField(models.CharField(blank=True, null=True))
+    calorias = models.IntegerField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
