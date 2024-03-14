@@ -2,8 +2,12 @@
 import axios from "axios";
 import { useState } from "react"; // Define the Login function.
 import { GetProfile } from "../../contoller/paciente/PerfilController"; 
+import { useNavigate } from 'react-router-dom';
+import { CustomButton } from "../../components/customButton";
+import { GenderOptions, DiabetesOptions } from "../../utils/options";
 
 export const Perfil = () => {
+  const navigate = useNavigate();
   const [userProfile] = GetProfile("1");
 
   return (
@@ -28,7 +32,7 @@ export const Perfil = () => {
               </tr>
               <tr>
                 <td colspan="2">{userProfile.data_de_nascimento}</td>
-                <td colspan="2">{userProfile.genero}</td>
+                <td colspan="2">{GenderOptions[userProfile.genero]}</td>
               </tr>
               <tr>
                 <th colspan="1">CEP</th>
@@ -48,10 +52,14 @@ export const Perfil = () => {
               </tr>
               <tr>
                 <td colspan="3">{userProfile.alergias}</td>
-                <td colspan="3">{userProfile.tipo_diabetes}</td>
+                <td colspan="3">{DiabetesOptions[userProfile.tipo_diabetes]}</td>
               </tr>
             </table>
           </div>}
+          <CustomButton
+            onClick={() => navigate('/paciente/perfil/edit')}
+            title="Editar perfil"
+          />
         </div>
     </div>
   );

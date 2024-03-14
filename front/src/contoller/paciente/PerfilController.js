@@ -3,8 +3,6 @@ import { useState, useEffect } from "react";
 
 export const GetProfile = (user_id) => {
 
-    console.log("user_id: " + user_id);
-
     const [userProfile, setUserProfile] = useState();
 
     useEffect(() => {
@@ -14,16 +12,29 @@ export const GetProfile = (user_id) => {
             }
         },
         ).then((response) => {
-            console.log("capturado");
-            console.log(response.data);
             setUserProfile(response.data);
         }).catch((e) => {
             console.log(e);
         });
     }, [])
-    
-    console.log("preparado");
 
-    return [userProfile];
+    return [userProfile, setUserProfile];
+    
+};
+
+export const UpdateProfile = async (user_id, userProfile) => {
+    try{
+        const response = await axios.post("http://localhost:8000/api/paciente/update_perfil", 
+            {...userProfile, user_id: user_id}
+        ); 
+        if(response.status != 200){
+            console.log(response.data);
+            return false;
+        }
+        return true;
+    }catch(e) {
+        console.log(e);
+        return false;
+    }
     
 };
