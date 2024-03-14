@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { AgendaTab } from "./agendaTab";
 import { TreinosTab } from "./treinosTab";
+import { Colors } from "../../utils/colors";
+import "./styles/Tabs.css";
 
 export const Tabs = () => {
     const [activeTab, setActiveTab] = useState("agenda");
@@ -14,7 +16,7 @@ export const Tabs = () => {
     };
 
     return (
-        <div className="Tabs">
+        <div className="vertical-box">
             <ul className="nav">
                 <li className={activeTab === "agenda" ? "active" : ""} onClick={handleAgendaTabTap}>
                     <span>Agenda</span>
@@ -23,7 +25,7 @@ export const Tabs = () => {
                     <span>Treinos</span>
                 </li>
             </ul>
-            <div className="tab-content">
+            <div className="vertical-box" style={{backgroundColor: Colors.BackgroundGray}}>
                 {activeTab === "agenda" && <AgendaTab />}
                 {activeTab === "treinos" && <TreinosTab />}
             </div>
