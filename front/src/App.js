@@ -9,7 +9,7 @@ import { NavBar } from "./components/navbar";
 import { SignIn } from "./components/signin";
 import { EditPerfil } from "./interface/paciente/perfil_edit";
 import { MedicoHome } from "./interface/medico/home";
-import { PreparadorHome } from "./interface/preparador/PreparadorHome";
+import { PreparadorHome } from "./interface/preparador/preparadorHome";
 
 function App() {
     return (
