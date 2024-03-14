@@ -38,6 +38,6 @@ def agenda(request: HttpRequest) -> Response:
         profissional=usuario,
         horario__gte=start_date,
         horario__lte=end_date
-    )
+    ).order_by('-horario')
 
     return Response({'message': consultas.values()})
