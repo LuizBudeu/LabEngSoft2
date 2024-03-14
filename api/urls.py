@@ -17,7 +17,7 @@ urlpatterns = [
     path('medico/agenda', medico_agenda, name='medico_agenda'),
     path('paciente/perfil', paciente_perfil, name='paciente_perfil'),
     path('paciente/update_perfil', paciente_update_perfil, name='paciente_update_perfil'),
-    path('preparador/agenda', preparador_agenda, name='preparador_agenda'),
+    path('preparador/agenda/', preparador_agenda, name='preparador_agenda'),
 
     path('token/',  
         jwt_views.TokenObtainPairView.as_view(), 
