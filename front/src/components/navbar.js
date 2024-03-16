@@ -3,28 +3,25 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
 export const NavBar = () => {
-  const location = useLocation();
+    const location = useLocation();
 
-  return (
-    <div className="navbar">
-      <ul>
-        {location.pathname == "/" ? (
-          ""
-        ) : (
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-        )}
-        <li>
-          <Link to="/login">Login</Link>
-        </li>
-        <li>
-          <Link to="/signin">Sign In</Link>
-        </li>
-        <li>
-          <Link to="/paciente/perfil">Perfil</Link>
-        </li>
-      </ul>
-    </div>
-  );
+    return (
+        <div className="navbar">
+            <ul>
+                {location.pathname === "/" ? (
+                    ""
+                ) : (
+                    <li>
+                        <Link to="/">Home</Link>
+                    </li>
+                )}
+                <li>
+                    <Link to="/login">Login</Link>
+                </li>
+                <li>
+                    <Link to="/signin">Sign In</Link>
+                </li>
+            </ul>
+        </div>
+    );
 };
