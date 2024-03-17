@@ -8,11 +8,10 @@ import { CustomButton } from "../../components/customButton";
 import { Row } from "../../components/row";
 import { RowItem } from "../../components/rowItem";
 import { Column } from "../../components/column";
-import { Padding } from "../../components/padding";
 import { GenderOptions, DiabetesOptions } from "../../utils/options";
 import { useNavigate } from 'react-router-dom';
 
-export const EditPerfil = ({closePopUp}) => {
+export const EditPerfil = ({closePopUp, setMainUserProfile}) => {
   const navigate = useNavigate();
   const [userProfile, setUserProfile] = GetProfile("1");
 
@@ -21,6 +20,7 @@ export const EditPerfil = ({closePopUp}) => {
     console.log(e);
     const resp = await UpdateProfile("1",userProfile); 
     if(resp){
+      setMainUserProfile(userProfile);
       closePopUp()
     }else{
       alert("Erro ao salvar os dados")

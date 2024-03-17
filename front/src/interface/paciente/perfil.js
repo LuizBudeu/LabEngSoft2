@@ -12,14 +12,14 @@ import { EditPerfil } from "./perfilEdit";
 
 const Perfil = () => {
   const navigate = useNavigate();
-  const [userProfile] = GetProfile("1");
+  const [userProfile, setUserProfile] = GetProfile("1");
   const [showPopUp, setShowPopUp] = useState(false);
 
   return (
     <div>
       <PopUpContainer showPopUp={showPopUp} closePopUp={() => setShowPopUp(false)}>
         <MainContainer>
-          <EditPerfil closePopUp={() => setShowPopUp(false)}/>
+          <EditPerfil closePopUp={() => setShowPopUp(false)} setMainUserProfile={setUserProfile}/>
         </MainContainer>
       </PopUpContainer>
       
