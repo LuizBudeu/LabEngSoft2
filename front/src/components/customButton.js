@@ -1,7 +1,19 @@
-export const CustomButton = ({title, onClick, type}) => {
+import styled from 'styled-components'
+import { Colors } from "../utils/colors";
+
+export const CustomButton = ({title, onClick, isSubmit, type}) => {
+  const ButtonStyle = styled.button`
+    padding: 10px;
+    border-radius: 10px;
+    background-color: ${type=="primary" ? Colors.CenterFitBlue : Colors.White};
+    border-color: ${type=="primary" ? Colors.CenterFitBlue : Colors.CancelRed};
+    color: ${type=="primary" ? Colors.White : Colors.CancelRed};
+    border-style: solid;
+  `
+
   return (
-    <button className="btn btn-primary" type={type} onClick={onClick}>
+    <ButtonStyle type={isSubmit ? "submit" : null} onClick={onClick}>
         {title}
-    </button>
+    </ButtonStyle>
   );
 };

@@ -6,5 +6,6 @@ export const Colors = {
     CancelRed: "#F64932",
     DarkGray: "#5D5B5B",
     LightGray: "#F0F0F0",
-    DisabledInputGray: "#B7B7B7"
+    DisabledInputGray: "#B7B7B7",
+    White: "#FFFFFF"
 };

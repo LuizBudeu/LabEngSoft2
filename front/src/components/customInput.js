@@ -1,6 +1,13 @@
+import styled from 'styled-components'
+
 export const CustomInput = ({name, onChange, value, placeholder, type, disabled}) => {
+
+  const InputStyle = styled.input`
+    width: 100%
+  `
+
   return (
-    <input
+    <InputStyle
       name={name}
       type={type}
       className="form-control mt-1"

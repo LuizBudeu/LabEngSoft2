@@ -11,3 +11,15 @@ export const DiabetesOptions = {
     1: "Tipo 1",
     2: "Tipo 2"
 };
+
+export const TipoProfissional = {
+    1: "Médico",
+    2: "Nutricionista",
+    3: "Preparador físico",
+};
+
+export const TipoConsulta = {
+    1: "Consulta médica",
+    2: "Consulta ao nutricionista",
+    3: "Consulta física",
+};

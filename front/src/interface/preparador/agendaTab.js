@@ -2,6 +2,7 @@ import React from "react";
 import "./styles/Tabs.css";
 import { groupByDate } from "../../utils/group";
 import { AgendaList } from "../../components/agendaList";
+import { MainContainer } from "../../components/mainContainer";
 
 const mockedAgenda = [
     {name: "Vinicius", horario: "2024-03-21 15:00:00"},
@@ -16,7 +17,7 @@ export const AgendaTab = () => {
     const appts = groupByDate(mockedAgenda);
 
     return(
-        <div className="main-container">
+        <MainContainer>
             <div className="vertical-box">
                 <h2>Suas consultas</h2>
                 <AgendaList appointments={appts}/>
@@ -24,6 +25,6 @@ export const AgendaTab = () => {
             <div className="vertical-box">
                 <span>Informações do fulano</span>
             </div>
-        </div>
+        </MainContainer>
     );
 };
