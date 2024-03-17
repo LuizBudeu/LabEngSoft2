@@ -6,9 +6,7 @@ import { Login } from "./interface/login";
 import { Home } from "./interface/home";
 import { NavBar } from "./components/navbar";
 import { SignIn } from "./components/signin";
-import { Perfil } from "./interface/paciente/perfil";
-import { EditPerfil } from "./interface/paciente/perfil_edit";
-import { Agenda } from "./interface/paciente/agenda";
+import { PacienteHome } from "./interface/paciente/home";
 import { MedicoHome } from "./interface/medico/home";
 import { PreparadorHome } from "./interface/preparador/preparadorHome";
 
@@ -20,9 +18,7 @@ function App() {
       <Route path="/" element={<Home/>}/>
       <Route path="/login" element={<Login/>}/>
       <Route path="/signin" element={<SignIn/>}/>
-      <Route path="/paciente/perfil" element={<Perfil/>}/>
-      <Route path="/paciente/perfil/edit" element={<EditPerfil/>}/>
-      <Route path="/paciente/agenda" element={<Agenda/>}/>
+      <Route path="/paciente" element={<PacienteHome/>}/>
       <Route path="/preparador" element={<PreparadorHome />} />
     </Routes>
   </BrowserRouter>
