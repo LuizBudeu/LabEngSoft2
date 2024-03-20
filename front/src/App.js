@@ -9,6 +9,7 @@ import { SignIn } from "./components/signin";
 import { PacienteHome } from "./interface/paciente/home";
 import { MedicoHome } from "./interface/medico/home";
 import { PreparadorHome } from "./interface/preparador/preparadorHome";
+import { NutricionistaHome } from "./interface/nutricionista/home";
 
 function App() {
   return (
@@ -20,9 +21,10 @@ function App() {
       <Route path="/signin" element={<SignIn/>}/>
       <Route path="/paciente" element={<PacienteHome/>}/>
       <Route path="/preparador" element={<PreparadorHome />} />
+      <Route path="/nutricionista" element={<NutricionistaHome />} />
     </Routes>
-  </BrowserRouter>
-  );
+        </BrowserRouter>
+    );
 }
 
 export default App;

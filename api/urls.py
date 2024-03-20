@@ -10,6 +10,11 @@ from .views.paciente.agenda import agenda as paciente_agenda
 from .views.paciente.perfil import perfil as paciente_perfil
 from .views.paciente.perfil import update_perfil as paciente_update_perfil
 from .views.preparador.agenda import agenda as preparador_agenda
+from .views.nutricionista.agenda import agenda as nutricionista_agenda
+from .views.nutricionista.avaliacao import avaliacao as avaliacao_nutricional
+from .views.nutricionista.consulta import consulta as nutricionista_consulta
+from .views.nutricionista.dieta import dieta
+from .views.nutricionista.exame import pedirExame as nutricionista_exame
 
 urlpatterns = [
     path('hello-world/', hello_world, name='hello_world'),
@@ -20,6 +25,11 @@ urlpatterns = [
     path('paciente/perfil', paciente_perfil, name='paciente_perfil'),
     path('paciente/update_perfil', paciente_update_perfil, name='paciente_update_perfil'),
     path('preparador/agenda/', preparador_agenda, name='preparador_agenda'),
+    path('nutricionista/agenda', nutricionista_agenda, name='nutricionista_agenda'),
+    path('nutricionista/avaliacao', avaliacao_nutricional, name='avaliacao_nutricional'),
+    path('nutricionista/consulta', nutricionista_consulta, name='nutricionista_consulta'),
+    path('nutricionista/dieta', dieta, name='dieta'),
+    path('nutricionista/exame', nutricionista_exame, name='nutricionista_exame'),
 
     path('token/',  
         jwt_views.TokenObtainPairView.as_view(), 
