@@ -46,8 +46,10 @@ export const GetHourMinute = (strDateTime, minDuration=60) => {
 
 export const FormatDate = (strDate) => {
     const date = new Date(strDate)
-    console.log(strDate);
-    console.log(date);
-    console.log("--------------");
     return(DiaDaSemana[date.getUTCDay()] + ", " + date.getUTCDate() + " de " + Meses[date.getUTCMonth()+1] + " de " + date.getUTCFullYear())
+}
+
+export const getMonthName = (strDate) => {
+    const date = new Date(strDate)
+    return(Meses[date.getUTCMonth()+1])
 }

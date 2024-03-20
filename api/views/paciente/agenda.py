@@ -3,6 +3,7 @@ from rest_framework.response import Response
 
 from api.models import Consulta, Usuario
 import datetime
+import json
 
 @api_view(['GET'])
 def agenda(request):
@@ -38,3 +39,54 @@ def agenda(request):
     )
 
     return Response(consultas)
+
+@api_view(['POST'])
+def createAppointment(request):
+    """
+    Cria uma nova consulta.
+
+    Query parameters:
+        user_id: ID usuário do paciente
+        professional_id: ID usuário do profissional
+        horario: Data e hora da consulta
+        duracao: Duracao em minutos
+    """
+
+    body = json.loads(request.body.decode('utf-8'))
+
+    try: 
+        usuario = Usuario.objects.get(id=body['user_id'])
+    except Usuario.DoesNotExist:
+        raise ParseError(f"Usuário com id={body['user_id']} não foi encontrado")
+
+    try: 
+        profissional = Usuario.objects.get(id=body['professional_id'])
+    except Usuario.DoesNotExist:
+        raise ParseError(f"Profissional com id={body['professional_id']} não foi encontrado")
+
+    consultaProfissional = Consulta.objects.filter(
+        profissional=profissional,
+        horario = body['horario']
+    ).exclude(
+        status=1 # consulta cancelada
+    ).count()
+
+    consultaPaciente = Consulta.objects.filter(
+        paciente=usuario,
+        horario = body['horario']
+    ).exclude(
+        status=1 # consulta cancelada
+    ).count()
+
+    if (consultaProfissional != 0 or consultaPaciente != 0):
+        return Response("Horário indisponível para consulta", 400)
+    
+    consulta = Consulta.objects.create(
+        paciente=usuario,
+        profissional=profissional,
+        horario = body['horario'],
+        duracao_em_minutos = body['duracao'],
+        status=4 # consulta pendente
+    )
+
+    return Response("Consulta criada")

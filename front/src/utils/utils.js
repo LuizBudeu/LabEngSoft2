@@ -5,3 +5,7 @@ export const AppointmentStatus = {
     vencida: 3,
     pendente: 4
 };
+
+export const formatNumber = (n) =>{
+    return n > 9 ? "" + n: "0" + n;
+}

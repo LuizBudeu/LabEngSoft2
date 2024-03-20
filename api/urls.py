@@ -9,6 +9,9 @@ from .views.medico.agenda import agenda as medico_agenda
 from .views.paciente.agenda import agenda as paciente_agenda
 from .views.paciente.perfil import perfil as paciente_perfil
 from .views.paciente.perfil import update_perfil as paciente_update_perfil
+from .views.paciente.busca import buscaProfissionais as paciente_busca_profissionais
+from .views.paciente.busca import horarios as paciente_horarios
+from .views.paciente.agenda import createAppointment as paciente_create_appointment
 from .views.preparador.agenda import agenda as preparador_agenda
 
 urlpatterns = [
@@ -19,6 +22,9 @@ urlpatterns = [
     path('paciente/agenda', paciente_agenda, name='paciente_agenda'),
     path('paciente/perfil', paciente_perfil, name='paciente_perfil'),
     path('paciente/update_perfil', paciente_update_perfil, name='paciente_update_perfil'),
+    path('paciente/busca_profissionais', paciente_busca_profissionais, name='paciente_busca_profissionais'),
+    path('paciente/horarios', paciente_horarios, name='paciente_horarios'),
+    path('paciente/create_consulta/', paciente_create_appointment, name='paciente_create_appointment'),
     path('preparador/agenda/', preparador_agenda, name='preparador_agenda'),
 
     path('token/',  
