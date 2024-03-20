@@ -11,7 +11,7 @@ export const AppointmentItem = ({type, text, status, onClick, selected}) => {
         <tr>
           <td>{text}</td>
           {status == 1 ? (
-            <td>(Cancalada)</td>
+            <td>(Cancelada)</td>
           ) : status == 4  && (
             <td>(Pendente)</td>
           )}

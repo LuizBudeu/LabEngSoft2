@@ -5,7 +5,6 @@ export const GroupByDate = (appointments) => {
 
     appointments.forEach(appt => {
         const horario = getBaseDate(appt.horario);
-        console.log(horario)
         if(!grouped[horario]) {
             grouped[horario] = [];
         }
