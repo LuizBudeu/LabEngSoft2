@@ -18,9 +18,11 @@ jobs:
       with:
         node-version: 20
       
-    - name: Build website
+    - name: Build website with env variables
       working-directory: ./front
       run: |
+        touch .env
+        echo PROTOCOL_HOSTNAME_PORT=http://example:1234 >> .env
         npm install
         npm run build
       env:
