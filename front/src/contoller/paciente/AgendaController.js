@@ -6,7 +6,7 @@ export const GetAppointments = (user_id) => {
     const [appointmentss, setAppointmentss] = useState([]);
 
     useEffect(() => {
-        axios.get("http://localhost:8000/api/paciente/agenda", {
+        axios.get(process.env.PROTOCOL_HOSTNAME_PORT + "/api/paciente/agenda", {
             params: {
                 user_id: user_id
             }

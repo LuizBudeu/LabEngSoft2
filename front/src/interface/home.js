@@ -6,7 +6,7 @@ export const Home = () => {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    axios.get('http://localhost:8000/api/home/')
+    axios.get(process.env.PROTOCOL_HOSTNAME_PORT + "/api/home/")
       .then(response => {
         setMessage(response.data.message);
       })

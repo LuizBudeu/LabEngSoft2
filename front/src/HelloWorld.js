@@ -18,7 +18,7 @@ function HelloWorld() {
   // }, []);
 
   useEffect(() => {
-    axios.get('http://localhost:8000/api/hello-world/')
+    axios.get(process.env.PROTOCOL_HOSTNAME_PORT + "/api/hello-world/")
       .then(response => {
         setMessage(response.data.message);
       })
