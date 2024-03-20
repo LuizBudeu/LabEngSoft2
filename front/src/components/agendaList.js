@@ -1,22 +1,31 @@
 import React from "react";
-import { getHourFromDate, getLabelDay } from "../utils/date";
+import { Colors } from "../utils/colors";
+import { FormatDate, GetHourMinute } from "../utils/date";
 
-export const AgendaList = ({appointments}) => {
+export const AgendaList = ({appointments, selectedAppointment, onItemClick}) => {
     
-    const appointmentItem = (item, index) => (
-        <li key={index}>
-            {item.name} - {getHourFromDate(item.horario)}
-        </li>
+    const appointmentItem = (item) => (
+        <div 
+            key={item.id} 
+            onClick={() => onItemClick(item)}
+            style={{'background-color': selectedAppointment.id === item.id ? Colors.LightGray : null}}
+        >
+          <table>
+            <tr>
+              <td>{item.paciente__nome} - {GetHourMinute(item.horario, item.duracao)}</td>
+            </tr>
+          </table>
+        </div>
     );
     
     return(
         <>
         {Object.entries(appointments).map(([date, dailyAppts], index) => (
             <div key={index}>
-                <h3>{getLabelDay(date)}</h3>
-                <ul>
+                <h3>{FormatDate(date)}</h3>
+                <div>
                     {dailyAppts.map(appointmentItem)}
-                </ul>
+                </div>
             </div>
         ))}
         </>
