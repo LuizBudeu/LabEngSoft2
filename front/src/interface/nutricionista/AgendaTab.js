@@ -1,58 +1,72 @@
-// Import the react JS packages
-import axios from "axios";
-import { useState } from "react"; // Define the Login function.
-import { GetAppointments } from "../../contoller/nutricionista/AgendaController"; 
-import { useNavigate } from 'react-router-dom';
-import { VerticalLine } from "../../components/verticalLine";
-import { AppointmentItem } from "../../components/appointmentItem";
-import { AppointmentInfo } from "../../components/appointmentInfo";
+import React from "react";
+import { useState } from "react";
+import { AgendaList } from "../../components/agendaList";
 import { Row } from "../../components/row";
 import { RowItem } from "../../components/rowItem";
+import { VerticalLine } from "../../components/verticalLine";
+import { GetAppointments } from "../../contoller/nutricionista/AgendaController";
+import { GetHourMinute } from "../../utils/date";
+import { groupByDate } from "../../utils/group";
 import { CustomButton } from "../../components/customButton";
 import { CenterContent } from "../../components/centerContent";
-import { GetHourMinute, FormatDate } from "../../utils/date";
 
-const AgendaTab = () => {
-  const navigate = useNavigate();
-  const [appointmentsByDay] = GetAppointments("1", "2024-01-01", "3024-01-01");
-  const [selectedAppointment, setSelectedAppointment] = useState();
+const mockedAgenda = [
+    {id: "001", paciente__nome: "Vinicius", horario: "2024-03-21 15:00:00", duracao: 60},
+    {id: "002", paciente__nome: "Henrique", horario: "2024-03-21 16:00:00", duracao: 60},
+    {id: "003", paciente__nome: "Luis", horario: "2024-03-22 13:00:00", duracao: 60},
+    {id: "004", paciente__nome: "Felipe", horario: "2024-03-23 10:00:00", duracao: 60},
+    {id: "005", paciente__nome: "Rafael", horario: "2024-03-23 11:00:00", duracao: 60},
+];
 
-  return (
-    <Row>
-      <RowItem grow noPadding>
-        <div style={{width: "100%"}}>
-          <h3 className="Auth-form-title">Suas consultas</h3>
-          {appointmentsByDay && <div>
-            {Object.entries(appointmentsByDay).map(([key, appointments]) => (
-              <div>
-                <h4>{FormatDate(key)}</h4>
-                {appointments.map((value) => (
-                  <AppointmentItem
-                    type={value.profissional__ocupacao}
-                    text={GetHourMinute(value.horario, value.duracao) + " - " + value.profissional__nome}
-                    status={value.status}
-                    onClick={() => setSelectedAppointment(value)}
-                    selected={value.id == selectedAppointment?.id}
-                  />
-                ))}
-              </div>
-            ))}
-          </div>}
-        </div>
-      </RowItem>
-      <RowItem noPadding>
-        <VerticalLine/>
-      </RowItem>
-      <RowItem grow noPadding>
-        {selectedAppointment ? (
-          <AppointmentInfo appointment={selectedAppointment}/>
-        ) : (
-          <CenterContent>
-            <body>Selecione uma consulta</body>
-          </CenterContent>
-        )}
-      </RowItem>
-    </Row>
-  );
+export const AgendaTab = () => {
+    //const [agenda] = GetAppointments("3", "2024-03-20", "2024-04-24");
+     const agenda = groupByDate(mockedAgenda);
+
+    const [selectedAppointment, setSelectedAppointment] = useState("");
+    
+    return(
+        <>
+            <Row>
+                <RowItem grow noPadding>
+                    <div style={{width: "100%"}}>
+                        <h2>Suas consultas</h2>
+                        {agenda &&
+                            <AgendaList
+                                appointments={agenda}
+                                selectedAppointment={selectedAppointment}
+                                onItemClick={(itemId) => setSelectedAppointment(itemId)}
+                            />
+                        }
+                    </div>
+                </RowItem>
+                <RowItem>
+                    <VerticalLine noPadding />
+                </RowItem>
+                <RowItem grow noPadding>
+                    {selectedAppointment ? (
+                            <AppointmentInfo appointment={selectedAppointment} />
+                        ) : (
+                            <CenterContent>
+                                <span>Selecione uma consulta</span>
+                            </CenterContent>
+                        )
+                    }
+                </RowItem>
+            </Row>
+        </>
+    );
 };
-export default AgendaTab;
+
+const AppointmentInfo = ({appointment}) => {
+    return (
+        <div>
+            <div style={{flexGrow: 1, width: "100%", padding: "16px"}}>
+                <body>Paciente: {appointment.paciente__nome}</body>
+                <body>Horário da consulta: {GetHourMinute(appointment.horario, appointment.duracao)}</body>
+            </div>
+            <Row>
+                <CustomButton title="Realizar consulta" onClick={() => console.log("Realizar consulta")} type="primary" />
+            </Row>
+        </div>
+    );
+}

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { groupByDate } from "../../utils/group";
 import { useState, useEffect } from "react";
 
 export const GetAppointments = (user_id, start_date, end_date) => {
@@ -14,23 +15,11 @@ export const GetAppointments = (user_id, start_date, end_date) => {
             }
         },
         ).then((response) => {
-            let sent_appointments = response.data;
-            let appointments_by_date = [];
-            sent_appointments.forEach(element => {
-                let data = element.horario.split('T')[0];
-                if(appointments_by_date[data] == null){
-                    appointments_by_date[data] = [];
-                }
-                appointments_by_date[data].push(element);
-            });
-            console.log(sent_appointments);
-            console.log(appointments_by_date);
-            setAppointments(appointments_by_date);
-            console.log("setted");
+            setAppointments(groupByDate(response.data));
         }).catch((e) => {
             console.log(e);
         });
-    }, [])
+    }, [user_id, start_date, end_date]);
 
     useEffect(() => {
         console.log("appointments")

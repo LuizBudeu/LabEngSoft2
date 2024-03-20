@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import AgendaTab from "./AgendaTab";
+import { AgendaTab } from "./AgendaTab";
 import PerfilTab from "./PerfilTab";
 import { MainContainer } from "../../components/mainContainer";
 import { BackgroundContainer } from "../../components/backgroundContainer";
