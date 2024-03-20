@@ -1,6 +1,6 @@
 import { getBaseDate } from "./date";
 
-export const groupByDate = (appointments) => {
+export const GroupByDate = (appointments) => {
     const grouped = {};
 
     appointments.forEach(appt => {
