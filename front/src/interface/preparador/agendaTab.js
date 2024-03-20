@@ -7,6 +7,7 @@ import { VerticalLine } from "../../components/verticalLine";
 import { GetAgenda } from "../../contoller/preparador/AgendaController";
 import { GetHourMinute } from "../../utils/date";
 import { CustomButton } from "../../components/customButton";
+import { CenterContent } from "../../components/centerContent";
 
 const mockedAgenda = [
     {id: "001", paciente__nome: "Vinicius", horario: "2024-03-21 15:00:00", duracao: 60},
@@ -44,7 +45,9 @@ export const AgendaTab = () => {
                     {selectedAppointment ? (
                             <AppointmentInfo appointment={selectedAppointment} />
                         ) : (
-                            <span>Selecione uma consulta</span>
+                            <CenterContent>
+                                <span>Selecione uma consulta</span>
+                            </CenterContent>
                         )
                     }
                 </RowItem>

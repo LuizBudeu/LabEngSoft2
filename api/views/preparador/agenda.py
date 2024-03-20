@@ -45,5 +45,5 @@ def agenda(request: HttpRequest) -> Response:
         'duracao_em_minutos',
         'status'       
     )
-    print(consultas)
+
     return Response(consultas)
