@@ -8,7 +8,7 @@ export const NavBar = () => {
     return (
         <div className="navbar">
             <ul>
-                {location.pathname == "/" ? (
+                {location.pathname === "/" ? (
                     ""
                 ) : (
                     <li>
