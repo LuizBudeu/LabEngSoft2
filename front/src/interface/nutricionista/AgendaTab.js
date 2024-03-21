@@ -4,23 +4,15 @@ import { AgendaList } from "../../components/agendaList";
 import { Row } from "../../components/row";
 import { RowItem } from "../../components/rowItem";
 import { VerticalLine } from "../../components/verticalLine";
-import { GetAppointments } from "../../contoller/nutricionista/AgendaController";
+import { GetConsultas } from "../../contoller/nutricionista/AgendaController";
 import { GetHourMinute } from "../../utils/date";
-import { groupByDate } from "../../utils/group";
 import { CustomButton } from "../../components/customButton";
 import { CenterContent } from "../../components/centerContent";
-
-const mockedAgenda = [
-    {id: "001", paciente__nome: "Vinicius", horario: "2024-03-21 15:00:00", duracao: 60},
-    {id: "002", paciente__nome: "Henrique", horario: "2024-03-21 16:00:00", duracao: 60},
-    {id: "003", paciente__nome: "Luis", horario: "2024-03-22 13:00:00", duracao: 60},
-    {id: "004", paciente__nome: "Felipe", horario: "2024-03-23 10:00:00", duracao: 60},
-    {id: "005", paciente__nome: "Rafael", horario: "2024-03-23 11:00:00", duracao: 60},
-];
+import { PopUpContainer } from "../../components/popUpContainer";
 
 export const AgendaTab = () => {
-    //const [agenda] = GetAppointments("3", "2024-03-20", "2024-04-24");
-     const agenda = groupByDate(mockedAgenda);
+    const [agenda] = GetConsultas("1" /* A SER PREENCHIDO COM ID DO NUTRICIONISTA APÓS INTEGRAÇÃO */,
+                                  "2024-01-01", "3024-01-01");
 
     const [selectedAppointment, setSelectedAppointment] = useState("");
     
@@ -44,7 +36,7 @@ export const AgendaTab = () => {
                 </RowItem>
                 <RowItem grow noPadding>
                     {selectedAppointment ? (
-                            <AppointmentInfo appointment={selectedAppointment} />
+                            <ConsultaInfo consulta={selectedAppointment} />
                         ) : (
                             <CenterContent>
                                 <span>Selecione uma consulta</span>
@@ -57,15 +49,25 @@ export const AgendaTab = () => {
     );
 };
 
-const AppointmentInfo = ({appointment}) => {
+const ConsultaInfo = ({consulta}) => {
     return (
         <div>
             <div style={{flexGrow: 1, width: "100%", padding: "16px"}}>
-                <body>Paciente: {appointment.paciente__nome}</body>
-                <body>Horário da consulta: {GetHourMinute(appointment.horario, appointment.duracao)}</body>
+                <body>Paciente: {consulta.paciente__nome}</body>
+                <body>Horário da consulta: {GetHourMinute(consulta.horario, consulta.duracao)}</body>
             </div>
             <Row>
-                <CustomButton title="Realizar consulta" onClick={() => console.log("Realizar consulta")} type="primary" />
+                <CustomButton title="     Realizar consulta     " onClick={() => console.log("Realizar consulta")} type="primary" />
+            </Row>
+            <br/>
+            <Row>
+                <CustomButton title="Realizar avaliação" onClick={() => console.log("Avaliação Nutricional")} type="primary" />
+                <CustomButton title="Prescrever dieta" onClick={() => console.log("Prescreve dieta prescreve dieta")} type="primary" />
+            </Row>
+            <br/>
+            <Row>
+                <CustomButton title="Solicitar exame" onClick={() => console.log("Pedido de exame")} type="primary" />
+                <CustomButton title="Detalhes do paciente" onClick={() => console.log("Detalhes, detalhes")} type="secondary" />
             </Row>
         </div>
     );

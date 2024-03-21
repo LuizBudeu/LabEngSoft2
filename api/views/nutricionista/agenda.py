@@ -11,8 +11,8 @@ from api.models import Usuario
 @api_view(['GET'])
 def agenda(request: HttpRequest) -> Response:
     """
-    Pega a agenda do nutricionista. Retorna todas as consultas marcadas para esse profissional
-    entre uma data inicial e final.
+    Pega a agenda do nutricionista. Retorna todas as consultas marcadas entre
+    uma data inicial e uma final.
 
     Query parameters:
         user_id: ID de usuário do nutricionista
@@ -38,6 +38,12 @@ def agenda(request: HttpRequest) -> Response:
         profissional=usuario,
         horario__gte=start_date,
         horario__lte=end_date
+    ).order_by('horario').values(
+        'id',
+        'paciente__nome',
+        'horario',
+        'duracao_em_minutos',
+        'status'       
     )
 
     return Response({'message': consultas.values()})

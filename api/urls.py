@@ -15,6 +15,8 @@ from .views.nutricionista.avaliacao import avaliacao as avaliacao_nutricional
 from .views.nutricionista.consulta import consulta as nutricionista_consulta
 from .views.nutricionista.dieta import dieta
 from .views.nutricionista.exame import pedirExame as nutricionista_exame
+from .views.nutricionista.perfil import perfil as nutricionista_perfil
+from .views.nutricionista.perfil import update_perfil as nutricionista_update_perfil
 
 urlpatterns = [
     path('hello-world/', hello_world, name='hello_world'),
@@ -30,6 +32,8 @@ urlpatterns = [
     path('nutricionista/consulta', nutricionista_consulta, name='nutricionista_consulta'),
     path('nutricionista/dieta', dieta, name='dieta'),
     path('nutricionista/exame', nutricionista_exame, name='nutricionista_exame'),
+    path('nutricionista/perfil', nutricionista_perfil, name='nutricionista_perfil'),
+    path('nutricionista/update_perfil', nutricionista_update_perfil, name='nutricionista_update_perfil'),
 
     path('token/',  
         jwt_views.TokenObtainPairView.as_view(), 
