@@ -7,7 +7,7 @@ axios.interceptors.response.use(
       refresh = true;
       console.log(localStorage.getItem("refresh_token"));
       const response = await axios.post(
-        process.env.PROTOCOL_HOSTNAME_PORT + "/api/token/refresh/",
+        process.env.REACT_APP_PROTOCOL_HOSTNAME_PORT + "/api/token/refresh/",
         { refresh: localStorage.getItem("refresh_token") },
         {
           headers: { "Content-Type": "application/json" }
@@ -29,7 +29,7 @@ axios.interceptors.response.use(
 );
 
 
-fetch(process.env.PROTOCOL_HOSTNAME_PORT + "/api/token/refresh/", {
+fetch(process.env.REACT_APP_PROTOCOL_HOSTNAME_PORT + "/api/token/refresh/", {
   method: "POST",
   body: JSON.stringify({
     refresh: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcwNzQxODE0MSwiaWF0IjoxNzA3MzMxNzQxLCJqdGkiOiI5NDQyNzgxMzkxNjQ0M2M5YTBmMGUxNWQwZmEwMmRlNSIsInVzZXJfaWQiOjF9.7bHrW4Jo5ODfb3onEUz6wTPZsUOEYUXwrQ24EZyLH5U'
@@ -39,7 +39,7 @@ fetch(process.env.PROTOCOL_HOSTNAME_PORT + "/api/token/refresh/", {
   }
 });
 
-fetch(process.env.PROTOCOL_HOSTNAME_PORT + "/api/token/", {
+fetch(process.env.REACT_APP_PROTOCOL_HOSTNAME_PORT + "/api/token/", {
   method: "POST",
   body: JSON.stringify({
     username: 'admin',
