@@ -10,7 +10,7 @@ import { EditPerfil } from "./PerfilTabEdit";
 
 const Perfil = () => {
   const navigate = useNavigate();
-  const [userProfile, setUserProfile] = GetProfile("1");
+  const [userProfile, setUserProfile] = GetProfile("3"); // TODO trocar por id do usuário logado na integração
   const [showPopUp, setShowPopUp] = useState(false);
 
   return (
@@ -58,7 +58,7 @@ const Perfil = () => {
             <th colspan="3">CRN</th>
           </tr>
           <tr>
-            <td colspan="3">{DiabetesOptions[userProfile.tipo_diabetes]}</td>
+            <td colspan="3">{userProfile.crn}</td>
           </tr>
         </table>
       </div>}

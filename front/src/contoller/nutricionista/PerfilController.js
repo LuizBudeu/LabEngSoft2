@@ -5,19 +5,6 @@ export const GetProfile = (user_id) => {
 
     const [userProfile, setUserProfile] = useState();
 
-    const resp_test = {
-        'email': 'a@b.c',
-        'nome': 'filipe arraia',
-        'cpf': '1',
-        'data_de_nascimento': '2002-04-30',
-        'genero': 'outro',
-        'cep': '00000-000',
-        'logradouro': 'Travessa do Politécnico',
-        'numero': '158',
-        'complemento': '---',
-        'crn': '12345678'
-    }
-
     useEffect(() => {
         axios.get("http://localhost:8000/api/nutricionista/perfil", {
             params: {
@@ -25,7 +12,7 @@ export const GetProfile = (user_id) => {
             }
         },
         ).then((response) => {
-            setUserProfile(resp_test);
+            setUserProfile(response.data);
         }).catch((e) => {
             console.log(e);
         });
