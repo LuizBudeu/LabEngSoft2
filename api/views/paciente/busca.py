@@ -72,7 +72,7 @@ def horarios(request):
 
     usuarioSchedule =  Consulta.objects.filter(
         paciente=usuario,
-        horario__gt=datetime.date.today()
+        horario__gt=datetime.datetime.utcnow()
     ).exclude(
         status=1 # Exclui consultas canceladas
     ).values(
@@ -87,7 +87,6 @@ def horarios(request):
     max_hour = 18
 
     while(extra_day < max_days):
-        date = date + timedelta(days=1)
         date_day = date.strftime("%Y-%m-%d")
 
         hour = min_hour
@@ -95,16 +94,20 @@ def horarios(request):
         while(hour <= max_hour):
             status = 0 # Horário livre
             date_str = date_day + " " + "{0:0=2d}".format(hour+3)
-            for consulta in professionalSchedule:
-                if str.startswith(str(consulta['horario']), date_str):
-                    status = 1
-                    break
-
-            if status == 0:
-                for consulta in usuarioSchedule:
+            custom_date = datetime.datetime.strptime(date_str, '%Y-%m-%d %H')
+            if(custom_date <= datetime.datetime.utcnow()):
+                status = 1
+            else:
+                for consulta in professionalSchedule:
                     if str.startswith(str(consulta['horario']), date_str):
-                        status = 1
-                        break
+                            status = 1
+                            break
+
+                if status == 0:
+                    for consulta in usuarioSchedule:
+                        if str.startswith(str(consulta['horario']), date_str):
+                            status = 1
+                            break
 
             available_schedule.append({
                 "data": date_day,
@@ -114,6 +117,6 @@ def horarios(request):
             hour += 1
 
         extra_day += 1
+        date = date + timedelta(days=1)
 
-    # return Response(usuarioSchedule)
     return Response(available_schedule)

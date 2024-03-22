@@ -2,7 +2,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from api.models import Consulta, Usuario
-import datetime
+from datetime import datetime
 import json
 
 @api_view(['GET'])
@@ -24,7 +24,7 @@ def agenda(request):
     consultas = Consulta.objects.filter(
         paciente=usuario,
         # status__in=[0, 4]
-        horario__gt=datetime.date.today()
+        horario__gt=datetime.utcnow()
     ).order_by('horario').values(
         'id',
         'profissional_id',
