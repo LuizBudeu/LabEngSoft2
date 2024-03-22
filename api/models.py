@@ -80,6 +80,19 @@ class RelatorioMedico(models.Model):
     producao_de_insulina = models.FloatField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+class PedidoExameMedico(models.Model):
+    EXAME_CHOICES = [
+        (0, 'Pendente'),
+        (1, 'Finalizada')
+    ]
+
+    paciente = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='exame_paciente')
+    medico = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='exame_medico')
+    titulo = models.CharField(max_length=100, blank=True, null=True)
+    status = models.IntegerField(choices=EXAME_CHOICES)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     
 class Nutricionista(models.Model):
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
