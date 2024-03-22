@@ -90,3 +90,67 @@ def createAppointment(request):
     )
 
     return Response("Consulta criada")
+
+@api_view(['POST'])
+def cancelAppointment(request):
+    """
+    Cancela uma consulta.
+
+    Query parameters:
+        user_id: ID usuário do paciente
+        appointment_id: ID da consulta
+    """
+
+    body = json.loads(request.body.decode('utf-8'))
+
+    try: 
+        usuario = Usuario.objects.get(id=body['user_id'])
+    except Usuario.DoesNotExist:
+        raise ParseError(f"Usuário com id={body['user_id']} não foi encontrado")
+
+    consulta = Consulta.objects.get(
+        id=body['appointment_id'],
+        paciente=usuario
+    )
+
+    if(consulta):
+        if(consulta.status in [0, 4]):
+            consulta.status = 1
+            consulta.save()
+            return Response("Consulta atualizada")
+        else:
+            return Response("Consulta indisponível para cancelamento", 400)
+    else:
+        return Response("Erro ao atualizar consulta", 400)
+
+@api_view(['POST'])
+def payAppointment(request):
+    """
+    Marca como pago uma consulta.
+
+    Query parameters:
+        user_id: ID usuário do paciente
+        appointment_id: ID da consulta
+    """
+
+    body = json.loads(request.body.decode('utf-8'))
+
+    try: 
+        usuario = Usuario.objects.get(id=body['user_id'])
+    except Usuario.DoesNotExist:
+        raise ParseError(f"Usuário com id={body['user_id']} não foi encontrado")
+
+    consulta = Consulta.objects.get(
+        id=body['appointment_id'],
+        paciente=usuario
+    )
+
+    if(consulta):
+        if(consulta.status == 4):
+            consulta.status = 0
+            consulta.save()
+            return Response("Consulta atualizada")
+        else:
+            return Response("Consulta indisponível para pagamento", 400)
+    else:
+        return Response("Erro ao atualizar consulta", 400)

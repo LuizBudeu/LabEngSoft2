@@ -5,6 +5,8 @@ import { formatNumber } from "../../utils/utils";
 export const GetAppointments = (user_id) => {
 
     const [appointments, setAppointments] = useState([]);
+    const [selectedAppointment, setSelectedAppointment] = useState();
+    const [showPopUp, setShowPopUp] = useState(false);
 
     const refreshAppointments = () => {
         axios.get("http://localhost:8000/api/paciente/agenda", {
@@ -28,11 +30,50 @@ export const GetAppointments = (user_id) => {
         });
     }
 
+    const cancelAppointment = async (appointment_id) => {
+        console.log("cancelAppointment");
+        console.log(appointment_id);
+        const response = await axios.post("http://localhost:8000/api/paciente/cancel_consulta", {
+            user_id: user_id,
+            appointment_id: appointment_id
+        });
+        if(response.status != 200){
+            console.log(response.data);
+            return false;
+        }
+        setSelectedAppointment(null);
+        refreshAppointments();
+        return true;
+    }
+
+    const payAppointment = async (appointment_id) => {
+        const response = await axios.post("http://localhost:8000/api/paciente/pay_consulta", {
+            user_id: user_id,
+            appointment_id: appointment_id
+        });
+        if(response.status != 200){
+            console.log(response.data);
+            return false;
+        }
+        setSelectedAppointment(null);
+        refreshAppointments();
+        return true;
+    }
+
     useEffect(() => {
         refreshAppointments();
     }, [])
 
-    return [appointments, refreshAppointments];
+    return [
+        appointments, 
+        refreshAppointments,
+        selectedAppointment, 
+        setSelectedAppointment,
+        showPopUp, 
+        setShowPopUp,
+        cancelAppointment,
+        payAppointment
+    ];
     
 };
 
@@ -82,12 +123,10 @@ export const GetProfessionals = (user_id, onSuccess) => {
     }
 
     const requestAppointment = (horario, professional) => {
-        console.log("called requestAppointment");
         let horario_utc = horario.hora
         horario_utc = horario.data + " " + formatNumber(horario_utc) + ":00:00"
         let date = new Date(horario_utc)
-        console.log(date);
-        axios.post("http://localhost:8000/api/paciente/create_consulta/", {
+        axios.post("http://localhost:8000/api/paciente/create_consulta", {
             user_id: user_id,
             professional_id: professional.id,
             horario: date,

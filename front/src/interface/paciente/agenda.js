@@ -17,9 +17,16 @@ import { NovaConsulta } from "./novaConsulta";
 
 const Agenda = () => {
   const navigate = useNavigate();
-  const [appointmentsByDay, refreshAppointments] = GetAppointments("1");
-  const [selectedAppointment, setSelectedAppointment] = useState();
-  const [showPopUp, setShowPopUp] = useState(false);
+  const [
+    appointmentsByDay, 
+    refreshAppointments,
+    selectedAppointment, 
+    setSelectedAppointment,
+    showPopUp, 
+    setShowPopUp,
+    cancelAppointment,
+    payAppointment
+  ] = GetAppointments("1");
 
   return (
     <div>
@@ -63,7 +70,15 @@ const Agenda = () => {
         </RowItem>
         <RowItem grow noPadding>
           {selectedAppointment ? (
-            <AppointmentInfo appointment={selectedAppointment}/>
+            <AppointmentInfo 
+              appointment={selectedAppointment} 
+              cancelAppointment={() => {
+                cancelAppointment(selectedAppointment.id)
+              }}
+              payAppointment={() => {
+                payAppointment(selectedAppointment.id)
+              }}
+            />
           ) : (
             <CenterContent>
               <body>Selecione uma consulta</body>

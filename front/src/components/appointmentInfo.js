@@ -4,7 +4,7 @@ import { AppointmentStatus } from "../utils/utils";
 import { Row } from "./row";
 import { CustomButton } from "./customButton";
 
-export const AppointmentInfo = ({appointment}) => {
+export const AppointmentInfo = ({appointment, cancelAppointment, payAppointment}) => {
   return (
     <div style={{width: "100%", padding: "16px"}}>
       <h3>Dados da consulta</h3>
@@ -18,14 +18,14 @@ export const AppointmentInfo = ({appointment}) => {
           <CustomButton
             type="primary"
             title="Realizar pagamento"
-            onClick={() => console.log("Realizar pagamento")}
+            onClick={payAppointment}
           />
         }
         {appointment.status != AppointmentStatus.cancelada &&
           <CustomButton
             type="secondary"
             title="Cancelar"
-            onClick={() => console.log("Cancelar")}
+            onClick={cancelAppointment}
           />
         }
       </Row>
