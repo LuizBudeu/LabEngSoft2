@@ -1,24 +1,24 @@
 // Import the react JS packages
 import axios from "axios";
 import { useState, useHook } from "react"; // Define the Login function.
-import { GetProfile, UpdateProfile } from "../../contoller/paciente/PerfilController";
+import { GetProfile, UpdateProfile } from "../../contoller/nutricionista/PerfilController";
 import { CustomInput } from "../../components/customInput";
 import { CustomSelect } from "../../components/customSelect";
 import { CustomButton } from "../../components/customButton";
 import { Row } from "../../components/row";
 import { RowItem } from "../../components/rowItem";
 import { Column } from "../../components/column";
-import { GenderOptions, DiabetesOptions } from "../../utils/options";
+import { GenderOptions } from "../../utils/options";
 import { useNavigate } from 'react-router-dom';
 
-export const EditPerfil = ({closePopUp, setMainUserProfile}) => {
+export const EditPerfil = ({closePopUp, mainUserId, setMainUserProfile}) => {
   const navigate = useNavigate();
-  const [userProfile, setUserProfile] = GetProfile("1");
+  const [userProfile, setUserProfile] = GetProfile(mainUserId);
 
   const submit = async (e) => {
     e.preventDefault(); 
     console.log(e);
-    const resp = await UpdateProfile("1",userProfile); 
+    const resp = await UpdateProfile(mainUserId, userProfile); 
     if(resp){
       setMainUserProfile(userProfile);
       closePopUp()
@@ -117,7 +117,7 @@ export const EditPerfil = ({closePopUp, setMainUserProfile}) => {
               </RowItem>
               <RowItem grow>
                 <Column>
-                  <body>número</body>
+                  <body>Número</body>
                   <CustomInput
                     name="numero"
                     onChange={(e) => setUserProfile({...userProfile, numero:e.target.value})}
@@ -141,22 +141,12 @@ export const EditPerfil = ({closePopUp, setMainUserProfile}) => {
             <Row>
               <RowItem grow>
                 <Column>
-                  <body>Alergias</body>
+                  <body>CRN</body>
                   <CustomInput
-                    name="alergias"
-                    onChange={(e) => setUserProfile({...userProfile, alergias:e.target.value})}
-                    value={userProfile.alergias}
+                    name="crn"
+                    onChange={(e) => setUserProfile({...userProfile, crn:e.target.value})}
+                    value={userProfile.crn}
                     type="text"
-                  />
-                </Column>
-              </RowItem>
-              <RowItem grow>
-                <Column>
-                  <body>Tipo de diabetes</body>
-                  <CustomSelect 
-                    list={DiabetesOptions}
-                    value={userProfile.tipo_diabetes}
-                    onChange={(e) => setUserProfile({...userProfile, tipo_diabetes:e.target.value})}
                   />
                 </Column>
               </RowItem>

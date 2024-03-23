@@ -10,14 +10,15 @@ import { EditPerfil } from "./PerfilTabEdit";
 
 const Perfil = () => {
   const navigate = useNavigate();
-  const [userProfile, setUserProfile] = GetProfile("3"); // TODO trocar por id do usuário logado na integração
+  const test_id = 3 // TODO trocar por id do usuário logado na integração
+  const [userProfile, setUserProfile] = GetProfile(test_id);
   const [showPopUp, setShowPopUp] = useState(false);
 
   return (
     <div>
       <PopUpContainer showPopUp={showPopUp} closePopUp={() => setShowPopUp(false)}>
         <MainContainer>
-          <EditPerfil closePopUp={() => setShowPopUp(false)} setMainUserProfile={setUserProfile}/>
+          <EditPerfil closePopUp={() => setShowPopUp(false)} mainUserId={test_id} setMainUserProfile={setUserProfile}/>
         </MainContainer>
       </PopUpContainer>
       
@@ -30,18 +31,20 @@ const Perfil = () => {
             <th colspan="2">Cpf</th>
           </tr>
           <tr>
-            <td colspan="2">{userProfile.nome}</td>
-            <td colspan="2">{userProfile.email}</td>
-            <td colspan="2">{userProfile.cpf}</td>
+            <td align="center" colspan="2">{userProfile.nome}</td>
+            <td align="center" colspan="2">{userProfile.email}</td>
+            <td align="center" colspan="2">{userProfile.cpf}</td>
           </tr>
+          <br/>
           <tr>
-            <th colspan="2">Data de nascimento</th>
+            <th colspan="2" c>Data de nascimento</th>
             <th colspan="2">Gênero</th>
           </tr>
           <tr>
-            <td colspan="2">{userProfile.data_de_nascimento}</td>
-            <td colspan="2">{GenderOptions[userProfile.genero]}</td>
+            <td align="center" colspan="2">{userProfile.data_de_nascimento}</td>
+            <td align="center" colspan="2">{GenderOptions[userProfile.genero]}</td>
           </tr>
+          <br/>
           <tr>
             <th colspan="1">CEP</th>
             <th colspan="3">Logradouro</th>
@@ -49,16 +52,17 @@ const Perfil = () => {
             <th colspan="1">Complemento</th>
           </tr>
           <tr>
-            <td colspan="1">{userProfile.cep}</td>
-            <td colspan="3">{userProfile.logradouro}</td>
-            <td colspan="1">{userProfile.numenro}</td>
-            <td colspan="1">{userProfile.complemento}</td>
+            <td align="center" colspan="1">{userProfile.cep}</td>
+            <td align="center" colspan="3">{userProfile.logradouro}</td>
+            <td align="center" colspan="1">{userProfile.numero}</td>
+            <td align="center" colspan="1">{userProfile.complemento}</td>
+          </tr>
+          <br/>
+          <tr>
+            <th colspan="1">CRN</th>
           </tr>
           <tr>
-            <th colspan="3">CRN</th>
-          </tr>
-          <tr>
-            <td colspan="3">{userProfile.crn}</td>
+            <td align="center" colspan="1">{userProfile.crn}</td>
           </tr>
         </table>
       </div>}
