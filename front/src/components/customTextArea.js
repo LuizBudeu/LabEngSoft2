@@ -1,13 +1,13 @@
 import styled from 'styled-components'
 
-const InputStyle = styled.input`
-  width: 100%
+const TextAreaStyle = styled.textarea`
+  width: 100%;
 `;
 
-export const CustomInput = ({name, onChange, value, placeholder, type, disabled}) => {
+export const CustomTextArea = ({name, onChange, value, placeholder, type, disabled}) => {
 
   return (
-    <InputStyle
+    <TextAreaStyle
       name={name}
       type={type}
       className="form-control mt-1"
@@ -16,6 +16,8 @@ export const CustomInput = ({name, onChange, value, placeholder, type, disabled}
       required
       onChange={onChange}
       disabled={disabled}
+      autoFocus
+      rows={20}
     />
   );
-};
+}; 

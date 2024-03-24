@@ -4,7 +4,6 @@ import { SecondaryNavBar } from "../../components/secondaryNavBar";
 import { AgendaTab } from "./agendaTab";
 import { TreinosTab } from "./treinosTab";
 import { MainContainer } from "../../components/mainContainer";
-import "./styles/Tabs.css";
 import { BackgroundContainer } from "../../components/backgroundContainer";
 
 export const PreparadorHome = () => {
