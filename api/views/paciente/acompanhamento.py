@@ -37,12 +37,17 @@ def acompanhamento(request):
         'consulta__profissional__nome',
         'treino_fisico__treino',
     ).order_by('-created_at').first()
+    treino['treino_fisico__title'] = "teste title"
 
     examesMedicos = PedidoExameMedico.objects.filter(
         paciente=usuario,
         status=0
     ).values(
+        'medico_id',
         'medico__nome',
+        'medico__logradouro',
+        'medico__numero',
+        'medico__complemento',
         'titulo',
     ).order_by('-created_at')
 
@@ -51,15 +56,28 @@ def acompanhamento(request):
     #     paciente=usuario,
     #     status=0
     # ).values(
+        # 'Nutricionista_id',
+        # 'Nutricionista__nome',
+        # 'Nutricionista__logradouro',
+        # 'Nutricionista__numero',
+        # 'Nutricionista__complemento',
     #     'tipo_exame',
     # ).order_by('-created_at')
 
     examesNutricionista = [{
+        'Nutricionista_id': 3,
         "Nutricionista__nome": "Adevaldo Rodrigues",
+        'Nutricionista__logradouro': "Rua do Anjos",
+        'Nutricionista__numero': "203",
+        'Nutricionista__complemento': "Apt 44",
         "tipo_exame": "Exame de sangue"
     },
     {
+        'Nutricionista_id': 3,
         "Nutricionista__nome": "Sara Penha",
+        'Nutricionista__logradouro': "Rua do Amores",
+        'Nutricionista__numero': "12022",
+        'Nutricionista__complemento': "Bloco 6",
         "tipo_exame": "Hemograma"
     }]
 
