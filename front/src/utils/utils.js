@@ -6,6 +6,14 @@ export const AppointmentStatus = {
     pendente: 4
 };
 
+export const AppointmentStatusString = {
+    0: "Agendada",
+    1: "Cancelada",
+    2: "Realizada",
+    3: "Vencida",
+    4: "Pagamento Pendente"
+};
+
 export const formatNumber = (n) =>{
     return n > 9 ? "" + n: "0" + n;
 }

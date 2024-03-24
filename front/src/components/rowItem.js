@@ -6,6 +6,7 @@ export const RowItem = ({grow, center, flex, noPadding, children, customPadding}
         display: flex;
         padding: ${noPadding ? "0px" : customPadding ? customPadding+"px" : "16px"};
         justify-content: ${center ? "center" : "null"};
+        align-items: ${center ? "center" : "null"};
     `
 
     return(
