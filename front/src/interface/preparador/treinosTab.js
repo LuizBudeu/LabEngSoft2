@@ -25,7 +25,7 @@ export const TreinosTab = () => {
                         ) : (
                             <>
                                 <CustomButton title="Novo treino" onClick={() => setVisible(true)} type="primary" />
-                                {workOuts && workOuts.map((workout) => <div key={workout.id} style={{backgroundColor: selectedWorkOut?.id === workout.id ? Colors.LightGray : null}} onClick={()=> setSelectedWorkOut(workout)}>{workout.title}</div>)}
+                                {workOuts && workOuts.map((workout) => <div key={workout.id} style={{backgroundColor: selectedWorkOut?.id === workout.id ? Colors.LightGray : null}} onClick={()=> setSelectedWorkOut(workout)}>{workout.titulo}</div>)}
                             </>
                         )}
                     </div>
@@ -35,10 +35,9 @@ export const TreinosTab = () => {
                 </RowItem>
                 <RowItem grow noPadding>
                     <CenterContent>
-                        <span>Selecione um treino</span>
                         {selectedWorkOut ? (
                             <div style={{width: "100%"}}>
-                                <h2>{selectedWorkOut.title}</h2>
+                                <h2>{selectedWorkOut.titulo}</h2>
                                 <body style={{whiteSpace: "pre-line"}}>{selectedWorkOut.treino}</body>
                             </div>
                             ) : (
