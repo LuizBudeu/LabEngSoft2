@@ -114,7 +114,9 @@ class AvaliacaoNutricional(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 class TreinoFisico(models.Model):
-    treino = models.CharField(max_length=300)
+    profissional = models.ForeignKey(Usuario, on_delete=models.CASCADE, default="3")
+    titulo = models.CharField(max_length=50, default="Treino Genérico")
+    treino = models.CharField(max_length=2000)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
