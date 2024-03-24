@@ -2,6 +2,7 @@ import { TipoAcompanhamento } from "../utils/options";
 import { Row } from "./row";
 import { RowItem } from "./rowItem";
 import { CustomButton } from "./customButton";
+import { Column } from "./column";
 
 export const AcompanhamentoInfo = ({acompanhamento, type, scheduleAppointment}) => {
 
@@ -24,25 +25,27 @@ export const AcompanhamentoInfo = ({acompanhamento, type, scheduleAppointment}) 
       {type == "dieta" ? (
         <div>
           <h4>{acompanhamento.dieta__descricao_curta}</h4>
-          <body>Duração: {acompanhamento.dieta__duracao_em_dias} dias</body>
-          <body>Calorias: {acompanhamento.dieta__calorias} kcal</body>
-          <br/>
-          <body>{acompanhamento.dieta__descricao}</body>
+          <Column>
+            <text>Duração: {acompanhamento.dieta__duracao_em_dias} dias</text>
+            <text>Calorias: {acompanhamento.dieta__calorias} kcal</text>
+            <br/>
+            <text>{acompanhamento.dieta__descricao}</text>
+          </Column>
         </div>
       ) : (
         type == "treino" ? (
           <div>
             <h4>{acompanhamento.treino_fisico__title}</h4>
-            <body>{acompanhamento.treino_fisico__treino}</body>
+            <text>{acompanhamento.treino_fisico__treino}</text>
           </div>
         ) : (
           <div>
             {type == "exameMedico" ? (
               <div>
-                <body>{acompanhamento.titulo}</body>
+                <text>{acompanhamento.titulo}</text>
               </div>
             ) : (
-              <body>{acompanhamento.tipo_exame}</body>
+              <text>{acompanhamento.tipo_exame}</text>
             )}
             <Row>
               <RowItem grow center>

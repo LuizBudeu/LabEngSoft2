@@ -14,7 +14,7 @@ export const AppointmentItem = ({type, text, status, onClick, selected}) => {
         </RowItem>
         <RowItem grow>
           <Row>
-            <body>{text}</body>
+            <text>{text}</text>
             <RowItem noPadding center>
               <StatusBadge status={status} colapsed/>
             </RowItem>

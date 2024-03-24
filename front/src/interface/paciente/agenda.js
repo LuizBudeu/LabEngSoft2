@@ -12,6 +12,7 @@ import { CustomButton } from "../../components/customButton";
 import { CenterContent } from "../../components/centerContent";
 import { PopUpContainer } from "../../components/popUpContainer";
 import { MainContainer } from "../../components/mainContainer";
+import { ScrollContainer } from "../../components/scrollContainer";
 import { GetHourMinute, FormatDate } from "../../utils/date";
 import { NovaConsulta } from "./novaConsulta";
 
@@ -40,30 +41,32 @@ const Agenda = () => {
       </PopUpContainer>
       <Row>
         <RowItem grow noPadding>
-          <div style={{width: "100%"}}>
-            <h3 className="Auth-form-title">Suas consultas</h3>
-            <CustomButton
-              type="primary"
-              title="Nova consulta"
-              onClick={() => setShowPopUp(true)}
-            />
-            {appointmentsByDay && <div>
-              {Object.entries(appointmentsByDay).map(([key, appointments]) => (
-                <div>
-                  <h4>{FormatDate(key)}</h4>
-                  {appointments.map((value) => (
-                    <AppointmentItem
-                      type={value.profissional__ocupacao}
-                      text={GetHourMinute(value.horario, value.duracao) + " - " + value.profissional__nome}
-                      status={value.status}
-                      onClick={() => setSelectedAppointment(value)}
-                      selected={value.id == selectedAppointment?.id}
-                    />
-                  ))}
-                </div>
-              ))}
-            </div>}
-          </div>
+          <ScrollContainer>
+            <div>
+              <h3 className="Auth-form-title">Suas consultas</h3>
+              <CustomButton
+                type="primary"
+                title="Nova consulta"
+                onClick={() => setShowPopUp(true)}
+              />
+              {appointmentsByDay && <div>
+                {Object.entries(appointmentsByDay).map(([key, appointments]) => (
+                  <div>
+                    <h4>{FormatDate(key)}</h4>
+                    {appointments.map((value) => (
+                      <AppointmentItem
+                        type={value.profissional__ocupacao}
+                        text={GetHourMinute(value.horario, value.duracao) + " - " + value.profissional__nome}
+                        status={value.status}
+                        onClick={() => setSelectedAppointment(value)}
+                        selected={value.id == selectedAppointment?.id}
+                      />
+                    ))}
+                  </div>
+                ))}
+              </div>}
+            </div>
+          </ScrollContainer>
         </RowItem>
         <RowItem noPadding>
           <VerticalLine/>
@@ -81,11 +84,11 @@ const Agenda = () => {
             />
           ) : (
             <CenterContent>
-              <body>Selecione uma consulta</body>
+              <text>Selecione uma consulta</text>
             </CenterContent>
           )}
         </RowItem>
-      </Row>
+      </Row>      
     </div>
   );
 };

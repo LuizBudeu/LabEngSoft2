@@ -5,6 +5,7 @@ import { Row } from "./row";
 import { CustomButton } from "./customButton";
 import { StatusBadge } from "./statusBadge";
 import { RowItem } from "./rowItem";
+import { Column } from "./column";
 
 export const AppointmentInfo = ({appointment, cancelAppointment, payAppointment}) => {
   return (
@@ -17,9 +18,11 @@ export const AppointmentInfo = ({appointment, cancelAppointment, payAppointment}
           <StatusBadge status={appointment.status}/>
         </RowItem>
       </Row>
-      <body>Profissional: {appointment.profissional__nome}</body>
-      <body>Endereço: {appointment.profissional__logradouro}, {appointment.profissional__numero} - {appointment.profissional__complemento}</body>
-      <body>Horário: {GetHourMinute(appointment.horario, appointment.duracao)}</body>
+      <Column>
+        <text>Profissional: {appointment.profissional__nome}</text>
+        <text>Endereço: {appointment.profissional__logradouro}, {appointment.profissional__numero} - {appointment.profissional__complemento}</text>
+        <text>Horário: {GetHourMinute(appointment.horario, appointment.duracao)}</text>
+      </Column>
       <br/>
       <Row>
         {appointment.status == AppointmentStatus.pendente &&

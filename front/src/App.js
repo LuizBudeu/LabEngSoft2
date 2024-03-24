@@ -13,15 +13,15 @@ import { PreparadorHome } from "./interface/preparador/preparadorHome";
 function App() {
   return (
     <BrowserRouter>
-    <NavBar />
-    <Routes>
-      <Route path="/" element={<Home/>}/>
-      <Route path="/login" element={<Login/>}/>
-      <Route path="/signin" element={<SignIn/>}/>
-      <Route path="/paciente" element={<PacienteHome/>}/>
-      <Route path="/preparador" element={<PreparadorHome />} />
-    </Routes>
-  </BrowserRouter>
+      <NavBar />
+      <Routes>
+        <Route path="/" element={<Home/>}/>
+        <Route path="/login" element={<Login/>}/>
+        <Route path="/signin" element={<SignIn/>}/>
+        <Route path="/paciente" element={<PacienteHome/>}/>
+        <Route path="/preparador" element={<PreparadorHome />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

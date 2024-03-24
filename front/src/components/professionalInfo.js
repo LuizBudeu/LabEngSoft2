@@ -4,14 +4,17 @@ import { AppointmentStatus } from "../utils/utils";
 import { Row } from "./row";
 import { CustomButton } from "./customButton";
 import { CenterContent } from "./centerContent";
+import { Column } from "./column";
 import { ScheduleGrid } from "../interface/paciente/scheduleGrid";
 
 export const ProfessionalInfo = ({professional, horarios, requestAppointment}) => {
   return (
     <div style={{padding: "16px"}}>
       <h3>Dados do profissional</h3>
-      <body>Nome: {professional.nome}</body>
-      <body>Endereço: {professional.logradouro}, {professional.numero} - {professional.complemento}</body>
+      <Column>
+        <text>Nome: {professional.nome}</text>
+        <text>Endereço: {professional.logradouro}, {professional.numero} - {professional.complemento}</text>
+      </Column>
       <br/>
       {horarios ? (
         <ScheduleGrid 
@@ -21,7 +24,7 @@ export const ProfessionalInfo = ({professional, horarios, requestAppointment}) =
         />
       ) : (
         <CenterContent>
-          <body>Não foi possível carregar os horários</body>
+          <text>Não foi possível carregar os horários</text>
         </CenterContent>
       )}
     </div>

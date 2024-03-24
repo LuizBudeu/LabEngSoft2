@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { Colors } from "../utils/colors";
 
-export const CustomButton = ({title, onClick, isSubmit, type}) => {
+export const CustomButton = ({title, onClick, isSubmit, type, disabled}) => {
   const ButtonStyle = styled.button`
     padding: 10px;
     border-radius: 10px;
@@ -12,7 +12,7 @@ export const CustomButton = ({title, onClick, isSubmit, type}) => {
   `
 
   return (
-    <ButtonStyle type={isSubmit ? "submit" : null} onClick={onClick}>
+    <ButtonStyle type={isSubmit ? "submit" : null} onClick={onClick} disabled={disabled}>
         {title}
     </ButtonStyle>
   );

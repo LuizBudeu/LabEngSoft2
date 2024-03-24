@@ -59,15 +59,15 @@ export const ScheduleGrid = ({horarios, professional, requestAppointment}) => {
         </Column>
       ) : (
         <CenterContent>
-          <body>Não foi possível carregar os horários</body>
+          <text>Não foi possível carregar os horários</text>
         </CenterContent>
       )}
       <Row>
         <RowItem grow flex={3}>
           {selectedSchedule ? (
-            <body>Selecionado dia {selectedSchedule.data} as {selectedSchedule.hora}h</body>
+            <text>Selecionado dia {selectedSchedule.data} as {selectedSchedule.hora}h</text>
           ) : (
-            <body>Selecione um horário</body>
+            <text>Selecione um horário</text>
           )}
           
         </RowItem>
@@ -76,7 +76,7 @@ export const ScheduleGrid = ({horarios, professional, requestAppointment}) => {
             type="primary" 
             onClick={() => requestAppointment(selectedSchedule, professional)} 
             title={"Reservar horário"} 
-            disabled={selectedSchedule != null}
+            disabled={selectedSchedule == null}
           />
         </RowItem>
       </Row>

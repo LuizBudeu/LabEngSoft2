@@ -16,6 +16,7 @@ import { CenterContent } from "../../components/centerContent";
 import { TipoProfissional } from "../../utils/options";
 import { useNavigate } from 'react-router-dom';
 import { GetHourMinute, FormatDate } from "../../utils/date";
+import { ScrollContainer } from "../../components/scrollContainer";
 
 export const NovaConsulta = ({onSuccess}) => {
   const [
@@ -64,16 +65,19 @@ export const NovaConsulta = ({onSuccess}) => {
               </RowItem>
             </Row>
           </form>
-          {professionals && <div>
-            {Object.entries(professionals).map(([key, professional]) => (
-              <AppointmentItem
-                type={professional.ocupacao}
-                text={professional.nome}
-                onClick={() => changeSelectedProfessional(professional)}
-                selected={professional.id == selectedProfessional?.id}
-              />
-            ))}
-          </div>}
+          <ScrollContainer>
+            {professionals && <div>
+              {Object.entries(professionals).map(([key, professional]) => (
+                <AppointmentItem
+                  type={professional.ocupacao}
+                  text={professional.nome}
+                  onClick={() => changeSelectedProfessional(professional)}
+                  selected={professional.id == selectedProfessional?.id}
+                />
+              ))}
+            </div>}
+          </ScrollContainer>
+          
         </div>
       </RowItem>
       <RowItem noPadding>
@@ -81,14 +85,17 @@ export const NovaConsulta = ({onSuccess}) => {
       </RowItem>
       <RowItem grow noPadding>
         {selectedProfessional ? (
-          <ProfessionalInfo 
-            professional={selectedProfessional}
-            horarios={horarios}
-            requestAppointment={requestAppointment}
-          />
+          <div style ={{width: "100%"}}>
+            <ProfessionalInfo 
+              professional={selectedProfessional}
+              horarios={horarios}
+              requestAppointment={requestAppointment}
+            />
+          </div>
+          
         ) : (
           <CenterContent>
-            <body>Selecione um profissional</body>
+            <text>Selecione um profissional</text>
           </CenterContent>
         )}
       </RowItem>
