@@ -22,7 +22,7 @@ jobs:
       working-directory: ./front
       run: |
         touch .env
-        echo REACT_APP_PROTOCOL_HOSTNAME_PORT=http://example:1234 >> .env
+        echo REACT_APP_PROTOCOL_HOSTNAME_PORT=${{ secrets.API_PROTOCOL_HOSTNAME_PORT }} >> .env
         npm install
         npm run build
       env:
