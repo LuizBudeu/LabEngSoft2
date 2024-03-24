@@ -45,7 +45,7 @@ def workouts(request: HttpRequest) -> Response:
         raise ParseError(f"Usuário com id={data.get('user_id')} não foi encontrado")
 
     treinos = TreinoFisico.objects.filter(
-        professional=usuario,
+        profissional=usuario,
     ).values(
         'id',
         'titulo',
