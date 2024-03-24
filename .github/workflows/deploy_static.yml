@@ -1,4 +1,4 @@
-name: Deploy website
+name: Deploy hosting portion of website
 
 on:
   workflow_dispatch:
