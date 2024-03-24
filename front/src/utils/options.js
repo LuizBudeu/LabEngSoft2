@@ -18,8 +18,21 @@ export const TipoProfissional = {
     3: "Preparador físico",
 };
 
+export const TipoProfissionalId = {
+    medico: 1,
+    nutricionista: 2,
+    preparadorFisico: 3,
+};
+
 export const TipoConsulta = {
     1: "Consulta médica",
     2: "Consulta ao nutricionista",
     3: "Consulta física",
+};
+
+export const TipoAcompanhamento = {
+    "exameMedico": "Exame solicitado",
+    "dieta": "Dieta passada",
+    "treino": "Treino passado",
+    "exameNutricionista": "Exame solicitado",
 };

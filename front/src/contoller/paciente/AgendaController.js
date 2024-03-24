@@ -115,7 +115,6 @@ export const GetProfessionals = (user_id, onSuccess) => {
                 professional_id: professional.id
             }
         }).then((response) => {
-            console.log(response.data);
             setHorarios(response.data);
         }).catch((e) => {
             console.log(e);
@@ -132,7 +131,6 @@ export const GetProfessionals = (user_id, onSuccess) => {
             horario: date,
             duracao: 60
         }).then((response) => {
-            console.log(response);
             if(response.status == 200){
                 onSuccess();
             }
@@ -173,9 +171,8 @@ export const GetSchedule = () => {
     var hours_array = Array(end_hour - start_hour + 1).fill().map((_, idx) => start_hour + idx)
   
     useEffect(()=>{
-      console.log("atualiza lista de semanas")
-      var days_array = Array(week_days + 1).fill().map((_, idx) => {
-        var custom_date = new Date();
+      var days_array = Array(week_days).fill().map((_, idx) => {
+        var custom_date = new Date(weekSunday);
         custom_date.setDate(weekSunday.getDate() + idx)
         return custom_date;
       });
@@ -183,10 +180,7 @@ export const GetSchedule = () => {
     }, [weekSunday])
   
     function next_week(){
-      console.log(weekSunday)
-      console.log(last_sunday)
       if(weekSunday < last_sunday){
-        console.log("passei 2");
         var customWeekSunday = new Date(weekSunday);
         customWeekSunday.setDate(customWeekSunday.getDate() + week_days);
         setWeekSunday(customWeekSunday);
@@ -194,10 +188,7 @@ export const GetSchedule = () => {
     }
   
     function last_week(){
-      console.log(weekSunday)
-      console.log(first_sunday)
       if(weekSunday > first_sunday){
-        console.log("passei 1");
         var customWeekSunday = new Date(weekSunday);
         customWeekSunday.setDate(customWeekSunday.getDate() - week_days);
         setWeekSunday(customWeekSunday);

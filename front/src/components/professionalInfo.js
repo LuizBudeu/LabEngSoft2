@@ -8,7 +8,7 @@ import { ScheduleGrid } from "../interface/paciente/scheduleGrid";
 
 export const ProfessionalInfo = ({professional, horarios, requestAppointment}) => {
   return (
-    <div style={{width: "100%", padding: "16px"}}>
+    <div style={{padding: "16px"}}>
       <h3>Dados do profissional</h3>
       <body>Nome: {professional.nome}</body>
       <body>Endereço: {professional.logradouro}, {professional.numero} - {professional.complemento}</body>

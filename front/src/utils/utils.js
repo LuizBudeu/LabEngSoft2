@@ -9,3 +9,9 @@ export const AppointmentStatus = {
 export const formatNumber = (n) =>{
     return n > 9 ? "" + n: "0" + n;
 }
+
+export const ProfissionalIcons = {
+    1: "img/MedicoIcon.png",
+    2: "img/DietaIcon.png",
+    3: "img/TreinoIcon.png",
+};

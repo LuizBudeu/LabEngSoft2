@@ -43,7 +43,8 @@ export const ScheduleGrid = ({horarios, professional, requestAppointment}) => {
             <Row>
               <RowItem noPadding>{formatNumber(hour)}h</RowItem>
               {daysArray.map((day) => {
-                var schedule = horarios.find((item) => item.data == (day.getFullYear()+"-"+formatNumber(day.getMonth()+1)+"-"+formatNumber(day.getDate())) && item.hora == hour);
+                let day_string = day.getFullYear()+"-"+formatNumber(day.getMonth()+1)+"-"+formatNumber(day.getDate());
+                var schedule = horarios.find((item) => item.data == day_string && item.hora == hour);
                 let status = (schedule == null? 1 : schedule.status)
                 return(<RowItem grow noPadding>
                   <ScheduleItem 
