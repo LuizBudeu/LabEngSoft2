@@ -36,6 +36,8 @@ jobs:
           push: true
           tags: rafnak1/labengsoft:api
           labels: ${{ steps.meta1.outputs.labels }}
+          secrets: |
+            "DB_PASSWORD=${{ secrets.SQL_PASSWORD }}"
 
       - name: Create TLS certificate and key
         working-directory: ./proxy
@@ -51,8 +53,6 @@ jobs:
           push: true
           tags: rafnak1/labengsoft:proxy
           labels: ${{ steps.meta2.outputs.labels }}
-          secrets: |
-            DB_PASSWORD=${{ secrets.SQL_PASSWORD }}
 
   deploy:
     runs-on: ubuntu-latest
