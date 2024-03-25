@@ -1,9 +1,10 @@
 services:
-  hosting:
-    image: rafnak1/labengsoft:hosting
-    ports: 
-      - '3000:3000'
   api:
     image: rafnak1/labengsoft:api
-    ports: 
-      - '8000:8000'
+    hostname: api
+  proxy:
+    image: rafnak1/labengsoft:proxy
+    ports:
+    - "443:443"
+    depends_on:
+    - api

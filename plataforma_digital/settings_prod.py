@@ -12,9 +12,11 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 from datetime import datetime, timedelta
+from dotenv import load_dotenv, find_dotenv
 import os
 
-DB_PASSWORD = os.environ["DB_PASSWORD"]
+load_dotenv(find_dotenv('api.env'))
+DB_PASSWORD = os.environ['DB_PASSWORD']
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -29,7 +31,7 @@ SECRET_KEY = 'django-insecure-0qnnm#eww2gal!ksqb(na+eand2v#2bvn*fq39ltwa59ub04h-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['api']
 
 
 # Application definition
@@ -44,7 +46,6 @@ INSTALLED_APPS = [
     'api',
     'corsheaders',
      'rest_framework',
-     'rest_framework_simplejwt.token_blacklist'
 ]
 
 MIDDLEWARE = [
@@ -58,19 +59,6 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware'
 ]
-
-REST_FRAMEWORK = {
-     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-      ],
-}
-
-SIMPLE_JWT = {
-     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=10),
-     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
-     'ROTATE_REFRESH_TOKENS': True,
-     'BLACKLIST_AFTER_ROTATION': True
-}
 
 CORS_ORIGIN_ALLOW_ALL = True
 
