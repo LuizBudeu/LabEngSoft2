@@ -6,4 +6,5 @@ export const MainContainer = styled.div`
     padding: 16px;
     border-radius: 10px;
     background-color: ${Colors.White};
+    height: 100%;
 `

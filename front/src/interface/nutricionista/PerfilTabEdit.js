@@ -1,24 +1,24 @@
 // Import the react JS packages
 import axios from "axios";
 import { useState, useHook } from "react"; // Define the Login function.
-import { GetProfile, UpdateProfile } from "../../contoller/paciente/PerfilController";
+import { GetProfile, UpdateProfile } from "../../contoller/nutricionista/PerfilController";
 import { CustomInput } from "../../components/customInput";
 import { CustomSelect } from "../../components/customSelect";
 import { CustomButton } from "../../components/customButton";
 import { Row } from "../../components/row";
 import { RowItem } from "../../components/rowItem";
 import { Column } from "../../components/column";
-import { GenderOptions, DiabetesOptions } from "../../utils/options";
+import { GenderOptions } from "../../utils/options";
 import { useNavigate } from 'react-router-dom';
 
-export const EditPerfil = ({closePopUp, setMainUserProfile}) => {
+export const EditPerfil = ({closePopUp, mainUserId, setMainUserProfile}) => {
   const navigate = useNavigate();
-  const [userProfile, setUserProfile] = GetProfile("1");
+  const [userProfile, setUserProfile] = GetProfile(mainUserId);
 
   const submit = async (e) => {
     e.preventDefault(); 
     console.log(e);
-    const resp = await UpdateProfile("1",userProfile); 
+    const resp = await UpdateProfile(mainUserId, userProfile); 
     if(resp){
       setMainUserProfile(userProfile);
       closePopUp()
@@ -36,7 +36,7 @@ export const EditPerfil = ({closePopUp, setMainUserProfile}) => {
             <Row>
               <RowItem grow>
                 <Column>
-                  <text>Nome</text>
+                  <body>Nome</body>
                   <CustomInput
                     name="nome"
                     onChange={(e) => setUserProfile({...userProfile, nome:e.target.value})}
@@ -47,7 +47,7 @@ export const EditPerfil = ({closePopUp, setMainUserProfile}) => {
               </RowItem>
               <RowItem grow>
                 <Column>
-                  <text>Email</text>
+                  <body>Email</body>
                   <CustomInput
                     name="email"
                     value={userProfile.email}
@@ -58,7 +58,7 @@ export const EditPerfil = ({closePopUp, setMainUserProfile}) => {
               </RowItem>
               <RowItem grow>
                 <Column>
-                  <text>CPF</text>
+                  <body>CPF</body>
                   <CustomInput
                     name="cpf"
                     value={userProfile.cpf}
@@ -71,7 +71,7 @@ export const EditPerfil = ({closePopUp, setMainUserProfile}) => {
             <Row>
               <RowItem grow>
                 <Column>
-                  <text>Data de nascimento</text>
+                  <body>Data de nascimento</body>
                   <CustomInput
                     name="data_de_nascimento"
                     onChange={(e) => setUserProfile({...userProfile, data_de_nascimento:e.target.value})}
@@ -82,7 +82,7 @@ export const EditPerfil = ({closePopUp, setMainUserProfile}) => {
               </RowItem>
               <RowItem grow>
                 <Column>
-                  <text>Gênero</text>
+                  <body>Gênero</body>
                   <CustomSelect 
                     list={GenderOptions}
                     value={userProfile.genero}
@@ -95,7 +95,7 @@ export const EditPerfil = ({closePopUp, setMainUserProfile}) => {
             <Row>
               <RowItem grow>
                 <Column>
-                  <text>CEP</text>
+                  <body>CEP</body>
                   <CustomInput
                     name="cep"
                     onChange={(e) => setUserProfile({...userProfile, cep:e.target.value})}
@@ -106,7 +106,7 @@ export const EditPerfil = ({closePopUp, setMainUserProfile}) => {
               </RowItem>
               <RowItem grow flex={3}>
                 <Column>
-                  <text>Logradouro</text>
+                  <body>Logradouro</body>
                   <CustomInput
                     name="logradouro"
                     onChange={(e) => setUserProfile({...userProfile, logradouro:e.target.value})}
@@ -117,7 +117,7 @@ export const EditPerfil = ({closePopUp, setMainUserProfile}) => {
               </RowItem>
               <RowItem grow>
                 <Column>
-                  <text>número</text>
+                  <body>Número</body>
                   <CustomInput
                     name="numero"
                     onChange={(e) => setUserProfile({...userProfile, numero:e.target.value})}
@@ -128,7 +128,7 @@ export const EditPerfil = ({closePopUp, setMainUserProfile}) => {
               </RowItem>
               <RowItem grow>
                 <Column>
-                  <text>Complemento</text>
+                  <body>Complemento</body>
                   <CustomInput
                     name="complemento"
                     onChange={(e) => setUserProfile({...userProfile, complemento:e.target.value})}
@@ -141,22 +141,12 @@ export const EditPerfil = ({closePopUp, setMainUserProfile}) => {
             <Row>
               <RowItem grow>
                 <Column>
-                  <text>Alergias</text>
+                  <body>CRN</body>
                   <CustomInput
-                    name="alergias"
-                    onChange={(e) => setUserProfile({...userProfile, alergias:e.target.value})}
-                    value={userProfile.alergias}
+                    name="crn"
+                    onChange={(e) => setUserProfile({...userProfile, crn:e.target.value})}
+                    value={userProfile.crn}
                     type="text"
-                  />
-                </Column>
-              </RowItem>
-              <RowItem grow>
-                <Column>
-                  <text>Tipo de diabetes</text>
-                  <CustomSelect 
-                    list={DiabetesOptions}
-                    value={userProfile.tipo_diabetes}
-                    onChange={(e) => setUserProfile({...userProfile, tipo_diabetes:e.target.value})}
                   />
                 </Column>
               </RowItem>
