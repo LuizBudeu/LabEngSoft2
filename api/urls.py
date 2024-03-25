@@ -1,6 +1,5 @@
 
 from django.urls import path, include
-from rest_framework_simplejwt import views as jwt_views
 
 from .views.hello_world import hello_world
 from .views.home import home
@@ -24,12 +23,6 @@ urlpatterns = [
     path('preparador/agenda/', preparador_agenda, name='preparador_agenda'),
     path('preparador/create_workout/', workout_create, name='workout_create'),
     path('preparador/workouts', workouts, name='workouts'),
-
-    path('token/',  
-        jwt_views.TokenObtainPairView.as_view(), 
-        name ='token_obtain_pair'), 
-    path('token/refresh/', 
-        jwt_views.TokenRefreshView.as_view(), 
-        name ='token_refresh'),
+    
     # path('logout/', views.LogoutView.as_view(), name ='logout')
 ]
