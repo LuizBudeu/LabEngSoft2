@@ -1,0 +1,79 @@
+name: My Deploy Action
+
+on: [push]
+
+jobs:
+  push_to_registry:
+    name: Push Docker image to Docker Hub
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
+        with:
+          username: rafnak1
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Extract metadata (tags, labels) for Docker (app1)
+        id: meta1
+        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+        with:
+          images: rafnak1/labengsoft:api
+
+      - name: Extract metadata (tags, labels) for Docker (app2)
+        id: meta2
+        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+        with:
+          images: rafnak1/labengsoft:proxy
+
+      - name: Build and push Docker image app1
+        uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: rafnak1/labengsoft:api
+          labels: ${{ steps.meta1.outputs.labels }}
+
+      - name: Build and push Docker image app2
+        uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
+        with:
+          context: .
+          file: ./proxy/Dockerfile
+          push: true
+          tags: rafnak1/labengsoft:proxy
+          labels: ${{ steps.meta2.outputs.labels }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: push_to_registry
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+    
+      - name: copy docker-compose.yml via ssh
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.VM_HOSTNAME }}
+          username: ${{ secrets.VM_USERNAME }}
+          password: ${{ secrets.VM_PASSWORD }}
+          port: 22
+          source: "docker-compose.yml"
+          target: $HOME/deploy
+          
+      - name: executing remote ssh commands
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VM_HOSTNAME }}
+          username: ${{ secrets.VM_USERNAME }}
+          password: ${{ secrets.VM_PASSWORD }}
+          port: 22
+          script: |
+            docker stop rafnak1_api_1 rafnak1_proxy_1
+            docker rm rafnak1_api_1 rafnak1_proxy_1
+            cd $HOME/deploy
+            docker login -u rafnak1 -p ${{ secrets.DOCKER_PASSWORD }}
+            docker-compose up -d
+            
