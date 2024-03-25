@@ -8,6 +8,10 @@ import { GetAgenda } from "../../contoller/preparador/AgendaController";
 import { GetHourMinute } from "../../utils/date";
 import { CustomButton } from "../../components/customButton";
 import { CenterContent } from "../../components/centerContent";
+import { GroupByDate } from "../../utils/group";
+import { FormContainer } from "../../components/formContainer";
+import { PopUpContainer } from "../../components/popUpContainer";
+import { AppointmentForm } from "./components/appointmentForm";
 
 const mockedAgenda = [
     {id: "001", paciente__nome: "Vinicius", horario: "2024-03-21 15:00:00", duracao: 60},
@@ -18,8 +22,8 @@ const mockedAgenda = [
 ];
 
 export const AgendaTab = () => {
-    const [agenda] = GetAgenda("3", "2024-03-20", "2024-04-24");
-    // const appts = groupByDate(mockedAgenda);
+    const [agenda] = GetAgenda("3", "2024-03-20", "2024-06-24");
+    const appts = GroupByDate(mockedAgenda);
 
     const [selectedAppointment, setSelectedAppointment] = useState("");
     
@@ -29,9 +33,9 @@ export const AgendaTab = () => {
                 <RowItem grow noPadding>
                     <div style={{width: "100%"}}>
                         <h2>Suas consultas</h2>
-                        {agenda &&
+                        {appts &&
                             <AgendaList
-                                appointments={agenda}
+                                appointments={appts}
                                 selectedAppointment={selectedAppointment}
                                 onItemClick={(itemId) => setSelectedAppointment(itemId)}
                             />
@@ -56,15 +60,24 @@ export const AgendaTab = () => {
     );
 };
 
-const AppointmentInfo = ({appointment}) => {
+const AppointmentInfo = ({appointment, onFormClick}) => {
+    const [showPopUp, setShowPopUp] = useState(false);
+
     return (
         <div>
+            <PopUpContainer showPopUp={showPopUp} closePopUp={() => setShowPopUp(false)}>
+                <CenterContent>
+                    <FormContainer>
+                        <AppointmentForm onSubmit={() => setShowPopUp(false)} onClose={() => setShowPopUp(false)}/>
+                    </FormContainer>
+                </CenterContent>
+            </PopUpContainer>
             <div style={{flexGrow: 1, width: "100%", padding: "16px"}}>
                 <body>Paciente: {appointment.paciente__nome}</body>
                 <body>Horário da consulta: {GetHourMinute(appointment.horario, appointment.duracao)}</body>
             </div>
             <Row>
-                <CustomButton title="Realizar consulta" onClick={() => console.log("Realizar consulta")} type="primary" />
+                <CustomButton title="Realizar consulta" onClick={() => setShowPopUp(true)} type="primary" />
             </Row>
         </div>
     );
