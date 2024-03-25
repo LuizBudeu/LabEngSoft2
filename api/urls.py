@@ -34,6 +34,7 @@ from .views.nutricionista.dieta import dieta
 from .views.nutricionista.exame import pedirExame as nutricionista_exame
 from .views.nutricionista.perfil import perfil as nutricionista_perfil
 from .views.nutricionista.perfil import update_perfil as nutricionista_update_perfil
+from .views.preparador.consulta import finalizar_consulta
 
 urlpatterns = [
     path('hello-world/', hello_world, name='hello_world'),
@@ -69,6 +70,7 @@ urlpatterns = [
     path('nutricionista/exame', nutricionista_exame, name='nutricionista_exame'),
     path('nutricionista/perfil', nutricionista_perfil, name='nutricionista_perfil'),
     path('nutricionista/update_perfil', nutricionista_update_perfil, name='nutricionista_update_perfil'),
+    path('preparador/consultas/<int:consulta_id>', finalizar_consulta, name='finalizar_consulta'),
 
     # path('logout/', views.LogoutView.as_view(), name ='logout')
 ]
