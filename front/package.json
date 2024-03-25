@@ -18,6 +18,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "start-docker": "REACT_APP_PROTOCOL_HOSTNAME_PORT=https://localhost react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
