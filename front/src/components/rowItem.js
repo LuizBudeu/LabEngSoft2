@@ -1,11 +1,12 @@
 import styled from 'styled-components'
 
-export const RowItem = ({grow, center, flex, noPadding, children}) => {
+export const RowItem = ({grow, center, flex, noPadding, children, customPadding}) => {
     const RowItemStyle = styled.div`
         flex: ${flex != null ? flex : (grow ? "1" : "0")};
         display: flex;
-        padding: ${noPadding ? "0px" : "16px"};
+        padding: ${noPadding ? "0px" : customPadding ? customPadding+"px" : "16px"};
         justify-content: ${center ? "center" : "null"};
+        align-items: ${center ? "center" : "null"};
     `
 
     return(

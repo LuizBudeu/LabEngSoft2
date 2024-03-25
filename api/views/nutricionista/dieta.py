@@ -5,6 +5,15 @@ from api.models import Consulta
 
 
 @api_view(['GET'])
-def consulta(request):
+def dieta(request):
+    
+    return Response({'message': 'Connected.'})
+
+
+@api_view(['POST'])
+def salvaDieta(request):
+    """
+    Salva uma dieta receitada pelo nutricionista.
+    """
     
     return Response({'message': 'Connected.'})

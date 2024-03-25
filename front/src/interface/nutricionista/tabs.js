@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import Agenda from "./agenda";
-import Perfil from "./perfil";
-import Acompanhamento from "./acompanhamento";
+import { AgendaTab } from "./AgendaTab";
+import PerfilTab from "./PerfilTab";
 import { MainContainer } from "../../components/mainContainer";
 import { BackgroundContainer } from "../../components/backgroundContainer";
 import { SecondaryNavBar } from "../../components/secondaryNavBar";
 
-export const PacienteHome = () => {
+const Tabs = () => {
     const [activeTab, setActiveTab] = useState("tab1");
 
     const tabs = [{
@@ -15,24 +14,8 @@ export const PacienteHome = () => {
      },
      {
         id: "tab2",
-        displayName: "Acompanhamento"
-     },
-     {
-        id: "tab3",
         displayName: "Perfil"
      }];
-
-    const handleTab1 = () => {
-        setActiveTab("tab1");
-    };
-
-    const handleTab2 = () => {
-        setActiveTab("tab2");
-    };
-
-    const handleTab3 = () => {
-        setActiveTab("tab3");
-    };
 
     return (
         <BackgroundContainer>
@@ -43,11 +26,11 @@ export const PacienteHome = () => {
             />
             <div>
                 <MainContainer>
-                    {activeTab === "tab1" && <Agenda />}
-                    {activeTab === "tab2" && <Acompanhamento />}
-                    {activeTab === "tab3" && <Perfil />}
+                    {activeTab === "tab1" && <AgendaTab />}
+                    {activeTab === "tab2" && <PerfilTab />}
                 </MainContainer>
             </div>
         </BackgroundContainer>
     );
 };
+export default Tabs;

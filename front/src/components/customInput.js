@@ -1,10 +1,9 @@
 import styled from 'styled-components'
 
-const InputStyle = styled.input`
-  width: 100%
-`;
-
-export const CustomInput = ({name, onChange, value, placeholder, type, disabled}) => {
+export const CustomInput = ({name, onChange, value, placeholder, type, disabled, notRequired}) => {
+  const InputStyle = styled.input`
+    width: 100%
+  `;
 
   return (
     <InputStyle
@@ -13,7 +12,7 @@ export const CustomInput = ({name, onChange, value, placeholder, type, disabled}
       className="form-control mt-1"
       placeholder={placeholder}
       value={value}
-      required
+      required={!notRequired}
       onChange={onChange}
       disabled={disabled}
     />

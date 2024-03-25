@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 export const CreateWorkOut = async (user_id, workOut) => {
     try{
-        const response = await axios.post("http://localhost:8000/api/preparador/create_workout/", 
+        const response = await axios.post(process.env.REACT_APP_PROTOCOL_HOSTNAME_PORT + "/api/preparador/create_workout/", 
             {...workOut, user_id}
         );
 
@@ -24,7 +24,7 @@ export const GetWorkOuts = (user_id) => {
     const [workOuts, setWorkOuts] = useState([]);
 
     useEffect(() => {
-        axios.get("http://localhost:8000/api/preparador/workouts", {
+        axios.get(process.env.REACT_APP_PROTOCOL_HOSTNAME_PORT + "/api/preparador/workouts", {
             params: {
                 user_id: user_id,
             }
