@@ -5,6 +5,7 @@ import { CustomInput } from "../../../components/customInput";
 import { CustomSelect } from "../../../components/customSelect";
 import { NivelAtividade } from "../../../utils/options";
 import { GetWorkOuts } from "../../../contoller/preparador/WorkOutController";
+import { RealizarConsulta } from "../../../contoller/preparador/ConsultaController";
 
 // consulta = models.ForeignKey(Consulta, on_delete=models.CASCADE)
 
@@ -14,6 +15,7 @@ export const AppointmentForm = ({consulta_id, onSubmit, onClose}) => {
 
     const submit = (e) => {
         e.preventDefault();
+        RealizarConsulta(consulta_id, pacienteInfo);
         onSubmit();
     }
     
