@@ -23,7 +23,7 @@ const mockedAgenda = [
 
 export const AgendaTab = () => {
     const [agenda] = GetAgenda("3", "2024-03-20", "2024-06-24");
-    const appts = GroupByDate(mockedAgenda);
+    // const appts = GroupByDate(mockedAgenda);
 
     const [selectedAppointment, setSelectedAppointment] = useState("");
     
@@ -33,9 +33,9 @@ export const AgendaTab = () => {
                 <RowItem grow noPadding>
                     <div style={{width: "100%"}}>
                         <h2>Suas consultas</h2>
-                        {appts &&
+                        {agenda &&
                             <AgendaList
-                                appointments={appts}
+                                appointments={agenda}
                                 selectedAppointment={selectedAppointment}
                                 onItemClick={(itemId) => setSelectedAppointment(itemId)}
                             />
@@ -68,7 +68,7 @@ const AppointmentInfo = ({appointment, onFormClick}) => {
             <PopUpContainer showPopUp={showPopUp} closePopUp={() => setShowPopUp(false)}>
                 <CenterContent>
                     <FormContainer>
-                        <AppointmentForm onSubmit={() => setShowPopUp(false)} onClose={() => setShowPopUp(false)}/>
+                        <AppointmentForm consulta_id={appointment.id} onSubmit={() => setShowPopUp(false)} onClose={() => setShowPopUp(false)}/>
                     </FormContainer>
                 </CenterContent>
             </PopUpContainer>

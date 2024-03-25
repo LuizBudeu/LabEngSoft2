@@ -62,6 +62,7 @@ urlpatterns = [
     path('preparador/agenda/', preparador_agenda, name='preparador_agenda'),
     path('preparador/create_workout/', workout_create, name='workout_create'),
     path('preparador/workouts', workouts, name='workouts'),
+    path('preparador/consultas/<int:consulta_id>', finalizar_consulta, name='finalizar_consulta'),
 
     path('nutricionista/agenda', nutricionista_agenda, name='nutricionista_agenda'),
     path('nutricionista/avaliacao', avaliacao_nutricional, name='avaliacao_nutricional'),
@@ -70,7 +71,6 @@ urlpatterns = [
     path('nutricionista/exame', nutricionista_exame, name='nutricionista_exame'),
     path('nutricionista/perfil', nutricionista_perfil, name='nutricionista_perfil'),
     path('nutricionista/update_perfil', nutricionista_update_perfil, name='nutricionista_update_perfil'),
-    path('preparador/consultas/<int:consulta_id>', finalizar_consulta, name='finalizar_consulta'),
 
     # path('logout/', views.LogoutView.as_view(), name ='logout')
 ]
