@@ -12,9 +12,11 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 from datetime import datetime, timedelta
+from dotenv import load_dotenv, find_dotenv
 import os
 
-DB_PASSWORD = os.environ["DB_PASSWORD"]
+load_dotenv(find_dotenv('api.env'))
+DB_PASSWORD = os.environ['DB_PASSWORD']
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent

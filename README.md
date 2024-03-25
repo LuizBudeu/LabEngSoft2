@@ -34,7 +34,7 @@ Frontend em `http://localhost:3000/`
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout tls.key -out tls.crt
 ```
 - Buildar a imagem do proxy com `docker build -t rafnak1/labengsoft:proxy ./proxy`
-- Atribuir a senha do banco de dados a uma variável de ambiente: `export DB_PASSWORD=<senha do banco>`
+- Criar um `api.env` com a senha do banco de dados: `DB_PASSWORD`
 - Buildar a imagem da API com `docker build -t rafnak1/labengsoft:api --build-arg DB_PASSWORD=$DB_PASSWORD .`
 - Rodar o front sem docker, de acordo com a seção "Developer setup"
 - Rodar com orquestração: `docker compose up`

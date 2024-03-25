@@ -1,6 +1,6 @@
 __pycache__
 debug.log
 /env
-.env
+*.env
 tls.crt
 tls.key
