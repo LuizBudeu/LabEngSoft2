@@ -17,6 +17,13 @@ from .views.paciente.acompanhamento import acompanhamento as paciente_acompanham
 from .views.preparador.agenda import agenda as preparador_agenda
 from .views.preparador.workout import workouts
 from .views.preparador.workout import create as workout_create
+from .views.nutricionista.agenda import agenda as nutricionista_agenda
+from .views.nutricionista.avaliacao import avaliacao as avaliacao_nutricional
+from .views.nutricionista.consulta import consulta as nutricionista_consulta
+from .views.nutricionista.dieta import dieta
+from .views.nutricionista.exame import pedirExame as nutricionista_exame
+from .views.nutricionista.perfil import perfil as nutricionista_perfil
+from .views.nutricionista.perfil import update_perfil as nutricionista_update_perfil
 
 urlpatterns = [
     path('hello-world/', hello_world, name='hello_world'),
@@ -32,9 +39,24 @@ urlpatterns = [
     path('paciente/cancel_consulta', paciente_cancel_appointment, name='paciente_cancel_appointment'),
     path('paciente/pay_consulta', paciente_pay_appointment, name='paciente_pay_appointment'),
     path('paciente/acompanhamento', paciente_acompanhamento, name='paciente_acompanhamento'),
+    
     path('preparador/agenda/', preparador_agenda, name='preparador_agenda'),
     path('preparador/create_workout/', workout_create, name='workout_create'),
     path('preparador/workouts', workouts, name='workouts'),
-    
+
+    path('nutricionista/agenda', nutricionista_agenda, name='nutricionista_agenda'),
+    path('nutricionista/avaliacao', avaliacao_nutricional, name='avaliacao_nutricional'),
+    path('nutricionista/consulta', nutricionista_consulta, name='nutricionista_consulta'),
+    path('nutricionista/dieta', dieta, name='dieta'),
+    path('nutricionista/exame', nutricionista_exame, name='nutricionista_exame'),
+    path('nutricionista/perfil', nutricionista_perfil, name='nutricionista_perfil'),
+    path('nutricionista/update_perfil', nutricionista_update_perfil, name='nutricionista_update_perfil'),
+
+    path('token/',  
+        jwt_views.TokenObtainPairView.as_view(), 
+        name ='token_obtain_pair'), 
+    path('token/refresh/', 
+        jwt_views.TokenRefreshView.as_view(), 
+        name ='token_refresh'),
     # path('logout/', views.LogoutView.as_view(), name ='logout')
 ]

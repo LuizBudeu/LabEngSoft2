@@ -95,7 +95,7 @@ class PedidoExameMedico(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     
 class Nutricionista(models.Model):
-    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='user_nutricionista')
     crn = models.CharField(max_length=13)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -123,6 +123,18 @@ class AvaliacaoNutricional(models.Model):
     alergias = models.CharField(max_length=300, blank=True, null=True)
     doencas = models.CharField(max_length=300, blank=True, null=True)
     objetivo = models.CharField(max_length=100, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)    
+
+class PedidoExameNutricionista(models.Model):
+    EXAME_CHOICES = [
+        (0, 'Pendente'),
+        (1, 'Finalizada')
+    ]
+    nutricionista = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='nutricionista_exame')
+    paciente = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='paciente_exame_nutricionista')
+    tipo_exame = models.CharField(max_length=100)
+    status = models.IntegerField(choices=EXAME_CHOICES, default=1)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
