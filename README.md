@@ -36,5 +36,5 @@ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout tls.key -out tls.crt
 - Buildar a imagem do proxy com `docker build -t rafnak1/labengsoft:proxy ./proxy`
 - Buildar a imagem da API com `docker build -t rafnak1/labengsoft:api --build-arg DB_PASSWORD=<SENHA DO BD NA NUVEM> .`
 - Criar no `./front` um `.env` com `REACT_APP_PROTOCOL_HOSTNAME_PORT=https://localhost`
-- Rodar o front sem docker, de acordo com a seção "Developer setup"
+- Rodar o front sem docker, mas dessa vez com `npm install` e `npm run start-docker`
 - Rodar com orquestração: `docker compose up`
