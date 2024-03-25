@@ -2,3 +2,5 @@ __pycache__
 debug.log
 /env
 .env
+tls.crt
+tls.key
