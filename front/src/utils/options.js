@@ -36,3 +36,11 @@ export const TipoAcompanhamento = {
     "treino": "Treino passado",
     "exameNutricionista": "Exame solicitado",
 };
+
+export const NivelAtividade = {
+    0: "Muito Ativo",
+    1: "Ativo",
+    2: "Insuficientemente Ativo A",
+    3: "Insuficientemente Ativo B",
+    4: "Sedentário",
+}
