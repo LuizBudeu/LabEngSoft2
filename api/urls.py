@@ -1,5 +1,6 @@
 
 from django.urls import path, include
+from rest_framework_simplejwt import views as jwt_views
 
 from .views.hello_world import hello_world
 from .views.home import home
@@ -39,7 +40,7 @@ urlpatterns = [
     path('paciente/cancel_consulta', paciente_cancel_appointment, name='paciente_cancel_appointment'),
     path('paciente/pay_consulta', paciente_pay_appointment, name='paciente_pay_appointment'),
     path('paciente/acompanhamento', paciente_acompanhamento, name='paciente_acompanhamento'),
-    
+
     path('preparador/agenda/', preparador_agenda, name='preparador_agenda'),
     path('preparador/create_workout/', workout_create, name='workout_create'),
     path('preparador/workouts', workouts, name='workouts'),

@@ -1,7 +1,7 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from api.models import Usuario, RelatorioNutricionista, RelatorioPreparadorFisico, PedidoExameMedico
+from api.models import Usuario, RelatorioNutricionista, RelatorioPreparadorFisico, PedidoExameMedico, PedidoExameNutricionista
 
 
 @api_view(['GET'])
@@ -36,8 +36,8 @@ def acompanhamento(request):
     ).values(
         'consulta__profissional__nome',
         'treino_fisico__treino',
+        'treino_fisico__titulo',
     ).order_by('-created_at').first()
-    treino['treino_fisico__title'] = "teste title"
 
     examesMedicos = PedidoExameMedico.objects.filter(
         paciente=usuario,
@@ -52,34 +52,17 @@ def acompanhamento(request):
     ).order_by('-created_at')
 
     # TODO: Add Exame nutricionista
-    # examesNutricionista = PedidoExameNutricionista.objects.filter(
-    #     paciente=usuario,
-    #     status=0
-    # ).values(
-        # 'Nutricionista_id',
-        # 'Nutricionista__nome',
-        # 'Nutricionista__logradouro',
-        # 'Nutricionista__numero',
-        # 'Nutricionista__complemento',
-    #     'tipo_exame',
-    # ).order_by('-created_at')
-
-    examesNutricionista = [{
-        'Nutricionista_id': 3,
-        "Nutricionista__nome": "Adevaldo Rodrigues",
-        'Nutricionista__logradouro': "Rua do Anjos",
-        'Nutricionista__numero': "203",
-        'Nutricionista__complemento': "Apt 44",
-        "tipo_exame": "Exame de sangue"
-    },
-    {
-        'Nutricionista_id': 3,
-        "Nutricionista__nome": "Sara Penha",
-        'Nutricionista__logradouro': "Rua do Amores",
-        'Nutricionista__numero': "12022",
-        'Nutricionista__complemento': "Bloco 6",
-        "tipo_exame": "Hemograma"
-    }]
+    examesNutricionista = PedidoExameNutricionista.objects.filter(
+        paciente=usuario,
+        status=0
+    ).values(
+        'nutricionista_id',
+        'nutricionista__nome',
+        'nutricionista__logradouro',
+        'nutricionista__numero',
+        'nutricionista__complemento',
+        'tipo_exame',
+    ).order_by('-created_at')
 
 
     return Response({
