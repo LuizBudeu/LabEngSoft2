@@ -81,6 +81,8 @@ jobs:
           script: |
             cd $HOME/deploy
             docker login -u rafnak1 -p ${{ secrets.DOCKER_PASSWORD }}
+            docker pull rafnak1/labengsoft:api
+            docker pull rafnak1/labengsoft:proxy
             docker compose down
             docker compose up -d
             
