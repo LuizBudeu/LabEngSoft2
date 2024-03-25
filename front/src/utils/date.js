@@ -24,9 +24,9 @@ const DiaDaSemana = {
     6: "Sábado"
 };
 
-export const getBaseDate = (dateString) => dateString.split(' ')[0];
+export const getBaseDate = (dateString) => dateString.split('T')[0];
 
-export const getHourFromDate = (dateString) => dateString.split(' ')[1];
+export const getHourFromDate = (dateString) => dateString.split('T')[1];
 
 export const getLabelDay = (dateString) => (new Date(dateString)).toDateString();
 
