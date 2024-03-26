@@ -66,7 +66,8 @@ export const NovaConsulta = ({onSuccess}) => {
             </Row>
           </form>
           <ScrollContainer>
-            {professionals && <div>
+            {professionals && professionals.length != 0 ? (
+            <div>
               {Object.entries(professionals).map(([key, professional]) => (
                 <AppointmentItem
                   type={professional.ocupacao}
@@ -75,7 +76,12 @@ export const NovaConsulta = ({onSuccess}) => {
                   selected={professional.id == selectedProfessional?.id}
                 />
               ))}
-            </div>}
+            </div>
+            ) : (
+              <CenterContent>
+                <text>Nenhum profissional encontrado</text>
+              </CenterContent>
+            )}
           </ScrollContainer>
           
         </div>

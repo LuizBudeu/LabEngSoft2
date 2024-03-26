@@ -1,20 +1,23 @@
 import styled from 'styled-components'
 
-export const CustomInput = ({name, onChange, value, placeholder, type, disabled, notRequired}) => {
-  const InputStyle = styled.input`
-    width: 100%
-  `;
+const InputStyle = styled.input`
+  width: 100%
+`;
 
+export const CustomInput = ({name, onChange, value, placeholder, type, disabled, notRequired}) => {
   return (
-    <InputStyle
-      name={name}
-      type={type}
-      className="form-control mt-1"
-      placeholder={placeholder}
-      value={value}
-      required={!notRequired}
-      onChange={onChange}
-      disabled={disabled}
-    />
+    <div>
+      <InputStyle
+        id={name}
+        name={name}
+        type={type}
+        placeholder={placeholder}
+        defaultValue={value}
+        required={!notRequired}
+        onChange={onChange}
+        disabled={disabled}
+      />
+    </div>
+    
   );
 };

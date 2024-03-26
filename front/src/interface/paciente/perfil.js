@@ -1,71 +1,118 @@
-// Import the react JS packages
-import axios from "axios";
-import { useState } from "react"; // Define the Login function.
 import { GetProfile } from "../../contoller/paciente/PerfilController"; 
-import { useNavigate } from 'react-router-dom';
 import { CustomButton } from "../../components/customButton";
 import { GenderOptions, DiabetesOptions } from "../../utils/options";
 import { CenterContent } from "../../components/centerContent";
 import { PopUpContainer } from "../../components/popUpContainer";
 import { MainContainer } from "../../components/mainContainer";
+import { Row } from "../../components/row";
+import { RowItem } from "../../components/rowItem";
+import { Column } from "../../components/column";
 import { EditPerfil } from "./perfilEdit";
 
 const Perfil = () => {
-  const navigate = useNavigate();
-  const [userProfile, setUserProfile] = GetProfile("1");
-  const [showPopUp, setShowPopUp] = useState(false);
+  const [
+    userProfile, 
+    setUserProfile,
+    refreshUserInfo,
+    submitProfile,
+    showPopUp,
+    setShowPopUp    
+  ] = GetProfile("1");
 
   return (
     <div>
       <PopUpContainer showPopUp={showPopUp} closePopUp={() => setShowPopUp(false)}>
         <MainContainer>
-          <EditPerfil closePopUp={() => setShowPopUp(false)} setMainUserProfile={setUserProfile}/>
+          <EditPerfil
+            closePopUp={() => setShowPopUp(false)} 
+            defaultProfile={userProfile}
+            userProfile={userProfile}
+            setUserProfile={setUserProfile}
+            refreshUserInfo={refreshUserInfo}
+            submitProfile={submitProfile}
+          />
         </MainContainer>
       </PopUpContainer>
       
       <h3 className="Auth-form-title">Perfil</h3>
-      {userProfile && <div>
-        <table style={{width:"100%"}}>
-          <tr>
-            <th colspan="2">Nome</th>
-            <th colspan="2">Email</th>
-            <th colspan="2">Cpf</th>
-          </tr>
-          <tr>
-            <td colspan="2">{userProfile.nome}</td>
-            <td colspan="2">{userProfile.email}</td>
-            <td colspan="2">{userProfile.cpf}</td>
-          </tr>
-          <tr>
-            <th colspan="2">Data de nascimento</th>
-            <th colspan="2">Gênero</th>
-          </tr>
-          <tr>
-            <td colspan="2">{userProfile.data_de_nascimento}</td>
-            <td colspan="2">{GenderOptions[userProfile.genero]}</td>
-          </tr>
-          <tr>
-            <th colspan="1">CEP</th>
-            <th colspan="3">Logradouro</th>
-            <th colspan="1">Número</th>
-            <th colspan="1">Complemento</th>
-          </tr>
-          <tr>
-            <td colspan="1">{userProfile.cep}</td>
-            <td colspan="3">{userProfile.logradouro}</td>
-            <td colspan="1">{userProfile.numenro}</td>
-            <td colspan="1">{userProfile.complemento}</td>
-          </tr>
-          <tr>
-            <th colspan="3">Alergias</th>
-            <th colspan="3">Tipo de diabetes</th>
-          </tr>
-          <tr>
-            <td colspan="3">{userProfile.alergias}</td>
-            <td colspan="3">{DiabetesOptions[userProfile.tipo_diabetes]}</td>
-          </tr>
-        </table>
-      </div>}
+      {userProfile &&
+      <Column>
+        <Row>
+          <RowItem grow>
+            <Column>
+              <text style={{fontWeight: "bold"}}>Nome</text>
+              <text>{userProfile.nome}</text>
+            </Column>
+          </RowItem>
+          <RowItem grow>
+            <Column>
+              <text style={{fontWeight: "bold"}}>Email</text>
+              <text>{userProfile.email}</text>
+            </Column>
+          </RowItem>
+          <RowItem grow>
+            <Column>
+              <text style={{fontWeight: "bold"}}>CPF</text>
+              <text>{userProfile.cpf}</text>
+            </Column>
+          </RowItem>
+        </Row>
+        <Row>
+          <RowItem grow>
+            <Column>
+              <text style={{fontWeight: "bold"}}>Data de nascimento</text>
+              <text>{userProfile.data_de_nascimento}</text>
+            </Column>
+          </RowItem>
+          <RowItem grow>
+            <Column>
+              <text style={{fontWeight: "bold"}}>Gênero</text>
+              <text>{GenderOptions[userProfile.genero]}</text>
+            </Column>
+          </RowItem>
+          <RowItem grow/>
+        </Row>
+        <Row>
+          <RowItem grow>
+            <Column>
+              <text style={{fontWeight: "bold"}}>CEP</text>
+              <text>{userProfile.cep}</text>
+            </Column>
+          </RowItem>
+          <RowItem grow flex={3}>
+            <Column>
+              <text style={{fontWeight: "bold"}}>Logradouro</text>
+              <text>{userProfile.logradouro}</text>
+            </Column>
+          </RowItem>
+          <RowItem grow>
+            <Column>
+              <text style={{fontWeight: "bold"}}>número</text>
+              <text>{userProfile.numero}</text>
+            </Column>
+          </RowItem>
+          <RowItem grow>
+            <Column>
+              <text style={{fontWeight: "bold"}}>Complemento</text>
+              <text>{userProfile.complemento}</text>
+            </Column>
+          </RowItem>
+        </Row>
+        <Row>
+          <RowItem grow>
+            <Column>
+              <text style={{fontWeight: "bold"}}>Alergias</text>
+              <text>{userProfile.alergias}</text>
+            </Column>
+          </RowItem>
+          <RowItem grow>
+            <Column>
+              <text style={{fontWeight: "bold"}}>Tipo de diabetes</text>
+              <text>{DiabetesOptions[userProfile.tipo_diabetes]}</text>
+            </Column>
+          </RowItem>
+        </Row>
+      </Column>}
       <br/>
       <CenterContent>
         <CustomButton

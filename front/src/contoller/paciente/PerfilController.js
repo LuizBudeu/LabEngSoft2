@@ -4,8 +4,9 @@ import { useState, useEffect } from "react";
 export const GetProfile = (user_id) => {
 
     const [userProfile, setUserProfile] = useState();
+    const [showPopUp, setShowPopUp] = useState(false);
 
-    useEffect(() => {
+    const refreshUserInfo = () => {
         axios.get(process.env.REACT_APP_PROTOCOL_HOSTNAME_PORT + "/api/paciente/perfil", {
             params: {
                 user_id: user_id
@@ -16,25 +17,36 @@ export const GetProfile = (user_id) => {
         }).catch((e) => {
             console.log(e);
         });
-    }, [])
+    }
 
-    return [userProfile, setUserProfile];
-    
-};
+    useEffect(() => {
+        refreshUserInfo();
+    }, []);
 
-export const UpdateProfile = async (user_id, userProfile) => {
-    try{
+    const submitProfile = async (e) => {
+        e.preventDefault(); 
+
+        console.log("called submitProfile");
+        console.log(userProfile);
         const response = await axios.post(process.env.REACT_APP_PROTOCOL_HOSTNAME_PORT + "/api/paciente/update_perfil", 
             {...userProfile, user_id: user_id}
         ); 
         if(response.status != 200){
             console.log(response.data);
-            return false;
+            alert("Erro ao salvar os dados")
+        }else{
+            refreshUserInfo();
+            setShowPopUp(false);
         }
-        return true;
-    }catch(e) {
-        console.log(e);
-        return false;
-    }
+    };
+
+    return [
+        userProfile, 
+        setUserProfile,
+        refreshUserInfo,
+        submitProfile,
+        showPopUp,
+        setShowPopUp
+    ];
     
 };

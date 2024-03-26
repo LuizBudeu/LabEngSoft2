@@ -89,6 +89,7 @@ export const GetProfessionals = (user_id, onSuccess) => {
         e.preventDefault();
         
         setProfessionals([]);
+        setSelectedProfessional(null);
 
         axios.get(process.env.REACT_APP_PROTOCOL_HOSTNAME_PORT + "/api/paciente/busca_profissionais", {
             params: {
