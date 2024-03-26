@@ -1,6 +1,7 @@
 // Import the react JS packages
 import axios from "axios";
 import { useState } from "react"; // Define the Login function.
+import { API_PROTOCOL_HOSTNAME_PORT } from "../utils/utils";
 
 export const Login = () => {
   const [username, setUsername] = useState("");
@@ -13,7 +14,7 @@ export const Login = () => {
       password: password,
     }; // Create the POST request
 
-    const response = await axios.post(process.env.REACT_APP_PROTOCOL_HOSTNAME_PORT + "/api/token/", {
+    const response = await axios.post(API_PROTOCOL_HOSTNAME_PORT + "/api/token/", {
         username: 'admin',
         password: 'admin123'  
       },
@@ -26,7 +27,7 @@ export const Login = () => {
 
 
     // axios.post(
-    //   process.env.REACT_APP_PROTOCOL_HOSTNAME_PORT + "/api/token/",
+    //   API_PROTOCOL_HOSTNAME_PORT + "/api/token/",
     //   user,
     //   { headers: { "Content-Type": "application/json" }, withCredentials: true }
     // ).then((data) => {

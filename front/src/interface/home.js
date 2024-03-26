@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { API_PROTOCOL_HOSTNAME_PORT } from "../utils/utils";
 
 export const Home = () => {
 
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    axios.get(process.env.REACT_APP_PROTOCOL_HOSTNAME_PORT + "/api/home/")
+    axios.get(API_PROTOCOL_HOSTNAME_PORT + "/api/home/")
       .then(response => {
         setMessage(response.data.message);
       })

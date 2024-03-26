@@ -23,3 +23,5 @@ export const ProfissionalIcons = {
     2: "img/DietaIcon.png",
     3: "img/TreinoIcon.png",
 };
+
+export const API_PROTOCOL_HOSTNAME_PORT = process.env.REACT_APP_PROTOCOL_HOSTNAME_PORT ?? "http://localhost:8000";

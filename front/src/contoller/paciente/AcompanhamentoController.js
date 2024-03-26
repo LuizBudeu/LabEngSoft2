@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { formatNumber } from "../../utils/utils";
+import { API_PROTOCOL_HOSTNAME_PORT } from "../../utils/utils";
 
 export const GetAcompanhemntos = (user_id) => {
 
@@ -40,7 +40,7 @@ export const GetAcompanhemntos = (user_id) => {
     }
 
     const refreshAcompanhamentos = () => {
-        axios.get(process.env.REACT_APP_PROTOCOL_HOSTNAME_PORT + "/api/paciente/acompanhamento", {
+        axios.get(API_PROTOCOL_HOSTNAME_PORT + "/api/paciente/acompanhamento", {
             params: {
                 user_id: user_id
             }

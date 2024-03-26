@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { formatNumber } from "../../utils/utils";
+import { formatNumber, API_PROTOCOL_HOSTNAME_PORT } from "../../utils/utils";
 
 export const GetAppointments = (user_id) => {
 
@@ -9,7 +9,7 @@ export const GetAppointments = (user_id) => {
     const [showPopUp, setShowPopUp] = useState(false);
 
     const refreshAppointments = () => {
-        axios.get(process.env.REACT_APP_PROTOCOL_HOSTNAME_PORT + "/api/paciente/agenda", {
+        axios.get(API_PROTOCOL_HOSTNAME_PORT + "/api/paciente/agenda", {
             params: {
                 user_id: user_id
             }
@@ -33,7 +33,7 @@ export const GetAppointments = (user_id) => {
     const cancelAppointment = async (appointment_id) => {
         console.log("cancelAppointment");
         console.log(appointment_id);
-        const response = await axios.post(process.env.REACT_APP_PROTOCOL_HOSTNAME_PORT + "/api/paciente/cancel_consulta", {
+        const response = await axios.post(API_PROTOCOL_HOSTNAME_PORT + "/api/paciente/cancel_consulta", {
             user_id: user_id,
             appointment_id: appointment_id
         });
@@ -47,7 +47,7 @@ export const GetAppointments = (user_id) => {
     }
 
     const payAppointment = async (appointment_id) => {
-        const response = await axios.post(process.env.REACT_APP_PROTOCOL_HOSTNAME_PORT + "/api/paciente/pay_consulta", {
+        const response = await axios.post(API_PROTOCOL_HOSTNAME_PORT + "/api/paciente/pay_consulta", {
             user_id: user_id,
             appointment_id: appointment_id
         });
@@ -90,7 +90,7 @@ export const GetProfessionals = (user_id, onSuccess) => {
         
         setProfessionals([]);
 
-        axios.get(process.env.REACT_APP_PROTOCOL_HOSTNAME_PORT + "/api/paciente/busca_profissionais", {
+        axios.get(API_PROTOCOL_HOSTNAME_PORT + "/api/paciente/busca_profissionais", {
             params: {
                 user_id: user_id,
                 type: professionalType,
@@ -109,7 +109,7 @@ export const GetProfessionals = (user_id, onSuccess) => {
 
         setHorarios([]);
 
-        axios.get(process.env.REACT_APP_PROTOCOL_HOSTNAME_PORT + "/api/paciente/horarios", {
+        axios.get(API_PROTOCOL_HOSTNAME_PORT + "/api/paciente/horarios", {
             params: {
                 user_id: user_id,
                 professional_id: professional.id
@@ -125,7 +125,7 @@ export const GetProfessionals = (user_id, onSuccess) => {
         let horario_utc = horario.hora
         horario_utc = horario.data + " " + formatNumber(horario_utc) + ":00:00"
         let date = new Date(horario_utc)
-        axios.post(process.env.REACT_APP_PROTOCOL_HOSTNAME_PORT + "/api/paciente/create_consulta", {
+        axios.post(API_PROTOCOL_HOSTNAME_PORT + "/api/paciente/create_consulta", {
             user_id: user_id,
             professional_id: professional.id,
             horario: date,
