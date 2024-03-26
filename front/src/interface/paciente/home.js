@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Agenda from "./agenda";
 import Perfil from "./perfil";
+import Acompanhamento from "./acompanhamento";
 import { MainContainer } from "../../components/mainContainer";
 import { BackgroundContainer } from "../../components/backgroundContainer";
 import { SecondaryNavBar } from "../../components/secondaryNavBar";
@@ -43,7 +44,7 @@ export const PacienteHome = () => {
             <div>
                 <MainContainer>
                     {activeTab === "tab1" && <Agenda />}
-                    {/* {activeTab === "tab2" && <ExamesTab />} */}
+                    {activeTab === "tab2" && <Acompanhamento />}
                     {activeTab === "tab3" && <Perfil />}
                 </MainContainer>
             </div>

@@ -80,9 +80,22 @@ class RelatorioMedico(models.Model):
     producao_de_insulina = models.FloatField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+class PedidoExameMedico(models.Model):
+    EXAME_CHOICES = [
+        (0, 'Pendente'),
+        (1, 'Finalizada')
+    ]
+
+    paciente = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='exame_paciente')
+    medico = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='exame_medico')
+    titulo = models.CharField(max_length=100, blank=True, null=True)
+    status = models.IntegerField(choices=EXAME_CHOICES)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     
 class Nutricionista(models.Model):
-    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='user_nutricionista')
     crn = models.CharField(max_length=13)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -111,10 +124,24 @@ class AvaliacaoNutricional(models.Model):
     doencas = models.CharField(max_length=300, blank=True, null=True)
     objetivo = models.CharField(max_length=100, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)    
+
+class PedidoExameNutricionista(models.Model):
+    EXAME_CHOICES = [
+        (0, 'Pendente'),
+        (1, 'Finalizada')
+    ]
+    nutricionista = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='nutricionista_exame')
+    paciente = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='paciente_exame_nutricionista')
+    tipo_exame = models.CharField(max_length=100)
+    status = models.IntegerField(choices=EXAME_CHOICES, default=1)
+    created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
 class TreinoFisico(models.Model):
-    treino = models.CharField(max_length=300)
+    profissional = models.ForeignKey(Usuario, on_delete=models.CASCADE, default="3")
+    titulo = models.CharField(max_length=50, default="Treino Genérico")
+    treino = models.CharField(max_length=2000)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

@@ -7,5 +7,6 @@ export const Colors = {
     DarkGray: "#5D5B5B",
     LightGray: "#F0F0F0",
     DisabledInputGray: "#B7B7B7",
-    White: "#FFFFFF"
+    White: "#FFFFFF",
+    SelectedBlue: "#43A2D8"
 };

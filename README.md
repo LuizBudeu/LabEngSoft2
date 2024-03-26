@@ -28,8 +28,14 @@ Backend API em `http://127.0.0.1:8000/`
 
 Frontend em `http://localhost:3000/`
 
-# Rodar com Docker
-- Atribuir a senha do banco de dados a uma variável de ambiente: `export DB_PASSWORD=<senha do banco>`
-- Buildar a imagem da API com `docker build -t rafnak1/labengsoft:api --build-arg DB_PASSWORD=$DB_PASSWORD .`
-- Buildar a imagem do hosting com `docker build -t rafnak1/labengsoft:hosting ./front`
-- Rodar com orquestração: `docker compose up`
+# Rodar com Docker localmente
+- Gerar certificado e chaves TLS dentro de `./proxy`:
+```
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout tls.key -out tls.crt
+```
+- Buildar a imagem do proxy com `docker build -t rafnak1/labengsoft:proxy ./proxy`
+- Criar na raíz um `api.env` com a senha do banco de dados na nuvem
+- Buildar a imagem da API com `docker build -t rafnak1/labengsoft:api --secret id=DB_PASSWORD,src=./api.env .`
+- Criar no `./front` um `.env` com `REACT_APP_PROTOCOL_HOSTNAME_PORT=https://localhost`
+- Rodar o front sem docker, mas dessa vez com `npm install` e `npm run start-docker`
+- Rodar o back com orquestração: `docker compose up`

@@ -5,3 +5,21 @@ export const AppointmentStatus = {
     vencida: 3,
     pendente: 4
 };
+
+export const AppointmentStatusString = {
+    0: "Agendada",
+    1: "Cancelada",
+    2: "Realizada",
+    3: "Vencida",
+    4: "Pagamento Pendente"
+};
+
+export const formatNumber = (n) =>{
+    return n > 9 ? "" + n: "0" + n;
+}
+
+export const ProfissionalIcons = {
+    1: "img/MedicoIcon.png",
+    2: "img/DietaIcon.png",
+    3: "img/TreinoIcon.png",
+};

@@ -13,7 +13,7 @@ export const Login = () => {
       password: password,
     }; // Create the POST request
 
-    const response = await axios.post("http://localhost:8000/api/token/", {
+    const response = await axios.post(process.env.REACT_APP_PROTOCOL_HOSTNAME_PORT + "/api/token/", {
         username: 'admin',
         password: 'admin123'  
       },
@@ -26,7 +26,7 @@ export const Login = () => {
 
 
     // axios.post(
-    //   "http://localhost:8000/api/token/",
+    //   process.env.REACT_APP_PROTOCOL_HOSTNAME_PORT + "/api/token/",
     //   user,
     //   { headers: { "Content-Type": "application/json" }, withCredentials: true }
     // ).then((data) => {

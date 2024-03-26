@@ -24,9 +24,9 @@ const DiaDaSemana = {
     6: "Sábado"
 };
 
-export const getBaseDate = (dateString) => dateString.split(' ')[0];
+export const getBaseDate = (dateString) => dateString.split('T')[0];
 
-export const getHourFromDate = (dateString) => dateString.split(' ')[1];
+export const getHourFromDate = (dateString) => dateString.split('T')[1];
 
 export const getLabelDay = (dateString) => (new Date(dateString)).toDateString();
 
@@ -47,4 +47,9 @@ export const GetHourMinute = (strDateTime, minDuration=60) => {
 export const FormatDate = (strDate) => {
     const date = new Date(strDate)
     return(DiaDaSemana[date.getUTCDay()] + ", " + date.getUTCDate() + " de " + Meses[date.getUTCMonth()+1] + " de " + date.getUTCFullYear())
+}
+
+export const getMonthName = (strDate) => {
+    const date = new Date(strDate)
+    return(Meses[date.getUTCMonth()+1])
 }

@@ -36,7 +36,7 @@ export const EditPerfil = ({closePopUp, setMainUserProfile}) => {
             <Row>
               <RowItem grow>
                 <Column>
-                  <body>Nome</body>
+                  <text>Nome</text>
                   <CustomInput
                     name="nome"
                     onChange={(e) => setUserProfile({...userProfile, nome:e.target.value})}
@@ -47,7 +47,7 @@ export const EditPerfil = ({closePopUp, setMainUserProfile}) => {
               </RowItem>
               <RowItem grow>
                 <Column>
-                  <body>Email</body>
+                  <text>Email</text>
                   <CustomInput
                     name="email"
                     value={userProfile.email}
@@ -58,7 +58,7 @@ export const EditPerfil = ({closePopUp, setMainUserProfile}) => {
               </RowItem>
               <RowItem grow>
                 <Column>
-                  <body>CPF</body>
+                  <text>CPF</text>
                   <CustomInput
                     name="cpf"
                     value={userProfile.cpf}
@@ -71,7 +71,7 @@ export const EditPerfil = ({closePopUp, setMainUserProfile}) => {
             <Row>
               <RowItem grow>
                 <Column>
-                  <body>Data de nascimento</body>
+                  <text>Data de nascimento</text>
                   <CustomInput
                     name="data_de_nascimento"
                     onChange={(e) => setUserProfile({...userProfile, data_de_nascimento:e.target.value})}
@@ -82,7 +82,7 @@ export const EditPerfil = ({closePopUp, setMainUserProfile}) => {
               </RowItem>
               <RowItem grow>
                 <Column>
-                  <body>Gênero</body>
+                  <text>Gênero</text>
                   <CustomSelect 
                     list={GenderOptions}
                     value={userProfile.genero}
@@ -95,7 +95,7 @@ export const EditPerfil = ({closePopUp, setMainUserProfile}) => {
             <Row>
               <RowItem grow>
                 <Column>
-                  <body>CEP</body>
+                  <text>CEP</text>
                   <CustomInput
                     name="cep"
                     onChange={(e) => setUserProfile({...userProfile, cep:e.target.value})}
@@ -106,7 +106,7 @@ export const EditPerfil = ({closePopUp, setMainUserProfile}) => {
               </RowItem>
               <RowItem grow flex={3}>
                 <Column>
-                  <body>Logradouro</body>
+                  <text>Logradouro</text>
                   <CustomInput
                     name="logradouro"
                     onChange={(e) => setUserProfile({...userProfile, logradouro:e.target.value})}
@@ -117,7 +117,7 @@ export const EditPerfil = ({closePopUp, setMainUserProfile}) => {
               </RowItem>
               <RowItem grow>
                 <Column>
-                  <body>número</body>
+                  <text>número</text>
                   <CustomInput
                     name="numero"
                     onChange={(e) => setUserProfile({...userProfile, numero:e.target.value})}
@@ -128,7 +128,7 @@ export const EditPerfil = ({closePopUp, setMainUserProfile}) => {
               </RowItem>
               <RowItem grow>
                 <Column>
-                  <body>Complemento</body>
+                  <text>Complemento</text>
                   <CustomInput
                     name="complemento"
                     onChange={(e) => setUserProfile({...userProfile, complemento:e.target.value})}
@@ -141,7 +141,7 @@ export const EditPerfil = ({closePopUp, setMainUserProfile}) => {
             <Row>
               <RowItem grow>
                 <Column>
-                  <body>Alergias</body>
+                  <text>Alergias</text>
                   <CustomInput
                     name="alergias"
                     onChange={(e) => setUserProfile({...userProfile, alergias:e.target.value})}
@@ -152,7 +152,7 @@ export const EditPerfil = ({closePopUp, setMainUserProfile}) => {
               </RowItem>
               <RowItem grow>
                 <Column>
-                  <body>Tipo de diabetes</body>
+                  <text>Tipo de diabetes</text>
                   <CustomSelect 
                     list={DiabetesOptions}
                     value={userProfile.tipo_diabetes}
