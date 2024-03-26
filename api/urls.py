@@ -1,6 +1,5 @@
 
 from django.urls import path, include
-from rest_framework_simplejwt import views as jwt_views
 
 from .views.hello_world import hello_world
 from .views.home import home
@@ -53,11 +52,5 @@ urlpatterns = [
     path('nutricionista/perfil', nutricionista_perfil, name='nutricionista_perfil'),
     path('nutricionista/update_perfil', nutricionista_update_perfil, name='nutricionista_update_perfil'),
 
-    path('token/',  
-        jwt_views.TokenObtainPairView.as_view(), 
-        name ='token_obtain_pair'), 
-    path('token/refresh/', 
-        jwt_views.TokenRefreshView.as_view(), 
-        name ='token_refresh'),
     # path('logout/', views.LogoutView.as_view(), name ='logout')
 ]
