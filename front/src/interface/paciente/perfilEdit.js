@@ -6,7 +6,7 @@ import { RowItem } from "../../components/rowItem";
 import { Column } from "../../components/column";
 import { GenderOptions, DiabetesOptions } from "../../utils/options";
 
-export const EditPerfil = ({closePopUp, userProfile, setUserProfile, refreshUserInfo, submitProfile}) => {
+export const EditPerfil = ({closePopUp, userProfile, setUserProfile, submitProfile}) => {
   return (
     <div>
       <h3 className="Auth-form-title">Editar perfil</h3>
@@ -150,10 +150,7 @@ export const EditPerfil = ({closePopUp, userProfile, setUserProfile, refreshUser
             </RowItem>
             <RowItem grow center noPadding>
               <CustomButton
-                onClick={() => {
-                  refreshUserInfo();
-                  closePopUp();
-                }}
+                onClick={() => closePopUp()}
                 title="Cancelar"
               />
             </RowItem>

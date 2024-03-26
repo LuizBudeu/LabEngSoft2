@@ -30,11 +30,6 @@ export const GetConsultas = (user_id, start_date, end_date) => {
         });
     }, [user_id, start_date, end_date]);
 
-    useEffect(() => {
-        console.log("consultas")
-        console.log(consultas)
-    }, [consultas])
-
     return [consultas, setConsultas];
     
 };

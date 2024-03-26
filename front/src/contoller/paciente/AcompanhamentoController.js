@@ -30,7 +30,6 @@ export const GetAcompanhemntos = (user_id) => {
                 complemento: acompanhamento.Nutricionista__complemento
             };
         }
-        console.log(professional);
         
         setSelectedAcompanhamento({
             type: type,

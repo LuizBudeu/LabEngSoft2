@@ -13,7 +13,7 @@ const ButtonStyle = styled.button`
 export const CustomButton = ({title, onClick, isSubmit, type, disabled}) => {
   let custom_type = type;
   return (
-    <ButtonStyle custom_type={custom_type} type={isSubmit ? "submit" : null} onClick={onClick} disabled={disabled}>
+    <ButtonStyle custom_type={custom_type} type={isSubmit ? "submit" : "button"} onClick={onClick} disabled={disabled}>
         {title}
     </ButtonStyle>
   );

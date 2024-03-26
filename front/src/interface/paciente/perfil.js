@@ -19,12 +19,17 @@ const Perfil = () => {
     setShowPopUp    
   ] = GetProfile("1");
 
+  const closePopUp = () => {
+    setShowPopUp(false);
+    refreshUserInfo();
+  }
+
   return (
     <div>
-      <PopUpContainer showPopUp={showPopUp} closePopUp={() => setShowPopUp(false)}>
+      <PopUpContainer showPopUp={showPopUp} closePopUp={closePopUp}>
         <MainContainer>
           <EditPerfil
-            closePopUp={() => setShowPopUp(false)} 
+            closePopUp={closePopUp}
             defaultProfile={userProfile}
             userProfile={userProfile}
             setUserProfile={setUserProfile}

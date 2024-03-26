@@ -25,9 +25,6 @@ export const GetProfile = (user_id) => {
 
     const submitProfile = async (e) => {
         e.preventDefault(); 
-
-        console.log("called submitProfile");
-        console.log(userProfile);
         const response = await axios.post(process.env.REACT_APP_PROTOCOL_HOSTNAME_PORT + "/api/paciente/update_perfil", 
             {...userProfile, user_id: user_id}
         ); 

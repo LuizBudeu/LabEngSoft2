@@ -31,8 +31,6 @@ export const GetAppointments = (user_id) => {
     }
 
     const cancelAppointment = async (appointment_id) => {
-        console.log("cancelAppointment");
-        console.log(appointment_id);
         const response = await axios.post(process.env.REACT_APP_PROTOCOL_HOSTNAME_PORT + "/api/paciente/cancel_consulta", {
             user_id: user_id,
             appointment_id: appointment_id
