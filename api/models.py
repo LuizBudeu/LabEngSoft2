@@ -97,7 +97,7 @@ class Dieta(models.Model):
 
 class RelatorioNutricionista(models.Model):
     consulta = models.ForeignKey(Consulta, on_delete=models.CASCADE)
-    dieta = models.ForeignKey(Dieta, on_delete=models.CASCADE)
+    dieta = models.ForeignKey(Dieta, on_delete=models.CASCADE, blank=True, null=True)
     detalhes_adicionais = models.CharField(max_length=300, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
