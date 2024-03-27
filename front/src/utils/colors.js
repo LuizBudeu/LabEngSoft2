@@ -8,5 +8,7 @@ export const Colors = {
     LightGray: "#F0F0F0",
     DisabledInputGray: "#B7B7B7",
     White: "#FFFFFF",
-    SelectedBlue: "#43A2D8"
+    SelectedBlue: "#43A2D8",
+    DisabledBlue: "#7DB2CC",
+    DisabledRed: "#F4A095"
 };

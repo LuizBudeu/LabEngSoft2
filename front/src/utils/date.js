@@ -53,3 +53,8 @@ export const getMonthName = (strDate) => {
     const date = new Date(strDate)
     return(Meses[date.getUTCMonth()+1])
 }
+
+export const getDate = (strDate) => {
+    const date = new Date(strDate)
+    return(date.getUTCDate() + "/" + date.getUTCMonth() + "/" + date.getUTCFullYear())
+}

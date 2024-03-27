@@ -8,7 +8,6 @@ const PopUpContainerStyle = styled.div`
     width: 100%;
     height: 100%;
     background-color: ${Colors.DarkGray}DD;
-    display: ${({showPopUp}) => showPopUp ? "Null": "None"};
 `;
 
 const SolidStyle = styled.div`
@@ -21,7 +20,8 @@ export const PopUpContainer = ({showPopUp, closePopUp, children}) => {
     };
 
     return(
-        <PopUpContainerStyle showPopUp={showPopUp} onClick={closePopUp}>
+        showPopUp &&
+        <PopUpContainerStyle onClick={closePopUp}>
             <SolidStyle onClick={handleChildClick}>
                 {children}
             </SolidStyle>
