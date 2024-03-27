@@ -5,9 +5,16 @@ import Acompanhamento from "./acompanhamento";
 import { MainContainer } from "../../components/mainContainer";
 import { BackgroundContainer } from "../../components/backgroundContainer";
 import { SecondaryNavBar } from "../../components/secondaryNavBar";
+import { useLogin } from "../../utils/useLogin";
+import { useLogout } from "../../utils/useLogout";
+
+const LOGIN_URL = process.env.REACT_APP_PACIENTE_LOGIN_URL;
 
 export const PacienteHome = () => {
     const [activeTab, setActiveTab] = useState("tab1");
+
+    const loggedIn = useLogin(process.env.REACT_APP_PACIENTE_AUTH_SECRET);
+    const logout = useLogout();
 
     const tabs = [{
         id: "tab1",
@@ -34,6 +41,13 @@ export const PacienteHome = () => {
         setActiveTab("tab3");
     };
 
+    if (!loggedIn) return (
+        <>
+            <p>Bem-vindo ao portal do paciente!</p>
+            <a href={LOGIN_URL}>Registre-se ou faça Login.</a>
+        </>
+    );
+
     return (
         <BackgroundContainer>
             <SecondaryNavBar
@@ -48,6 +62,7 @@ export const PacienteHome = () => {
                     {activeTab === "tab3" && <Perfil />}
                 </MainContainer>
             </div>
+            <button onClick={logout}>Logout</button>
         </BackgroundContainer>
     );
 };
