@@ -11,5 +11,7 @@ ENV DJANGO_SETTINGS_MODULE=plataforma_digital.settings_prod
 RUN --mount=type=secret,id=DB_PASSWORD \
   echo "DB_PASSWORD=$(cat /run/secrets/DB_PASSWORD)" > api.env
 
+RUN python manage.py migrate
+
 EXPOSE 8000/tcp
 CMD [ "python", "manage.py", "runserver", "0.0.0.0:8000" ]
