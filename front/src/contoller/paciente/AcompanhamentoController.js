@@ -23,11 +23,11 @@ export const GetAcompanhemntos = (user_id) => {
             };
         }else if(type=="exameNutricionista"){
             professional = {
-                id: acompanhamento.Nutricionista_id,
-                nome: acompanhamento.Nutricionista__nome,
-                logradouro: acompanhamento.Nutricionista__logradouro,
-                numero: acompanhamento.Nutricionista__numero,
-                complemento: acompanhamento.Nutricionista__complemento
+                id: acompanhamento.nutricionista_id,
+                nome: acompanhamento.nutricionista__nome,
+                logradouro: acompanhamento.nutricionista__logradouro,
+                numero: acompanhamento.nutricionista__numero,
+                complemento: acompanhamento.nutricionista__complemento
             };
         }
         
