@@ -3,6 +3,7 @@ import { CustomSelect } from "../components/customSelect";
 import { GenderOptions } from "../utils/options";
 
 import axios from "axios";
+import { API_PROTOCOL_HOSTNAME_PORT } from "../utils/utils";
 
 const obligatoryFields = {
     email: true,
@@ -35,7 +36,7 @@ export const SignIn = () => {
     // Create user
     const submit = async (e) => {
         e.preventDefault();
-        const response = await axios.post(process.env.REACT_APP_PROTOCOL_HOSTNAME_PORT + "/api/usuario/create/", formValues);
+        const response = await axios.post(API_PROTOCOL_HOSTNAME_PORT + "/api/usuario/create/", formValues);
         console.log(response);
     };
 

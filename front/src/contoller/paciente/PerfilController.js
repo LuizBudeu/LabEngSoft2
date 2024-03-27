@@ -1,12 +1,13 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { API_PROTOCOL_HOSTNAME_PORT } from "../../utils/utils";
 
 export const GetProfile = (user_id) => {
 
     const [userProfile, setUserProfile] = useState();
 
     useEffect(() => {
-        axios.get(process.env.REACT_APP_PROTOCOL_HOSTNAME_PORT + "/api/paciente/perfil", {
+        axios.get(API_PROTOCOL_HOSTNAME_PORT + "/api/paciente/perfil", {
             params: {
                 user_id: user_id
             }
@@ -24,7 +25,7 @@ export const GetProfile = (user_id) => {
 
 export const UpdateProfile = async (user_id, userProfile) => {
     try{
-        const response = await axios.post(process.env.REACT_APP_PROTOCOL_HOSTNAME_PORT + "/api/paciente/update_perfil", 
+        const response = await axios.post(API_PROTOCOL_HOSTNAME_PORT + "/api/paciente/update_perfil", 
             {...userProfile, user_id: user_id}
         ); 
         if(response.status != 200){
