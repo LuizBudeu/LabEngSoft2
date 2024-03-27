@@ -1,5 +1,6 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.exceptions import ParseError
 import json
 
 from api.models import Usuario, Nutricionista
@@ -63,7 +64,7 @@ def update_perfil(request):
         nome: Nome do nutricionista,
         data_de_nascimento: Data de nascimento do nutricionista,
         genero: Gênero do nutricionista,
-        cep: CEp do nutricionista,
+        cep: CEP do nutricionista,
         logradouro: Logradouro do nutricionista,
         numero: Número do endereço do nutricionista,
         complemento: Complemento do endereço do nutricionista,

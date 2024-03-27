@@ -46,4 +46,4 @@ def agenda(request: HttpRequest) -> Response:
         'status'       
     )
 
-    return Response({'message': consultas.values()})
+    return Response(consultas)
