@@ -67,7 +67,7 @@ export const ScheduleGrid = ({horarios, professional, requestAppointment}) => {
                 <RowItem grow noPadding>
                   <Column>
                     <text>{day.getDate()}</text>
-                    <text>{getWeekDayName(day)}</text>
+                    <text style={{"font-size": 12}}>{getWeekDayName(day)}</text>
                   </Column>
                 </RowItem>
               )}

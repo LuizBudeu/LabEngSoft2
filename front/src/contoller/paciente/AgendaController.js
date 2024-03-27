@@ -83,8 +83,7 @@ export const GetProfessionals = (user_id, onSuccess) => {
     const [professionalType, setProfessionalType] = useState(1);
     const [professionalName, setProfessionalName] = useState("");
 
-    const submitSearch = (e) => {
-        e.preventDefault();
+    const submitSearch = () => {
         
         setProfessionals([]);
         setSelectedProfessional(null);
