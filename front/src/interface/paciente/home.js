@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styled from 'styled-components';
 import Agenda from "./agenda";
 import Perfil from "./perfil";
 import Acompanhamento from "./acompanhamento";
@@ -41,13 +42,13 @@ export const PacienteHome = () => {
                 activeTab={activeTab}
                 setActiveTab={setActiveTab}
             />
-            <div>
-                <MainContainer>
+            <div style={{height: "80%"}}>
+               <MainContainer>
                     {activeTab === "tab1" && <Agenda />}
                     {activeTab === "tab2" && <Acompanhamento />}
                     {activeTab === "tab3" && <Perfil />}
-                </MainContainer>
-            </div>
+                </MainContainer>   
+            </div>  
         </BackgroundContainer>
     );
 };

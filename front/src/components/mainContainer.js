@@ -7,4 +7,6 @@ export const MainContainer = styled.div`
     border-radius: 10px;
     background-color: ${Colors.White};
     height: 100%;
+    display: flex;
+    flex-flow: column;
 `

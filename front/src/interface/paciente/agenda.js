@@ -30,7 +30,7 @@ const Agenda = () => {
   ] = GetAppointments("1");
 
   return (
-    <div>
+    <div style={{height: "100%"}}>
       <PopUpContainer showPopUp={showPopUp} closePopUp={() => setShowPopUp(false)}>
         <MainContainer>
           <NovaConsulta onSuccess={() => {
@@ -39,56 +39,60 @@ const Agenda = () => {
             }}/>
         </MainContainer>
       </PopUpContainer>
-      <Row>
-        <RowItem grow noPadding>
-          <ScrollContainer>
-            <div>
-              <h3 className="Auth-form-title">Suas consultas</h3>
-              <CustomButton
-                type="primary"
-                title="Nova consulta"
-                onClick={() => setShowPopUp(true)}
+      <div style={{height: "100%"}}>
+        <Row>
+          <RowItem grow noPadding>
+            <ScrollContainer>
+              <div>
+                <h3 className="Auth-form-title">Suas consultas</h3>
+                <CustomButton
+                  type="primary"
+                  title="Nova consulta"
+                  onClick={() => setShowPopUp(true)}
+                />
+                {appointmentsByDay && <div>
+                  {Object.entries(appointmentsByDay).map(([key, appointments]) => (
+                    <div>
+                      <h4>{FormatDate(key)}</h4>
+                      {appointments.map((value) => (
+                        <AppointmentItem
+                          type={value.profissional__ocupacao}
+                          text={GetHourMinute(value.horario, value.duracao) + " - " + value.profissional__nome}
+                          status={value.status}
+                          onClick={() => setSelectedAppointment(value)}
+                          selected={value.id == selectedAppointment?.id}
+                        />
+                      ))}
+                    </div>
+                  ))}
+                </div>}
+              </div>
+            </ScrollContainer>
+          </RowItem>
+          <RowItem noPadding>
+            <VerticalLine/>
+          </RowItem>
+          <RowItem grow noPadding>
+            {selectedAppointment ? (
+              <AppointmentInfo 
+                appointment={selectedAppointment} 
+                cancelAppointment={() => {
+                  cancelAppointment(selectedAppointment.id)
+                }}
+                payAppointment={() => {
+                  payAppointment(selectedAppointment.id)
+                }}
               />
-              {appointmentsByDay && <div>
-                {Object.entries(appointmentsByDay).map(([key, appointments]) => (
-                  <div>
-                    <h4>{FormatDate(key)}</h4>
-                    {appointments.map((value) => (
-                      <AppointmentItem
-                        type={value.profissional__ocupacao}
-                        text={GetHourMinute(value.horario, value.duracao) + " - " + value.profissional__nome}
-                        status={value.status}
-                        onClick={() => setSelectedAppointment(value)}
-                        selected={value.id == selectedAppointment?.id}
-                      />
-                    ))}
-                  </div>
-                ))}
-              </div>}
-            </div>
-          </ScrollContainer>
-        </RowItem>
-        <RowItem noPadding>
-          <VerticalLine/>
-        </RowItem>
-        <RowItem grow noPadding>
-          {selectedAppointment ? (
-            <AppointmentInfo 
-              appointment={selectedAppointment} 
-              cancelAppointment={() => {
-                cancelAppointment(selectedAppointment.id)
-              }}
-              payAppointment={() => {
-                payAppointment(selectedAppointment.id)
-              }}
-            />
-          ) : (
-            <CenterContent>
-              <text>Selecione uma consulta</text>
-            </CenterContent>
-          )}
-        </RowItem>
-      </Row>      
+            ) : (
+              <CenterContent>
+                <text>Selecione uma consulta</text>
+              </CenterContent>
+            )}
+          </RowItem>
+        </Row> 
+      </div>
+        
+           
     </div>
   );
 };
