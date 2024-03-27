@@ -54,6 +54,11 @@ export const getMonthName = (strDate) => {
     return(Meses[date.getUTCMonth()+1])
 }
 
+export const getWeekDayName = (strDate) => {
+    const date = new Date(strDate)
+    return(DiaDaSemana[date.getUTCDay()])
+}
+
 export const getDate = (strDate) => {
     const date = new Date(strDate)
     return(date.getUTCDate() + "/" + date.getUTCMonth() + "/" + date.getUTCFullYear())

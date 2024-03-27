@@ -10,7 +10,7 @@ import { CustomButton } from "../../components/customButton";
 // import 'react-datetime-picker/dist/DateTimePicker.css';
 // import 'react-calendar/dist/Calendar.css';
 // import 'react-clock/dist/Clock.css';
-import { getMonthName, getDate } from "../../utils/date";
+import { getMonthName, getDate, getWeekDayName } from "../../utils/date";
 import { formatNumber } from "../../utils/utils";
 import { ScheduleItem } from "../../components/scheduleItem";
 import { Pressable } from "../../components/pressable";
@@ -64,7 +64,12 @@ export const ScheduleGrid = ({horarios, professional, requestAppointment}) => {
             <Row>
               <RowItem/>
               {daysArray.map((day) =>
-                <RowItem grow noPadding>{day.getDate()}</RowItem>
+                <RowItem grow noPadding>
+                  <Column>
+                    <text>{day.getDate()}</text>
+                    <text>{getWeekDayName(day)}</text>
+                  </Column>
+                </RowItem>
               )}
             </Row>
             {hours_array.map((hour) => 
