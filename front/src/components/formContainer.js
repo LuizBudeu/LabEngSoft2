@@ -6,5 +6,5 @@ export const FormContainer = styled.div`
     padding: 16px;
     border-radius: 10px;
     background-color: ${Colors.White};
-    max-width: 40%;
+    min-width: 35vw;
 `
