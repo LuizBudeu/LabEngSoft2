@@ -11,7 +11,7 @@ import { RegistrarFormulario } from "../../../contoller/preparador/ConsultaContr
 
 export const AppointmentForm = ({consulta_id, onSubmit, onClose}) => {
     const [pacienteInfo, setPacientInfo] = useState({nivel_de_atividade_fisica: 0, treino_fisico: 0});
-    const [workOuts] = GetWorkOuts("3");
+    const { workOuts } = GetWorkOuts("3");
 
     const submit = (e) => {
         e.preventDefault();
