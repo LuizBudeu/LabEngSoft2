@@ -9,7 +9,7 @@ from api.models import TreinoFisico
 from api.models import RelatorioPreparadorFisico
 
 @api_view(['POST'])
-def finalizar_consulta (request: HttpRequest, consulta_id) -> Response:
+def registrar_formulario (request: HttpRequest, consulta_id) -> Response:
     """
     Cria um novo objeto de Relatório do preparador físico.
 
@@ -21,7 +21,6 @@ def finalizar_consulta (request: HttpRequest, consulta_id) -> Response:
     """
     
     body = json.loads(request.body.decode('utf-8'))
-    print(body, consulta_id)
     
     try:
         consulta = Consulta.objects.get(id=consulta_id)
@@ -31,7 +30,7 @@ def finalizar_consulta (request: HttpRequest, consulta_id) -> Response:
     try:
         treino = TreinoFisico.objects.get(id=body['treino_fisico'])
     except Consulta.DoesNotExist:
-        raise ParseError(f"Treino com id={body['user-id']} não encontrado")
+        raise ParseError(f"Treino com id={consulta_id} não encontrado")
 
     try:
         relatorio = RelatorioPreparadorFisico(
@@ -49,4 +48,22 @@ def finalizar_consulta (request: HttpRequest, consulta_id) -> Response:
     except:
         raise ParseError(f"Ocorreu um erro durante a criação do relatório.")
     
-    return Response("Consulta updatada")
+    return Response("Formulario registrado")
+
+@api_view(['PATCH'])
+def finalizar_consulta (request: HttpRequest, consulta_id) -> Response:
+    """
+    Atualiza o status da consulta para "Realizada"
+
+    Path parms:
+        consulta_id: id da consulta a ser finalizada
+    """
+    try:
+        consulta = Consulta.objects.get(id=consulta_id)
+    except Consulta.DoesNotExist:
+        raise ParseError(f"Consulta com id={consulta_id} não encontrada")
+
+    consulta.status = 2
+    consulta.save()
+
+    return Response("Consulta finalizada")
