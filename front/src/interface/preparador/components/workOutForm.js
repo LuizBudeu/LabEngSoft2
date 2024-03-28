@@ -10,11 +10,12 @@ export const WorkOutForm = ({onSubmit}) => {
 
     const submit = async (e) => {
       e.preventDefault(); 
-      console.log("O formulário foi submetido", e.target);
+
       const resp = await CreateWorkOut("3", workOut); 
-      if(resp){
+      
+      if(resp) {
         onSubmit();
-      }else{
+      } else {
         alert("Erro ao salvar os dados");
       }
     };
@@ -23,7 +24,7 @@ export const WorkOutForm = ({onSubmit}) => {
         <form onSubmit={submit}>
             <Column>  
                 <Column>
-                  <body>Título do treino</body>
+                  <text>Título do treino</text>
                   <CustomInput
                     name="title"
                     onChange={(e) => setWorkOut({...workOut, title:e.target.value})}
@@ -32,7 +33,7 @@ export const WorkOutForm = ({onSubmit}) => {
                   />
                 </Column>
                 <Column>
-                  <body>Descrição do treino</body>
+                  <text>Descrição do treino</text>
                   <CustomTextArea
                     name="workout"
                     onChange={(e) => setWorkOut({...workOut, workout:e.target.value})}
