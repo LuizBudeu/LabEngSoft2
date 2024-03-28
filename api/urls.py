@@ -34,6 +34,7 @@ from .views.nutricionista.dieta import dieta
 from .views.nutricionista.exame import pedirExame as nutricionista_exame
 from .views.nutricionista.perfil import perfil as nutricionista_perfil
 from .views.nutricionista.perfil import update_perfil as nutricionista_update_perfil
+from .views.preparador.consulta import registrar_formulario
 from .views.preparador.consulta import finalizar_consulta
 
 urlpatterns = [
@@ -62,6 +63,7 @@ urlpatterns = [
     path('preparador/agenda/', preparador_agenda, name='preparador_agenda'),
     path('preparador/create_workout/', workout_create, name='workout_create'),
     path('preparador/workouts', workouts, name='workouts'),
+    path('preparador/consultas/<int:consulta_id>/formulario', registrar_formulario, name='finalizar_consulta'),
     path('preparador/consultas/<int:consulta_id>', finalizar_consulta, name='finalizar_consulta'),
 
     path('nutricionista/agenda', nutricionista_agenda, name='nutricionista_agenda'),
