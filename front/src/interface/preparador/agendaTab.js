@@ -16,7 +16,7 @@ import { FinalizarConsulta } from "../../contoller/preparador/ConsultaController
 
 
 export const AgendaTab = () => {
-    const [agenda] = GetAgenda("3", "2024-03-20", "2024-06-24");
+    const { agenda } = GetAgenda("3", "2024-03-20", "2024-06-24");
 
     const [selectedAppointment, setSelectedAppointment] = useState("");
     

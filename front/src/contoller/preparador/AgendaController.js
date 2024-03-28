@@ -6,7 +6,7 @@ import { API_PROTOCOL_HOSTNAME_PORT } from "../../utils/utils";
 export const GetAgenda = (user_id, start_date, end_date) => {
     const [agenda, setAgenda] = useState();
 
-    useEffect(() => {
+    const fetchAgenda = () => {
         axios.get(API_PROTOCOL_HOSTNAME_PORT + "/api/preparador/agenda/", {
             params: {
                 user_id: user_id,
@@ -19,7 +19,15 @@ export const GetAgenda = (user_id, start_date, end_date) => {
         }).catch((e) => {
             console.log(e);
         });
-    }, [user_id, start_date, end_date]);
+    }
+
+    useEffect(() => {
+        fetchAgenda();
+    }, []);
     
-    return [agenda, setAgenda];
+    const refetch = () => {
+        fetchAgenda();
+    };
+
+    return { agenda, refetch };
 };
