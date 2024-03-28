@@ -38,7 +38,7 @@ export const TreinosTab = () => {
                         {selectedWorkOut ? (
                             <div style={{width: "100%"}}>
                                 <h2>{selectedWorkOut.titulo}</h2>
-                                <body style={{whiteSpace: "pre-line"}}>{selectedWorkOut.treino}</body>
+                                <text style={{whiteSpace: "pre-line"}}>{selectedWorkOut.treino}</text>
                             </div>
                             ) : (
                                 <span>Selecione o seu treino</span>

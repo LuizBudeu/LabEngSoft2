@@ -5,7 +5,7 @@ import { CustomInput } from "../../../components/customInput";
 import { CustomSelect } from "../../../components/customSelect";
 import { NivelAtividade } from "../../../utils/options";
 import { GetWorkOuts } from "../../../contoller/preparador/WorkOutController";
-import { RealizarConsulta } from "../../../contoller/preparador/ConsultaController";
+import { RegistrarFormulario } from "../../../contoller/preparador/ConsultaController";
 
 // consulta = models.ForeignKey(Consulta, on_delete=models.CASCADE)
 
@@ -15,7 +15,7 @@ export const AppointmentForm = ({consulta_id, onSubmit, onClose}) => {
 
     const submit = (e) => {
         e.preventDefault();
-        RealizarConsulta(consulta_id, pacienteInfo);
+        RegistrarFormulario(consulta_id, pacienteInfo);
         onSubmit();
     }
     
@@ -31,7 +31,7 @@ export const AppointmentForm = ({consulta_id, onSubmit, onClose}) => {
         <form onSubmit={submit}>
             <Column>  
                 <Column>
-                  <body>Altura</body>
+                  <text>Altura</text>
                   <CustomInput
                     name="altura"
                     onChange={(e) => setPacientInfo({...pacienteInfo, altura:e.target.value})}
@@ -42,7 +42,7 @@ export const AppointmentForm = ({consulta_id, onSubmit, onClose}) => {
                 </Column>
 
                 <Column>
-                  <body>Peso</body>
+                  <text>Peso</text>
                   <CustomInput
                     name="massa"
                     onChange={(e) => setPacientInfo({...pacienteInfo, massa:e.target.value})}
@@ -53,7 +53,7 @@ export const AppointmentForm = ({consulta_id, onSubmit, onClose}) => {
                 </Column>
 
                 <Column>
-                    <body>Nível de atividade física</body>
+                    <text>Nível de atividade física</text>
                     <CustomSelect
                         list={NivelAtividade}
                         value={pacienteInfo.nivel_de_atividade_fisica}
@@ -62,7 +62,7 @@ export const AppointmentForm = ({consulta_id, onSubmit, onClose}) => {
                 </Column>
 
                 <Column>
-                  <body>Percentual de gordura</body>
+                  <text>Percentual de gordura</text>
                   <CustomInput
                     name="porcentagem_de_gordura"
                     onChange={(e) => setPacientInfo({...pacienteInfo, porcentagem_de_gordura:e.target.value})}
@@ -73,7 +73,7 @@ export const AppointmentForm = ({consulta_id, onSubmit, onClose}) => {
                 </Column>
 
                 <Column>
-                  <body>Percentual de massa magra</body>
+                  <text>Percentual de massa magra</text>
                   <CustomInput
                     name="porcentage_de_musculo"
                     onChange={(e) => setPacientInfo({...pacienteInfo, porcentage_de_musculo:e.target.value})}
@@ -84,7 +84,7 @@ export const AppointmentForm = ({consulta_id, onSubmit, onClose}) => {
                 </Column>
 
                 <Column>
-                  <body>Metabolismo basal</body>
+                  <text>Metabolismo basal</text>
                   <CustomInput
                     name="metabolismo_basal"
                     onChange={(e) => setPacientInfo({...pacienteInfo, metabolismo_basal:e.target.value})}
@@ -95,7 +95,7 @@ export const AppointmentForm = ({consulta_id, onSubmit, onClose}) => {
                 </Column>
 
                 <Column>
-                  <body>Gasto calórico</body>
+                  <text>Gasto calórico</text>
                   <CustomInput
                     name="gasto_calorico"
                     onChange={(e) => setPacientInfo({...pacienteInfo, gasto_calorico:e.target.value})}
@@ -107,7 +107,7 @@ export const AppointmentForm = ({consulta_id, onSubmit, onClose}) => {
 
                 {workOuts && (
                     <Column>
-                        <body>Treino</body>
+                        <text>Treino</text>
                         <CustomSelect
                             list={workOutsToSelector(workOuts)}
                             value={pacienteInfo.treino_fisico}
