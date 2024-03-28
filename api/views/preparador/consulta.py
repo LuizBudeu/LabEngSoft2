@@ -50,8 +50,26 @@ def registrar_formulario (request: HttpRequest, consulta_id) -> Response:
     
     return Response("Formulario registrado")
 
-@api_view(['PATCH'])
-def finalizar_consulta (request: HttpRequest, consulta_id) -> Response:
+@api_view(['GET','PATCH'])
+def consulta_request(request: HttpRequest, consulta_id) -> Response:
+    if request.method == 'GET':
+        return informacoes_usuario(consulta_id)
+    else:
+        return finalizar_consulta(consulta_id)
+
+
+mockInfo_UserNutrion = {'dieta': 'Consome 2500 kcal', 'detalhes_adicionais': 'Não consegue comer farinha'}
+mockInfo_UserMedical = {'alergias': 'Amendoim', 'tipo_diabetes': '0'}
+
+def informacoes_usuario(consulta_id) -> Response:
+    mockResponse = {
+        'medical': mockInfo_UserMedical,
+        'nutrition': mockInfo_UserNutrion
+    }
+    return Response(mockResponse)
+
+
+def finalizar_consulta (consulta_id) -> Response:
     """
     Atualiza o status da consulta para "Realizada"
 
