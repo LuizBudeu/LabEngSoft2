@@ -1,12 +1,13 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
 import { formatNumber, API_PROTOCOL_HOSTNAME_PORT } from "../../utils/utils";
+import { useAxiosWithToken } from "../../utils/useAxiosWithToken";
 
 export const GetAppointments = (user_id) => {
 
     const [appointments, setAppointments] = useState([]);
     const [selectedAppointment, setSelectedAppointment] = useState();
     const [showPopUp, setShowPopUp] = useState(false);
+    const axios = useAxiosWithToken();
 
     const refreshAppointments = () => {
         axios.get(API_PROTOCOL_HOSTNAME_PORT + "/api/paciente/agenda", {
@@ -84,6 +85,7 @@ export const GetProfessionals = (user_id, onSuccess) => {
     const [selectedProfessional, setSelectedProfessional] = useState();
     const [professionalType, setProfessionalType] = useState(1);
     const [professionalName, setProfessionalName] = useState("");
+    const axios = useAxiosWithToken();
 
     const submitSearch = (e) => {
         e.preventDefault();

@@ -20,6 +20,8 @@ cd front
 
 npm install
 
+Adicionar o `.env` em `./front`
+
 npm start
 
 Utilização:
@@ -36,5 +38,6 @@ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout tls.key -out tls.crt
 - Buildar a imagem do proxy com `docker build -t rafnak1/labengsoft:proxy ./proxy`
 - Criar na raíz um `api.env` com a senha do banco de dados na nuvem
 - Buildar a imagem da API com `docker build -t rafnak1/labengsoft:api --secret id=DB_PASSWORD,src=./api.env .`
-- Rodar o front sem docker, mas dessa vez com `npm install` e `npm run start-docker`
+- Adicionar o `.env` em `./front`
 - Rodar o back com orquestração: `docker compose up`
+- Rodar o front sem docker, mas dessa vez com `npm install` e `npm run start-docker`

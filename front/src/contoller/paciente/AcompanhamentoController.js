@@ -1,6 +1,6 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
 import { API_PROTOCOL_HOSTNAME_PORT } from "../../utils/utils";
+import { useAxiosWithToken } from "../../utils/useAxiosWithToken";
 
 export const GetAcompanhemntos = (user_id) => {
 
@@ -10,6 +10,7 @@ export const GetAcompanhemntos = (user_id) => {
     const [examesNutricionais, setExamesNutricionais] = useState([]);
     const [selectedAcompanhamento, setSelectedAcompanhamento] = useState();
     const [showPopUp, setShowPopUp] = useState(false);
+    const axios = useAxiosWithToken()
 
     const changeSelectedAcompanhamento = (acompanhamento, type) => {
         let professional = null;
