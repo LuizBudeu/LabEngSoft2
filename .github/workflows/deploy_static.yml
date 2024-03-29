@@ -23,6 +23,9 @@ jobs:
       run: |
         touch .env
         echo REACT_APP_PROTOCOL_HOSTNAME_PORT=${{ secrets.API_PROTOCOL_HOSTNAME_PORT }} >> .env
+        echo REACT_APP_TOKEN_URL=${{ secrets.TOKEN_URL }} >> .env
+        echo REACT_APP_PACIENTE_LOGIN_URL=${{ secrets.PACIENTE_LOGIN_URL }} >> .env
+        echo REACT_APP_PACIENTE_AUTH_SECRET=${{ secrets.PACIENTE_AUTH_SECRET }} >> .env
         npm install
         npm run build
       env:
