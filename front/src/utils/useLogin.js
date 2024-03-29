@@ -1,14 +1,16 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import axios from "../interceptors/axios";
+import axios from "axios";
+import { useIsLoggedIn } from "./useIsLoggedIn";
 
 const TOKEN_URL = process.env.REACT_APP_TOKEN_URL;
 
 export const useLogin = (client_secret) => {
 
     const [searchParams, setSearchParams] = useSearchParams();
-    const [cookies, setCookie] = useCookies();
+    const loggedIn = useIsLoggedIn();
+    const setCookie = useCookies()[1];
 
     const authorization_code = searchParams.get("code")
 
@@ -33,6 +35,5 @@ export const useLogin = (client_secret) => {
         }
     }, [authorization_code])
 
-    const loggedIn = !!cookies.access_token;
     return loggedIn;
 };

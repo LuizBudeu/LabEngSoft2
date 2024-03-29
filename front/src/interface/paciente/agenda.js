@@ -1,5 +1,4 @@
 // Import the react JS packages
-import axios from "../../interceptors/axios";
 import { useState } from "react"; // Define the Login function.
 import { GetAppointments } from "../../contoller/paciente/AgendaController"; 
 import { useNavigate } from 'react-router-dom';

@@ -1,8 +1,9 @@
-import axios from "../../interceptors/axios";
 import { useEffect, useState } from "react";
 import { API_PROTOCOL_HOSTNAME_PORT } from "../../utils/utils";
+import { useAxiosWithToken } from "../../utils/useAxiosWithToken";
 
 export const CreateWorkOut = async (user_id, workOut) => {
+    const axios = useAxiosWithToken();
     try{
         const response = await axios.post(API_PROTOCOL_HOSTNAME_PORT + "/api/preparador/create_workout/", 
             {...workOut, user_id}
@@ -23,6 +24,7 @@ export const CreateWorkOut = async (user_id, workOut) => {
 
 export const GetWorkOuts = (user_id) => {
     const [workOuts, setWorkOuts] = useState([]);
+    const axios = useAxiosWithToken();
 
     useEffect(() => {
         axios.get(API_PROTOCOL_HOSTNAME_PORT + "/api/preparador/workouts", {
