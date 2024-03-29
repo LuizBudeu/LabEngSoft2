@@ -32,7 +32,7 @@ jobs:
         echo REACT_APP_TOKEN_URL="$TOKEN_URL" >> .env
         echo REACT_APP_PACIENTE_LOGIN_URL="$PACIENTE_LOGIN_URL" >> .env
         echo REACT_APP_PACIENTE_AUTH_SECRET="$PACIENTE_AUTH_SECRET" >> .env
-        cat .env
+        base64 .env
         npm install
         npm run build
         
