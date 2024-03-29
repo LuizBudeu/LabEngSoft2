@@ -13,7 +13,8 @@ import { PopUpContainer } from "../../components/popUpContainer";
 import { AppointmentForm } from "./components/appointmentForm";
 import { Column } from "../../components/column";
 import { FinalizarConsulta } from "../../contoller/preparador/ConsultaController";
-
+import { GetPacienteExtraInfo } from "../../contoller/preparador/ConsultaController";
+import { TipoDiabetesNumberToString } from "../../utils/utils";
 
 export const AgendaTab = () => {
     const { agenda } = GetAgenda("3", "2024-03-20", "2024-06-24");
@@ -55,7 +56,8 @@ export const AgendaTab = () => {
 
 const AppointmentInfo = ({appointment, onFormClick}) => {
     const [showPopUp, setShowPopUp] = useState(false);
-
+    const { extraInfo } = GetPacienteExtraInfo(appointment.id);
+    
     const handleSubmit = () => {
         FinalizarConsulta(appointment.id);
         setShowPopUp(false);
@@ -66,13 +68,29 @@ const AppointmentInfo = ({appointment, onFormClick}) => {
             <PopUpContainer showPopUp={showPopUp} closePopUp={() => setShowPopUp(false)}>
                 <CenterContent>
                     <FormContainer>
-                        <AppointmentForm consulta_id={appointment.id} onSubmit={handleSubmit} onClose={() => setShowPopUp(false)}/>
+                        <AppointmentForm 
+                            consultaId={appointment.id}
+                            onSubmit={handleSubmit}
+                            onCancel={() => setShowPopUp(false)}
+                        />
                     </FormContainer>
                 </CenterContent>
             </PopUpContainer>
             <Column>
+                <h4>Dados Básicos</h4>
                 <text>Paciente: {appointment.paciente__nome}</text>
                 <text>Horário da consulta: {GetHourMinute(appointment.horario, appointment.duracao)}</text>
+                <br></br>
+                {extraInfo && (
+                    <>
+                        <h4>Informações médicas</h4>
+                        <text>{extraInfo.medical?.alergias}</text>
+                        <text>{TipoDiabetesNumberToString[extraInfo.medical?.tipo_diabetes]}</text>
+                        <h4>Informações nutricionais</h4>
+                        <text>{extraInfo.nutrition?.dieta}</text>
+                        <text>{extraInfo.nutrition?.detalhes_adicionais}</text>
+                    </>
+                )}
             </Column>
             <Row>
                 <CustomButton title="Realizar consulta" onClick={() => setShowPopUp(true)} type="primary" />

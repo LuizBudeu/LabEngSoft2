@@ -9,13 +9,13 @@ import { RegistrarFormulario } from "../../../contoller/preparador/ConsultaContr
 
 // consulta = models.ForeignKey(Consulta, on_delete=models.CASCADE)
 
-export const AppointmentForm = ({consulta_id, onSubmit, onClose}) => {
+export const AppointmentForm = ({consultaId, onSubmit, onCancel}) => {
     const [pacienteInfo, setPacientInfo] = useState({nivel_de_atividade_fisica: 0, treino_fisico: 0});
     const { workOuts } = GetWorkOuts("3");
 
     const submit = (e) => {
         e.preventDefault();
-        RegistrarFormulario(consulta_id, pacienteInfo);
+        RegistrarFormulario(consultaId, pacienteInfo);
         onSubmit();
     }
     
@@ -117,7 +117,7 @@ export const AppointmentForm = ({consulta_id, onSubmit, onClose}) => {
                 )}
             </Column>
             <CustomButton title="Finalizar" isSubmit type="primary" />
-            <CustomButton title="Cancelar" onClick={onClose}/>
+            <CustomButton title="Cancelar" onClick={onCancel}/>
         </form>
     );
 }

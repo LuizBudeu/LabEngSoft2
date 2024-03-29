@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useEffect, useState } from "react";
 
 export const RegistrarFormulario = async (consulta_id, pacientInfo) => {
     const path = `http://localhost:8000/api/preparador/consultas/${consulta_id}/formulario`
@@ -31,4 +32,23 @@ export const FinalizarConsulta = async (consulta_id) => {
         console.log("Erro ao alterar estado da consulta", e);
         return false;
     }
+}
+
+export const GetPacienteExtraInfo = (consulta_id) => {
+    const [extraInfo, setExtraInfo] = useState({});
+    
+    const path = `http://localhost:8000/api/preparador/consultas/${consulta_id}`
+    
+    const fetchData = () => {
+        axios.get(path)
+            .then((response) => setExtraInfo(response.data))
+            .catch((e) => console.log(e));
+    };
+    console.log(path, extraInfo);
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    return { extraInfo };
 }
