@@ -35,11 +35,6 @@ jobs:
         npm install
         npm run build
         
-    - name: Leave routing concerns to the SPA
-      working-directory: ./front
-      run: |
-        cp build/index.html build/404.html
-        
     - name: Deploy to Azure
       uses: TravisSpomer/deploy-to-azure-storage@v1.5.0
       with:
