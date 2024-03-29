@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../../interceptors/axios";
 import { GroupByDate } from "../../utils/group";
 import { useState, useEffect } from "react";
 

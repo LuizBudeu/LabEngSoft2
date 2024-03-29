@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../../interceptors/axios";
 import { useEffect, useState } from "react";
 import { API_PROTOCOL_HOSTNAME_PORT } from "../../utils/utils";
 

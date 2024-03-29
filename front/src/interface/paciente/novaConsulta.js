@@ -1,5 +1,5 @@
 // Import the react JS packages
-import axios from "axios";
+import axios from "../../interceptors/axios";
 import { useState, useHook } from "react"; // Define the Login function.
 import { GetProfessionals } from "../../contoller/paciente/AgendaController"; 
 import { GetProfile, UpdateProfile } from "../../contoller/paciente/PerfilController";

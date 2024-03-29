@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import axios from "axios";
+import axios from "../interceptors/axios";
 
 const TOKEN_URL = process.env.REACT_APP_TOKEN_URL;
 

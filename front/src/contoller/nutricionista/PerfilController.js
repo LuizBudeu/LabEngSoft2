@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../../interceptors/axios";
 import { useState, useEffect } from "react";
 
 export const GetProfile = (user_id) => {
