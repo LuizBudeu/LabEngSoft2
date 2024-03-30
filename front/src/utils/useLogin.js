@@ -6,7 +6,7 @@ import { useIsLoggedIn } from "./useIsLoggedIn";
 
 const TOKEN_URL = process.env.REACT_APP_TOKEN_URL;
 
-export const useLogin = (client_secret) => {
+export const useLogin = (clientSecret) => {
 
     const [searchParams, setSearchParams] = useSearchParams();
     const loggedIn = useIsLoggedIn();
@@ -19,7 +19,7 @@ export const useLogin = (client_secret) => {
             axios.post(TOKEN_URL, {
                 grant_type: "authorization_code",
                 code: authorization_code,
-                client_secret
+                client_secret: clientSecret
             }, {
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded"
