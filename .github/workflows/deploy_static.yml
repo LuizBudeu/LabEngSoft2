@@ -26,6 +26,8 @@ jobs:
         TOKEN_URL: ${{ secrets.TOKEN_URL }}
         PACIENTE_LOGIN_URL: ${{ secrets.PACIENTE_LOGIN_URL }}
         PACIENTE_AUTH_SECRET: ${{ secrets.PACIENTE_AUTH_SECRET }}
+        MEDICO_LOGIN_URL: ${{ secrets.MEDICO_LOGIN_URL }}
+        MEDICO_AUTH_SECRET: ${{ secrets.MEDICO_AUTH_SECRET }}
       run: |
         touch .env
         echo REACT_APP_ENVIRONMENT=prod >> .env
@@ -33,6 +35,8 @@ jobs:
         echo REACT_APP_TOKEN_URL="$TOKEN_URL" >> .env
         echo REACT_APP_PACIENTE_LOGIN_URL="$PACIENTE_LOGIN_URL" >> .env
         echo REACT_APP_PACIENTE_AUTH_SECRET="$PACIENTE_AUTH_SECRET" >> .env
+        echo REACT_APP_MEDICO_LOGIN_URL="$MEDICO_LOGIN_URL" >> .env
+        echo REACT_APP_MEDICO_AUTH_SECRET="$MEDICO_AUTH_SECRET" >> .env
         npm install
         npm run build
         
