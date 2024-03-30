@@ -1,10 +1,11 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
 import { GroupByDate } from "../../utils/group";
 import { API_PROTOCOL_HOSTNAME_PORT } from "../../utils/utils";
+import { useAxiosWithToken } from "../../utils/useAxiosWithToken";
 
 export const GetAgenda = (user_id, start_date, end_date) => {
     const [agenda, setAgenda] = useState();
+    const axios = useAxiosWithToken();
 
     useEffect(() => {
         axios

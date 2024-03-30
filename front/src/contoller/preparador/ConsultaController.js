@@ -1,8 +1,8 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { API_PROTOCOL_HOSTNAME_PORT } from "../../utils/utils";
+import { useAxiosWithToken } from "../../utils/useAxiosWithToken";
 
-export const RegistrarFormulario = async (consulta_id, pacientInfo) => {
+export const RegistrarFormulario = async (consulta_id, pacientInfo, axios) => {
     const path = `${API_PROTOCOL_HOSTNAME_PORT}/api/preparador/consultas/${consulta_id}/formulario`
     try {
         const response = await axios.post(path, {...pacientInfo});
@@ -19,9 +19,8 @@ export const RegistrarFormulario = async (consulta_id, pacientInfo) => {
     }
 };
 
-export const FinalizarConsulta = async (consulta_id) => {
+export const FinalizarConsulta = async (consulta_id, axios) => {
     const path = `${API_PROTOCOL_HOSTNAME_PORT}/api/preparador/consultas/${consulta_id}`
-    
     try {
         const response = await axios.patch(path);
         
@@ -37,7 +36,8 @@ export const FinalizarConsulta = async (consulta_id) => {
 
 export const GetPacienteExtraInfo = (consulta_id) => {
     const [extraInfo, setExtraInfo] = useState({});
-    
+    const axios = useAxiosWithToken();
+
     const path = `${API_PROTOCOL_HOSTNAME_PORT}/api/preparador/consultas/${consulta_id}`
     
     const fetchData = () => {

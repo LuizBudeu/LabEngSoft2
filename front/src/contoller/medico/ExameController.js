@@ -1,8 +1,8 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { API_PROTOCOL_HOSTNAME_PORT } from "../../utils/utils";
+import { useAxiosWithToken } from "../../utils/useAxiosWithToken";
 
-export const PedirExameMedico = async (paciente_id, medico_id, titulo) => {
+export const PedirExameMedico = async (paciente_id, medico_id, titulo, axios) => {
     try {
         const response = await axios.post(API_PROTOCOL_HOSTNAME_PORT + "/api/medico/pedir_exame/", { paciente_id, medico_id, titulo });
 
@@ -20,6 +20,7 @@ export const PedirExameMedico = async (paciente_id, medico_id, titulo) => {
 
 export const GetPedidosExames = (user_id) => {
     const [pedidosExames, setPedidosExames] = useState([]);
+    const axios = useAxiosWithToken();
 
     useEffect(() => {
         axios
@@ -39,7 +40,7 @@ export const GetPedidosExames = (user_id) => {
     return [pedidosExames, setPedidosExames];
 };
 
-export const FinalizaExameMedico = async (exame_id) => {
+export const FinalizaExameMedico = async (exame_id, axios) => {
     try {
         const response = await axios.put(API_PROTOCOL_HOSTNAME_PORT + "/api/medico/finaliza_exame", { exame_id });
 

@@ -15,6 +15,7 @@ import { Column } from "../../components/column";
 import { FinalizarConsulta } from "../../contoller/preparador/ConsultaController";
 import { GetPacienteExtraInfo } from "../../contoller/preparador/ConsultaController";
 import { TipoDiabetesNumberToString } from "../../utils/utils";
+import { useAxiosWithToken } from "../../utils/useAxiosWithToken";
 
 export const AgendaTab = () => {
     const { agenda } = GetAgenda("3", "2024-03-20", "2024-06-24");
@@ -57,9 +58,10 @@ export const AgendaTab = () => {
 const AppointmentInfo = ({appointment, onFormClick}) => {
     const [showPopUp, setShowPopUp] = useState(false);
     const { extraInfo } = GetPacienteExtraInfo(appointment.id);
+    const axios = useAxiosWithToken();
     
     const handleSubmit = () => {
-        FinalizarConsulta(appointment.id);
+        FinalizarConsulta(appointment.id, axios);
         setShowPopUp(false);
     }
 
