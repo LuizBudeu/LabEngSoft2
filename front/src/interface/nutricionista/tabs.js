@@ -28,7 +28,7 @@ const Tabs = () => {
      if (ENVIRONMENT === "prod" && !loggedIn)
      return (
          <>
-             <p>Bem-vindo ao portal do médico!</p>
+             <p>Bem-vindo ao portal do nutricionista!</p>
              <a href={LOGIN_URL}>Registre-se ou faça Login.</a>
          </>
      );
