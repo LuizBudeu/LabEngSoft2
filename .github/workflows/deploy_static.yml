@@ -30,6 +30,8 @@ jobs:
         MEDICO_AUTH_SECRET: ${{ secrets.MEDICO_AUTH_SECRET }}
         NUTRICIONISTA_LOGIN_URL: ${{ secrets.NUTRICIONISTA_LOGIN_URL }}
         NUTRICIONISTA_AUTH_SECRET: ${{ secrets.NUTRICIONISTA_AUTH_SECRET }}
+        PREPARADOR_LOGIN_URL: ${{ secrets.PREPARADOR_LOGIN_URL }}
+        PREPARADOR_AUTH_SECRET: ${{ secrets.PREPARADOR_AUTH_SECRET }}
       run: |
         touch .env
         echo REACT_APP_ENVIRONMENT=prod >> .env
@@ -41,6 +43,8 @@ jobs:
         echo REACT_APP_MEDICO_AUTH_SECRET="$MEDICO_AUTH_SECRET" >> .env
         echo REACT_APP_NUTRICIONISTA_LOGIN_URL="$NUTRICIONISTA_LOGIN_URL" >> .env
         echo REACT_APP_NUTRICIONISTA_AUTH_SECRET="$NUTRICIONISTA_AUTH_SECRET" >> .env
+        echo REACT_APP_PREPARADOR_LOGIN_URL="$PREPARADOR_LOGIN_URL" >> .env
+        echo REACT_APP_PREPARADOR_AUTH_SECRET="$PREPARADOR_AUTH_SECRET" >> .env
         npm install
         npm run build
         
