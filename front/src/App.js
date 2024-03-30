@@ -4,7 +4,7 @@ import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { PacienteHome } from "./interface/paciente/home";
 import { MedicoHome } from "./interface/medico/home";
-import { PreparadorHome } from "./interface/preparador/preparadorHome";
+import { PreparadorHome } from "./interface/preparador/home";
 import { NutricionistaHome } from "./interface/nutricionista/home";
 
 function App() {
