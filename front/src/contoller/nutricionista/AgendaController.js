@@ -1,6 +1,7 @@
 import { GroupByDate } from "../../utils/group";
 import { useState, useEffect } from "react";
 import { useAxiosWithToken } from "../../utils/useAxiosWithToken";
+import { API_PROTOCOL_HOSTNAME_PORT } from "../../utils/utils";
 
 export const GetConsultas = (user_id, start_date, end_date) => {
 
@@ -16,7 +17,7 @@ export const GetConsultas = (user_id, start_date, end_date) => {
     ];
 
     useEffect(() => {
-        axios.get("http://localhost:8000/api/nutricionista/agenda", {
+        axios.get(API_PROTOCOL_HOSTNAME_PORT + "/api/nutricionista/agenda", {
             params: {
                 user_id: user_id,
                 start_date: start_date,
