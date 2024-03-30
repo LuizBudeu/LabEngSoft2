@@ -28,7 +28,6 @@ jobs:
         PACIENTE_AUTH_SECRET: ${{ secrets.PACIENTE_AUTH_SECRET }}
       run: |
         touch .env
-        # echo REACT_APP_PROTOCOL_HOSTNAME_PORT="$API_PROTOCOL_HOSTNAME_PORT" >> .env
         echo REACT_APP_PROTOCOL_HOSTNAME_PORT='asdf&asdf' >> .env
         echo REACT_APP_TOKEN_URL="$TOKEN_URL" >> .env
         echo REACT_APP_PACIENTE_LOGIN_URL="$PACIENTE_LOGIN_URL" >> .env
