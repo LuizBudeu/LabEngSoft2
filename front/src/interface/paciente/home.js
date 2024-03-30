@@ -7,6 +7,7 @@ import { BackgroundContainer } from "../../components/backgroundContainer";
 import { SecondaryNavBar } from "../../components/secondaryNavBar";
 import { useLogin } from "../../utils/useLogin";
 import { useLogout } from "../../utils/useLogout";
+import { ENVIROMENT } from "../../utils/utils";
 
 const LOGIN_URL = process.env.REACT_APP_PACIENTE_LOGIN_URL;
 
@@ -16,18 +17,20 @@ export const PacienteHome = () => {
     const loggedIn = useLogin(process.env.REACT_APP_PACIENTE_AUTH_SECRET);
     const logout = useLogout();
 
-    const tabs = [{
-        id: "tab1",
-        displayName: "Agenda"
-     },
-     {
-        id: "tab2",
-        displayName: "Acompanhamento"
-     },
-     {
-        id: "tab3",
-        displayName: "Perfil"
-     }];
+    const tabs = [
+        {
+            id: "tab1",
+            displayName: "Agenda",
+        },
+        {
+            id: "tab2",
+            displayName: "Acompanhamento",
+        },
+        {
+            id: "tab3",
+            displayName: "Perfil",
+        },
+    ];
 
     const handleTab1 = () => {
         setActiveTab("tab1");
@@ -41,20 +44,17 @@ export const PacienteHome = () => {
         setActiveTab("tab3");
     };
 
-    if (!loggedIn) return (
-        <>
-            <p>Bem-vindo ao portal do paciente!</p>
-            <a href={LOGIN_URL}>Registre-se ou faça Login.</a>
-        </>
-    );
+    if (ENVIROMENT === "prod" && !loggedIn)
+        return (
+            <>
+                <p>Bem-vindo ao portal do paciente!</p>
+                <a href={LOGIN_URL}>Registre-se ou faça Login.</a>
+            </>
+        );
 
     return (
         <BackgroundContainer>
-            <SecondaryNavBar
-                tabs={tabs}
-                activeTab={activeTab}
-                setActiveTab={setActiveTab}
-            />
+            <SecondaryNavBar tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
             <div>
                 <MainContainer>
                     {activeTab === "tab1" && <Agenda />}
