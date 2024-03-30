@@ -10,11 +10,11 @@ import { useLogout } from "../../utils/useLogout";
 import { ENVIROMENT } from "../../utils/utils";
 
 const LOGIN_URL = process.env.REACT_APP_PACIENTE_LOGIN_URL;
-const PACIENTE_AUTH_SECRET = process.env.REACT_APP_PACIENTE_AUTH_SECRET;
+const AUTH_SECRET = process.env.REACT_APP_PACIENTE_AUTH_SECRET;
 
 export const PacienteHome = () => {
     const [activeTab, setActiveTab] = useState("tab1");
-    const loggedIn = useLogin(PACIENTE_AUTH_SECRET);
+    const loggedIn = useLogin(AUTH_SECRET);
     const logout = useLogout();
 
     const tabs = [
