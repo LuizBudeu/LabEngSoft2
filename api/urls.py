@@ -4,9 +4,15 @@ from django.urls import path, include
 from .views.hello_world import hello_world
 from .views.home import home
 from .views.usuario import create as usuario_create
+
+from .views.medico.consulta import consulta as medico_consulta
+from .views.medico.consulta import comeca_consulta as medico_comeca_consulta
+from .views.medico.medico import create_medico
+from .views.medico.exame import pedir_exames as medico_pedir_exame
+from .views.medico.exame import pegar_exames as medico_pegar_exames
+from .views.medico.exame import finalizar_exame as medico_finalizar_exame
 from .views.medico.agenda import agenda as medico_agenda
-from .views.paciente.agenda import agenda as paciente_agenda
-from .views.paciente.perfil import perfil as paciente_perfil
+
 from .views.paciente.perfil import update_perfil as paciente_update_perfil
 from .views.paciente.busca import buscaProfissionais as paciente_busca_profissionais
 from .views.paciente.busca import horarios as paciente_horarios
@@ -14,9 +20,13 @@ from .views.paciente.agenda import createAppointment as paciente_create_appointm
 from .views.paciente.agenda import cancelAppointment as paciente_cancel_appointment
 from .views.paciente.agenda import payAppointment as paciente_pay_appointment
 from .views.paciente.acompanhamento import acompanhamento as paciente_acompanhamento
+from .views.paciente.perfil import perfil as paciente_perfil
+from .views.paciente.agenda import agenda as paciente_agenda
+
 from .views.preparador.agenda import agenda as preparador_agenda
 from .views.preparador.workout import workouts
 from .views.preparador.workout import create as workout_create
+
 from .views.nutricionista.agenda import agenda as nutricionista_agenda
 from .views.nutricionista.avaliacao import avaliacao as avaliacao_nutricional
 from .views.nutricionista.consulta import consulta as nutricionista_consulta
@@ -29,7 +39,15 @@ urlpatterns = [
     path('hello-world/', hello_world, name='hello_world'),
     path('home/', home, name='home'),
     path('usuario/create/', usuario_create, name='usuario_create'),
+    
     path('medico/agenda', medico_agenda, name='medico_agenda'),
+    path('medico/consulta', medico_consulta, name='medico_consulta'),
+    path('medico/comeca_consulta', medico_comeca_consulta, name='medico_comeca_consulta'),
+    path('medico/pedir_exame', medico_pedir_exame, name='medico_pedir_exame'),
+    path('medico/pegar_exames', medico_pegar_exames, name='medico_pegar_exames'),
+    path('medico/finalizar_exame', medico_finalizar_exame, name='medico_finalizar_exame'),
+    path('medico/create', create_medico, name='medico_create'),
+    
     path('paciente/agenda', paciente_agenda, name='paciente_agenda'),
     path('paciente/perfil', paciente_perfil, name='paciente_perfil'),
     path('paciente/update_perfil', paciente_update_perfil, name='paciente_update_perfil'),
