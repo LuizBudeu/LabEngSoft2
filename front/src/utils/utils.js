@@ -25,4 +25,4 @@ export const ProfissionalIcons = {
 };
 
 export const API_PROTOCOL_HOSTNAME_PORT = process.env.REACT_APP_PROTOCOL_HOSTNAME_PORT ?? "http://localhost:8000";
-export const ENVIROMENT = process.env.ENVIROMENT === "prod";
+export const ENVIROMENT = process.env.ENVIROMENT === "prod" ? "prod" : "dev";
