@@ -6,6 +6,7 @@ import { BackgroundContainer } from "../../components/backgroundContainer";
 import { SecondaryNavBar } from "../../components/secondaryNavBar";
 import { useLogout } from "../../utils/useLogout";
 import { useLogin } from "../../utils/useLogin";
+import { ENVIRONMENT } from "../../utils/utils";
 
 const LOGIN_URL = process.env.REACT_APP_NUTRICIONISTA_LOGIN_URL;
 const AUTH_SECRET = process.env.REACT_APP_NUTRICIONISTA_AUTH_SECRET;
