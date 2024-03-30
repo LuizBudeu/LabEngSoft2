@@ -7,7 +7,7 @@ import { BackgroundContainer } from "../../components/backgroundContainer";
 import { SecondaryNavBar } from "../../components/secondaryNavBar";
 import { useLogin } from "../../utils/useLogin";
 import { useLogout } from "../../utils/useLogout";
-import { ENVIROMENT } from "../../utils/utils";
+import { ENVIRONMENT } from "../../utils/utils";
 
 const LOGIN_URL = process.env.REACT_APP_PACIENTE_LOGIN_URL;
 const AUTH_SECRET = process.env.REACT_APP_PACIENTE_AUTH_SECRET;
@@ -44,7 +44,7 @@ export const PacienteHome = () => {
         setActiveTab("tab3");
     };
 
-    if (ENVIROMENT === "prod" && !loggedIn)
+    if (ENVIRONMENT === "prod" && !loggedIn)
         return (
             <>
                 <p>Bem-vindo ao portal do paciente!</p>

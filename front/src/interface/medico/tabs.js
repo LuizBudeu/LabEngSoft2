@@ -6,8 +6,8 @@ import { SecondaryNavBar } from "../../components/secondaryNavBar";
 import { MainContainer } from "../../components/mainContainer";
 import { BackgroundContainer } from "../../components/backgroundContainer";
 import { useLogout } from "../../utils/useLogout";
-import { ENVIROMENT } from "../../utils/utils";
 import { useLogin } from "../../utils/useLogin";
+import { ENVIRONMENT } from "../../utils/utils";
 
 const LOGIN_URL = process.env.REACT_APP_MEDICO_LOGIN_URL;
 const AUTH_SECRET = process.env.REACT_APP_MEDICO_AUTH_SECRET;
@@ -22,7 +22,7 @@ const Tabs = () => {
         { id: "tab2", displayName: "Exames" },
     ];
 
-    if (ENVIROMENT === "prod" && !loggedIn)
+    if (ENVIRONMENT === "prod" && !loggedIn)
         return (
             <>
                 <p>Bem-vindo ao portal do médico!</p>

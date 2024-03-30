@@ -25,7 +25,7 @@ export const ProfissionalIcons = {
 };
 
 export const API_PROTOCOL_HOSTNAME_PORT = process.env.REACT_APP_PROTOCOL_HOSTNAME_PORT ?? "http://localhost:8000";
-export const ENVIROMENT = process.env.REACT_APP_ENVIROMENT === "prod" ? "prod" : "dev";
+export const ENVIRONMENT = process.env.REACT_APP_ENVIRONMENT === "prod" ? "prod" : "dev";
 export const TipoDiabetesNumberToString = {
     0: "Não possui diabetes",
     1: "Diabetes tipo 1",
