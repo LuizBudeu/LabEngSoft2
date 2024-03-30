@@ -28,7 +28,7 @@ export const UpdateProfile = async (user_id, userProfile) => {
     const axios = useAxiosWithToken();
 
     try{
-        const response = await axios.post("http://localhost:8000/api/nutricionista/update_perfil", 
+        const response = await axios.post(API_PROTOCOL_HOSTNAME_PORT + "/api/nutricionista/update_perfil", 
             {...userProfile, user_id: user_id}
         ); 
         if(response.status != 200){
