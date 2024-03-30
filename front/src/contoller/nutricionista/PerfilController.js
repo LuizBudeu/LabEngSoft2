@@ -1,9 +1,10 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
+import { useAxiosWithToken } from "../../utils/useAxiosWithToken";
 
 export const GetProfile = (user_id) => {
 
     const [userProfile, setUserProfile] = useState();
+    const axios = useAxiosWithToken();
 
     useEffect(() => {
         axios.get("http://localhost:8000/api/nutricionista/perfil", {
@@ -23,6 +24,8 @@ export const GetProfile = (user_id) => {
 };
 
 export const UpdateProfile = async (user_id, userProfile) => {
+    const axios = useAxiosWithToken();
+
     try{
         const response = await axios.post("http://localhost:8000/api/nutricionista/update_perfil", 
             {...userProfile, user_id: user_id}

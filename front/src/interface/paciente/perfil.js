@@ -1,5 +1,4 @@
 // Import the react JS packages
-import axios from "axios";
 import { useState } from "react"; // Define the Login function.
 import { GetProfile } from "../../contoller/paciente/PerfilController"; 
 import { useNavigate } from 'react-router-dom';
