@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import AgendaTab from "./AgendaTab";
 import ExamesTab from "./ExamesTab";
-import { Colors } from "../../utils/colors";
 import "./styles/Tabs.css";
 import { SecondaryNavBar } from "../../components/secondaryNavBar";
 import { MainContainer } from "../../components/mainContainer";

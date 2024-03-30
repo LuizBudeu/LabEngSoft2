@@ -1,23 +1,57 @@
 import React from "react";
 import "./styles/Tabs.css";
-import { groupByDate } from "../../utils/group";
 import { AgendaList } from "../../components/agendaList";
-import { MainContainer } from "../../components/mainContainer";
 import { GetAgenda } from "../../contoller/medico/AgendaController";
 
-const AgendaTab = () => {
-    const [agenda, setAgenda] = GetAgenda("1", "2021-01-01", "2024-12-31");
+import { useState } from "react";
+import { Row } from "../../components/row";
+import { RowItem } from "../../components/rowItem";
+import { VerticalLine } from "../../components/verticalLine";
+import { GetHourMinute } from "../../utils/date";
+import { CustomButton } from "../../components/customButton";
+import { CenterContent } from "../../components/centerContent";
 
-    return(
-        <MainContainer>
-            <div className="vertical-box">
-                <h2>Suas consultas</h2>
-                {agenda && <AgendaList appointments={agenda}/>}
+const AgendaTab = () => {
+    const [agenda] = GetAgenda("2", "2021-01-01", "2024-12-31");
+    const [selectedAppointment, setSelectedAppointment] = useState("");
+
+    return (
+        <>
+            <Row>
+                <RowItem grow noPadding>
+                    <div style={{ width: "100%" }}>
+                        <h2>Suas consultas</h2>
+                        {agenda && <AgendaList appointments={agenda} selectedAppointment={selectedAppointment} onItemClick={(itemId) => setSelectedAppointment(itemId)} />}
+                    </div>
+                </RowItem>
+                <RowItem>
+                    <VerticalLine noPadding />
+                </RowItem>
+                <RowItem grow noPadding>
+                    {selectedAppointment ? (
+                        <AppointmentInfo appointment={selectedAppointment} />
+                    ) : (
+                        <CenterContent>
+                            <span>Selecione uma consulta</span>
+                        </CenterContent>
+                    )}
+                </RowItem>
+            </Row>
+        </>
+    );
+};
+
+const AppointmentInfo = ({ appointment }) => {
+    return (
+        <div>
+            <div style={{ flexGrow: 1, width: "100%", padding: "16px" }}>
+                <body>Paciente: {appointment.paciente__nome}</body>
+                <body>Horário da consulta: {GetHourMinute(appointment.horario, appointment.duracao)}</body>
             </div>
-            <div className="vertical-box">
-                <span>Informações do fulano</span>
-            </div>
-        </MainContainer>
+            <Row>
+                <CustomButton title="Realizar consulta" onClick={() => console.log("Realizar consulta")} type="primary" />
+            </Row>
+        </div>
     );
 };
 export default AgendaTab;

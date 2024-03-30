@@ -2,7 +2,6 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { GroupByDate } from "../../utils/group";
 
-
 export const GetAgenda = (user_id, start_date, end_date) => {
     const [agenda, setAgenda] = useState();
 
@@ -22,7 +21,7 @@ export const GetAgenda = (user_id, start_date, end_date) => {
             .catch((e) => {
                 console.log(e);
             });
-    }, []);
+    }, [end_date, start_date, user_id]);
 
     return [agenda, setAgenda];
 };
