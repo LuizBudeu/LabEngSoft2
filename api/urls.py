@@ -38,9 +38,9 @@ from .views.preparador.consulta import registrar_formulario
 from .views.preparador.consulta import consulta_request
 
 urlpatterns = [
-    path('hello-world/', hello_world, name='hello_world'),
-    path('home/', home, name='home'),
-    path('usuario/create/', usuario_create, name='usuario_create'),
+    path('hello-world', hello_world, name='hello_world'),
+    path('home', home, name='home'),
+    path('usuario/create', usuario_create, name='usuario_create'),
     
     path('medico/agenda', medico_agenda, name='medico_agenda'),
     path('medico/consulta', medico_consulta, name='medico_consulta'),
@@ -60,8 +60,8 @@ urlpatterns = [
     path('paciente/pay_consulta', paciente_pay_appointment, name='paciente_pay_appointment'),
     path('paciente/acompanhamento', paciente_acompanhamento, name='paciente_acompanhamento'),
 
-    path('preparador/agenda/', preparador_agenda, name='preparador_agenda'),
-    path('preparador/create_workout/', workout_create, name='workout_create'),
+    path('preparador/agenda', preparador_agenda, name='preparador_agenda'),
+    path('preparador/create_workout', workout_create, name='workout_create'),
     path('preparador/workouts', workouts, name='workouts'),
     path('preparador/consultas/<int:consulta_id>/formulario', registrar_formulario, name='finalizar_consulta'),
     path('preparador/consultas/<int:consulta_id>', consulta_request, name='consulta_request'),
