@@ -17,13 +17,13 @@ def dieta(request: HttpRequest) -> Response:
         appointment_id: ID da consulta de um nutricionista.
     """
 
-    data: dict = json.loads(request.body.decode('utf-8'))
+    data = request.GET
 
     # Data validation
     try: 
-        consulta_id = Consulta.objects.get(id=data['appointment_id']).pk # Nesse caso, primary key == id
+        consulta_id = Consulta.objects.get(id=data.get('appointment_id')).pk # Nesse caso, primary key == id
     except Consulta.DoesNotExist:
-        raise ParseError(f"Consulta com id={data['appointment_id']} não foi encontrada")
+        raise ParseError(f"Consulta com id={data.get('appointment_id')} não foi encontrada")
     
     try:
         relatorio_nutri = RelatorioNutricionista.objects.get(consulta=consulta_id)
