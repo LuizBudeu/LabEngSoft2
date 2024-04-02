@@ -23,3 +23,7 @@ export const ProfissionalIcons = {
     2: "img/DietaIcon.png",
     3: "img/TreinoIcon.png",
 };
+
+export const formatCurrency = (val) =>{
+    return "R$"+val.toFixed(2).replace(".", ",");;
+}

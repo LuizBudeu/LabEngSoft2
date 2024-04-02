@@ -59,6 +59,8 @@ class Consulta(models.Model):
     horario = models.DateTimeField()
     duracao_em_minutos = models.IntegerField(blank=True, null=True)
     status = models.IntegerField(choices=CONSULTA_CHOICES)
+    valor = models.FloatField(blank=True, null=True)
+    tarifa = models.FloatField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

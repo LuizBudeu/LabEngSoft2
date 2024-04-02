@@ -6,7 +6,8 @@ export const GetAppointments = (user_id) => {
 
     const [appointments, setAppointments] = useState([]);
     const [selectedAppointment, setSelectedAppointment] = useState();
-    const [showPopUp, setShowPopUp] = useState(false);
+    const [showNewAppointmentPopUp, setShowNewAppointmentPopUp] = useState(false);
+    const [showPayAppointmentPopUp, setPayNewAppointmentPopUp] = useState(false);
 
     const refreshAppointments = () => {
         axios.get(process.env.REACT_APP_PROTOCOL_HOSTNAME_PORT + "/api/paciente/agenda", {
@@ -67,8 +68,10 @@ export const GetAppointments = (user_id) => {
         refreshAppointments,
         selectedAppointment, 
         setSelectedAppointment,
-        showPopUp, 
-        setShowPopUp,
+        showNewAppointmentPopUp, 
+        setShowNewAppointmentPopUp,
+        showPayAppointmentPopUp, 
+        setPayNewAppointmentPopUp,
         cancelAppointment,
         payAppointment
     ];

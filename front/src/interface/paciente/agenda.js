@@ -14,7 +14,9 @@ import { PopUpContainer } from "../../components/popUpContainer";
 import { MainContainer } from "../../components/mainContainer";
 import { ScrollContainer } from "../../components/scrollContainer";
 import { GetHourMinute, FormatDate } from "../../utils/date";
+import { formatCurrency } from "../../utils/utils";
 import { NovaConsulta } from "./novaConsulta";
+import { DynamicContainer } from "../../components/dynamicContainer";
 
 const Agenda = () => {
   const navigate = useNavigate();
@@ -23,21 +25,40 @@ const Agenda = () => {
     refreshAppointments,
     selectedAppointment, 
     setSelectedAppointment,
-    showPopUp, 
-    setShowPopUp,
+    showNewAppointmentPopUp, 
+    setShowNewAppointmentPopUp,
+    showPayAppointmentPopUp, 
+    setPayNewAppointmentPopUp,
     cancelAppointment,
     payAppointment
   ] = GetAppointments("1");
 
   return (
     <div style={{height: "100%"}}>
-      <PopUpContainer showPopUp={showPopUp} closePopUp={() => setShowPopUp(false)}>
+      <PopUpContainer showPopUp={showNewAppointmentPopUp} closePopUp={() => setShowNewAppointmentPopUp(false)}>
         <MainContainer>
           <NovaConsulta onSuccess={() => {
-              setShowPopUp(false);
+              setShowNewAppointmentPopUp(false);
               refreshAppointments();
             }}/>
         </MainContainer>
+      </PopUpContainer>
+      <PopUpContainer showPopUp={showPayAppointmentPopUp} closePopUp={() => setPayNewAppointmentPopUp(false)} center>
+        <DynamicContainer>
+          <text style={{'font-weight': 'bold'}}>Pagar consuta</text>
+          <text>{formatCurrency(selectedAppointment?.valor+selectedAppointment?.tarifa)}</text>
+          <br/>
+          <CustomButton
+            type="primary"
+            title="Pagar consulta"
+            onClick={() => {
+              payAppointment(selectedAppointment.id);
+              setPayNewAppointmentPopUp(false);
+            }}
+          />
+          
+        </DynamicContainer>
+      
       </PopUpContainer>
       <div style={{height: "100%"}}>
         <Row>
@@ -48,7 +69,7 @@ const Agenda = () => {
                 <CustomButton
                   type="primary"
                   title="Nova consulta"
-                  onClick={() => setShowPopUp(true)}
+                  onClick={() => setShowNewAppointmentPopUp(true)}
                 />
                 {appointmentsByDay && <div>
                   {Object.entries(appointmentsByDay).map(([key, appointments]) => (
@@ -80,7 +101,7 @@ const Agenda = () => {
                   cancelAppointment(selectedAppointment.id)
                 }}
                 payAppointment={() => {
-                  payAppointment(selectedAppointment.id)
+                  setPayNewAppointmentPopUp(true)
                 }}
               />
             ) : (
