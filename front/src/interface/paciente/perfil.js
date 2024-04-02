@@ -117,15 +117,16 @@ const Perfil = () => {
             </Column>
           </RowItem>
         </Row>
+        <Row>
+          <RowItem grow center>
+              <CustomButton
+              type="primary"
+              onClick={() => setShowPopUp(true)}
+              title="Editar perfil"
+            />
+          </RowItem>
+        </Row>
       </Column>}
-      <br/>
-      <CenterContent>
-        <CustomButton
-          type="primary"
-          onClick={() => setShowPopUp(true)}
-          title="Editar perfil"
-        />
-      </CenterContent>
     </div>
   );
 };
