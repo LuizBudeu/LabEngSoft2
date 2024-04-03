@@ -8,6 +8,7 @@ import { BackgroundContainer } from "../../components/backgroundContainer";
 import { ENVIRONMENT } from "../../utils/utils";
 import { useLogin } from "../../utils/useLogin";
 import { useLogout } from "../../utils/useLogout";
+import { PerfilTab } from "./perfilTab";
 
 const LOGIN_URL = process.env.REACT_APP_PREPARADOR_LOGIN_URL;
 const AUTH_SECRET = process.env.REACT_APP_PREPARADOR_AUTH_SECRET;
@@ -20,6 +21,7 @@ export const PreparadorHome = () => {
     const tabs = [
         {id: 'tab1', displayName: 'Agenda'},
         {id: 'tab2', displayName: 'Treinos'},
+        {id: 'tab3', displayName: 'Perfil'},
     ];
 
     if (ENVIRONMENT === "prod" && !loggedIn)
@@ -40,6 +42,7 @@ export const PreparadorHome = () => {
             <MainContainer>
                 {activeTab === "tab1" && <AgendaTab />}
                 {activeTab === "tab2" && <TreinosTab />}
+                {activeTab === "tab3" && <PerfilTab />}
             </MainContainer>
             <button onClick={logout}>Logout</button>
         </BackgroundContainer>
