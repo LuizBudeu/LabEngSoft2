@@ -6,20 +6,25 @@ import { PerfilForm } from "./components/perfilForm";
 import { FormContainer } from "../../components/formContainer";
 
 export const PerfilTab = () => {
-    const [userProfile, setUserProfile] = GetProfile("3");
+    const { userProfile, refetch } = GetProfile("3");
     const [showPopUp, setShowPopUp] = useState(false);
+
+    const handleSubmit = () => {
+        refetch();
+        setShowPopUp(false);
+    }
 
     return(
         <div>
             <PopUpContainer showPopUp={showPopUp} closePopUp={() => setShowPopUp(false)}>
                 <FormContainer>
-                    <PerfilForm perfil={userProfile} setPerfil={setUserProfile}/>
+                    <PerfilForm perfil={userProfile} onSubmit={handleSubmit}/>
                 </FormContainer>
             </PopUpContainer>
             {userProfile && (
                 <>
                     {Object.entries(userProfile).map(userInfo => (
-                        <div>{userInfo[0] + ": " + userInfo[1]}</div>
+                        <div><b>{userInfo[0] + ": "}</b><text>{userInfo[1]}</text></div>
                     ))}
                 </>
             )}

@@ -7,7 +7,7 @@ export const GetProfile = (user_id) => {
     const [userProfile, setUserProfile] = useState();
     const axios = useAxiosWithToken();
 
-    useEffect(() => {
+    const fetchProfile = () => {
         axios.get(API_PROTOCOL_HOSTNAME_PORT + "/api/preparador/perfil", {
             params: {
                 user_id: user_id
@@ -18,17 +18,24 @@ export const GetProfile = (user_id) => {
         }).catch((e) => {
             console.log(e);
         });
-    }, [])
+    }
 
-    return [userProfile, setUserProfile];
+    useEffect(() => {
+        fetchProfile();
+    }, []);
+
+    const refetch = () => {
+        fetchProfile();
+    };
+
+    return { userProfile, refetch };
     
 };
 
-export const UpdateProfile = async (user_id, userProfile) => {
-    const axios = useAxiosWithToken();
+export const UpdateProfile = async (user_id, userProfile, axios) => {
     
     try{
-        const response = await axios.post(API_PROTOCOL_HOSTNAME_PORT + "/api/paciente/update_perfil", 
+        const response = await axios.post(API_PROTOCOL_HOSTNAME_PORT + "/api/preparador/update_perfil", 
             {...userProfile, user_id: user_id}
         ); 
         if(response.status !== 200){
