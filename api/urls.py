@@ -18,6 +18,8 @@ from .views.nutricionista.dieta import salvaDieta
 from .views.nutricionista.exame import pedirExame as nutricionista_exame
 from .views.nutricionista.perfil import perfil as nutricionista_perfil
 from .views.nutricionista.perfil import update_perfil as nutricionista_update_perfil
+from .views.nutricionista.avaliacao import salvaAvaliacao as salva_avaliacao_nutricional
+from .views.nutricionista.avaliacao import avaliacao as avaliacao_nutricional
 
 urlpatterns = [
     path('hello-world/', hello_world, name='hello_world'),
@@ -34,6 +36,8 @@ urlpatterns = [
     path('nutricionista/dieta', dieta, name='dieta'),
     path('nutricionista/salva_dieta', salvaDieta, name='salva_dieta'),
     path('nutricionista/exame', nutricionista_exame, name='nutricionista_exame'),
+    path('nutricionista/avaliacao', avaliacao_nutricional, name='avaliacao_nutricional'),
+    path('nutricionista/salva_avaliacao', salva_avaliacao_nutricional, name='salva_avaliacao_nutricional'),
     path('nutricionista/perfil', nutricionista_perfil, name='nutricionista_perfil'),
     path('nutricionista/update_perfil', nutricionista_update_perfil, name='nutricionista_update_perfil'),
 
