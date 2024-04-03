@@ -1,6 +1,5 @@
 from django.db import models
 
-
 OCUPACAO_CHOICES = [
     (0, "Paciente"),
     (1, "Médico"),
@@ -17,7 +16,14 @@ GENDER_CHOICES = [
     (4, "Outro"),
 ]
 
-class Usuario(models.Model):
+# Paciente
+class Paciente(models.Model):
+    DIABETES_CHOICES = [
+        (0, "Não possui"),
+        (1, "Tipo 1"),
+        (2, "Tipo 2")
+    ]
+
     email = models.CharField(max_length=100)
     senha = models.CharField(max_length=100)
     ocupacao = models.IntegerField(choices=OCUPACAO_CHOICES)
@@ -29,23 +35,33 @@ class Usuario(models.Model):
     logradouro = models.CharField(max_length=100, blank=True, null=True)
     numero = models.CharField(max_length=100, blank=True, null=True)
     complemento = models.CharField(max_length=100, blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-class Paciente(models.Model):
-    DIABETES_CHOICES = [
-        (0, "Não possui"),
-        (1, "Tipo 1"),
-        (2, "Tipo 2")
-    ]
-
-    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     alergias = models.CharField(max_length=200)
     tipo_diabetes = models.IntegerField(choices=DIABETES_CHOICES)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-class Consulta(models.Model):
+# Medico
+class Medico(models.Model):
+    email = models.CharField(max_length=100)
+    senha = models.CharField(max_length=100)
+    ocupacao = models.IntegerField(choices=OCUPACAO_CHOICES)
+    nome = models.CharField(max_length=100)
+    cpf = models.CharField(max_length=11)
+    data_de_nascimento = models.DateField()
+    genero = models.IntegerField(choices=GENDER_CHOICES)
+    cep = models.CharField(max_length=100, blank=True, null=True)
+    logradouro = models.CharField(max_length=100, blank=True, null=True)
+    numero = models.CharField(max_length=100, blank=True, null=True)
+    complemento = models.CharField(max_length=100, blank=True, null=True)
+    agencia = models.CharField(max_length=4)
+    conta = models.CharField(max_length=9)
+    digito_verificador = models.CharField(max_length=1)
+    crm = models.CharField(max_length=13)
+    especialidade = models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+class ConsultaMedico(models.Model):
     CONSULTA_CHOICES = [
         (0, 'Agendada'),
         (1, 'Cancelada'),
@@ -54,8 +70,8 @@ class Consulta(models.Model):
         (4, 'Pendente')
     ]
 
-    paciente = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='usuario')
-    profissional = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='profissional')
+    paciente_cpf = models.CharField(max_length=11)
+    medico = models.ForeignKey(Medico, on_delete=models.CASCADE, related_name='medico')
     horario = models.DateTimeField()
     duracao_em_minutos = models.IntegerField(blank=True, null=True)
     status = models.IntegerField(choices=CONSULTA_CHOICES)
@@ -64,16 +80,8 @@ class Consulta(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-
-class Medico(models.Model):
-    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
-    crm = models.CharField(max_length=13)
-    especialidade = models.CharField(max_length=100)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
 class RelatorioMedico(models.Model):
-    consulta = models.ForeignKey(Consulta, on_delete=models.CASCADE)
+    consulta = models.ForeignKey(ConsultaMedico, on_delete=models.CASCADE)
     massa = models.FloatField(blank=True, null=True)
     altura = models.FloatField(blank=True, null=True)
     nivel_de_acucar_no_sangue = models.FloatField(blank=True, null=True)
@@ -89,16 +97,49 @@ class PedidoExameMedico(models.Model):
         (1, 'Finalizada')
     ]
 
-    paciente = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='exame_paciente')
-    medico = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='exame_medico')
+    paciente_cpf = models.CharField(max_length=11)
+    medico = models.ForeignKey(Medico, on_delete=models.CASCADE, related_name='exame_medico')
     titulo = models.CharField(max_length=100, blank=True, null=True)
     status = models.IntegerField(choices=EXAME_CHOICES)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    
+
+# Nutricionista
 class Nutricionista(models.Model):
-    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='user_nutricionista')
+    email = models.CharField(max_length=100)
+    senha = models.CharField(max_length=100)
+    ocupacao = models.IntegerField(choices=OCUPACAO_CHOICES)
+    nome = models.CharField(max_length=100)
+    cpf = models.CharField(max_length=11)
+    data_de_nascimento = models.DateField()
+    genero = models.IntegerField(choices=GENDER_CHOICES)
+    cep = models.CharField(max_length=100, blank=True, null=True)
+    logradouro = models.CharField(max_length=100, blank=True, null=True)
+    numero = models.CharField(max_length=100, blank=True, null=True)
+    complemento = models.CharField(max_length=100, blank=True, null=True)
+    agencia = models.CharField(max_length=4)
+    conta = models.CharField(max_length=9)
+    digito_verificador = models.CharField(max_length=1)
     crn = models.CharField(max_length=13)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+class ConsultaNutricionista(models.Model):
+    CONSULTA_CHOICES = [
+        (0, 'Agendada'),
+        (1, 'Cancelada'),
+        (2, 'Realizada'),
+        (3, 'Vencida'),
+        (4, 'Pendente')
+    ]
+
+    paciente_cpf = models.CharField(max_length=11)
+    nutricionista = models.ForeignKey(Nutricionista, on_delete=models.CASCADE, related_name='nutricionista')
+    horario = models.DateTimeField()
+    duracao_em_minutos = models.IntegerField(blank=True, null=True)
+    status = models.IntegerField(choices=CONSULTA_CHOICES)
+    valor = models.FloatField(blank=True, null=True)
+    tarifa = models.FloatField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -111,7 +152,7 @@ class Dieta(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 class RelatorioNutricionista(models.Model):
-    consulta = models.ForeignKey(Consulta, on_delete=models.CASCADE)
+    consulta = models.ForeignKey(ConsultaNutricionista, on_delete=models.CASCADE)
     dieta = models.ForeignKey(Dieta, on_delete=models.CASCADE)
     detalhes_adicionais = models.CharField(max_length=300, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -119,7 +160,7 @@ class RelatorioNutricionista(models.Model):
 
 class AvaliacaoNutricional(models.Model):
     relatorio_nutricionista = models.ForeignKey(RelatorioNutricionista, on_delete=models.CASCADE)
-    paciente = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    paciente_cpf = models.CharField(max_length=11)
     gosta = models.CharField(max_length=300, blank=True, null=True)
     desgosta = models.CharField(max_length=300, blank=True, null=True)
     alergias = models.CharField(max_length=300, blank=True, null=True)
@@ -133,22 +174,55 @@ class PedidoExameNutricionista(models.Model):
         (0, 'Pendente'),
         (1, 'Finalizada')
     ]
-    nutricionista = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='nutricionista_exame')
-    paciente = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='paciente_exame_nutricionista')
+    nutricionista = models.ForeignKey(Nutricionista, on_delete=models.CASCADE, related_name='nutricionista_exame')
+    paciente_cpf = models.CharField(max_length=11)
     tipo_exame = models.CharField(max_length=100)
     status = models.IntegerField(choices=EXAME_CHOICES, default=1)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-class TreinoFisico(models.Model):
-    profissional = models.ForeignKey(Usuario, on_delete=models.CASCADE, default="3")
-    titulo = models.CharField(max_length=50, default="Treino Genérico")
-    treino = models.CharField(max_length=2000)
+# Preparador Físico
+class PreparadorFisico(models.Model):
+    email = models.CharField(max_length=100)
+    senha = models.CharField(max_length=100)
+    ocupacao = models.IntegerField(choices=OCUPACAO_CHOICES)
+    nome = models.CharField(max_length=100)
+    cpf = models.CharField(max_length=11)
+    data_de_nascimento = models.DateField()
+    genero = models.IntegerField(choices=GENDER_CHOICES)
+    cep = models.CharField(max_length=100, blank=True, null=True)
+    logradouro = models.CharField(max_length=100, blank=True, null=True)
+    numero = models.CharField(max_length=100, blank=True, null=True)
+    complemento = models.CharField(max_length=100, blank=True, null=True)
+    agencia = models.CharField(max_length=4)
+    conta = models.CharField(max_length=9)
+    digito_verificador = models.CharField(max_length=1)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-class PreparadorFisico(models.Model):
-    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+class ConsultaPreparadorFisico(models.Model):
+    CONSULTA_CHOICES = [
+        (0, 'Agendada'),
+        (1, 'Cancelada'),
+        (2, 'Realizada'),
+        (3, 'Vencida'),
+        (4, 'Pendente')
+    ]
+
+    paciente_cpf = models.CharField(max_length=11)
+    preparador = models.ForeignKey(PreparadorFisico, on_delete=models.CASCADE, related_name='preparador')
+    horario = models.DateTimeField()
+    duracao_em_minutos = models.IntegerField(blank=True, null=True)
+    status = models.IntegerField(choices=CONSULTA_CHOICES)
+    valor = models.FloatField(blank=True, null=True)
+    tarifa = models.FloatField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+class TreinoFisico(models.Model):
+    preparador = models.ForeignKey(PreparadorFisico, on_delete=models.CASCADE)
+    titulo = models.CharField(max_length=50, default="Treino Genérico")
+    treino = models.CharField(max_length=2000)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -161,7 +235,7 @@ class RelatorioPreparadorFisico(models.Model):
         (4, 'Sedentário')
     ]
 
-    consulta = models.ForeignKey(Consulta, on_delete=models.CASCADE)
+    consulta = models.ForeignKey(ConsultaPreparadorFisico, on_delete=models.CASCADE)
     treino_fisico = models.ForeignKey(TreinoFisico, on_delete=models.CASCADE)
     massa = models.FloatField(blank=True, null=True)
     altura = models.FloatField(blank=True, null=True)
@@ -170,13 +244,5 @@ class RelatorioPreparadorFisico(models.Model):
     metabolismo_basal = models.IntegerField(blank=True, null=True)
     porcentagem_de_gordura = models.FloatField(blank=True, null=True)
     porcentage_de_musculo = models.FloatField(blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-class DadosBancariosRecebimento(models.Model):
-    profissional = models.IntegerField(choices=OCUPACAO_CHOICES)
-    agencia = models.CharField(max_length=4)
-    conta = models.CharField(max_length=9)
-    digito_verificador = models.CharField(max_length=1)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

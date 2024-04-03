@@ -4,11 +4,11 @@ from rest_framework.exceptions import ParseError
 from django.http import HttpRequest
 import json
 
-from api.models import TreinoFisico
-from api.models import Usuario
+# from api.models import TreinoFisico
+# from api.models import Usuario
 
 @api_view(['POST'])
-def create(request: HttpRequest) -> Response:
+def create(request):
     """
     Cria um novo treino para o preparador físico
 
@@ -18,38 +18,39 @@ def create(request: HttpRequest) -> Response:
         workout: descrição completa do treino
     """
 
-    body = json.loads(request.body.decode('utf-8'))
-    print(body)
+    # body = json.loads(request.body.decode('utf-8'))
+    # print(body)
 
-    try:
-        usuario = Usuario.objects.get(id=body['user_id'])
-    except Usuario.DoesNotExist:
-        raise ParseError(f"Usuário com id={body['user_id']} não foi encontrado")
+    # try:
+    #     usuario = Usuario.objects.get(id=body['user_id'])
+    # except Usuario.DoesNotExist:
+    #     raise ParseError(f"Usuário com id={body['user_id']} não foi encontrado")
 
-    try:
-        treino = TreinoFisico(profissional=usuario, titulo=body['title'], treino=body['workout'])
-        treino.save()
-    except :
-        raise ParseError(f"Ocorreu um erro durante a criação do treino.")
+    # try:
+    #     treino = TreinoFisico(profissional=usuario, titulo=body['title'], treino=body['workout'])
+    #     treino.save()
+    # except :
+    #     raise ParseError(f"Ocorreu um erro durante a criação do treino.")
 
-    return Response("Treino criado")
+    # return Response("Treino criado")
 
 @api_view(['GET'])
-def workouts(request: HttpRequest) -> Response:
+def workouts(request):
     
-    data = request.GET
+    # data = request.GET
 
-    try: 
-        usuario = Usuario.objects.get(id=data.get('user_id'))
-    except Usuario.DoesNotExist:
-        raise ParseError(f"Usuário com id={data.get('user_id')} não foi encontrado")
+    # try: 
+    #     usuario = Usuario.objects.get(id=data.get('user_id'))
+    # except Usuario.DoesNotExist:
+    #     raise ParseError(f"Usuário com id={data.get('user_id')} não foi encontrado")
 
-    treinos = TreinoFisico.objects.filter(
-        profissional=usuario,
-    ).values(
-        'id',
-        'titulo',
-        'treino',      
-    )
+    # treinos = TreinoFisico.objects.filter(
+    #     profissional=usuario,
+    # ).values(
+    #     'id',
+    #     'titulo',
+    #     'treino',      
+    # )
 
-    return Response(treinos)
+    # return Response(treinos)
+    return

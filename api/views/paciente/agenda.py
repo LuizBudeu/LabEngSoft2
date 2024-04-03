@@ -2,7 +2,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.exceptions import ParseError
 
-from api.models import Consulta, Usuario
+from api.models import Paciente
 from datetime import datetime
 import json
 
@@ -18,28 +18,30 @@ def agenda(request):
     data = request.GET
 
     try: 
-        usuario = Usuario.objects.get(id=data['user_id'])
-    except Usuario.DoesNotExist:
+        paciente = Paciente.objects.get(id=data['user_id'])
+    except Paciente.DoesNotExist:
         raise ParseError(f"Usuário com id={data['user_id']} não foi encontrado")
+        
+    consultas = []
     
-    consultas = Consulta.objects.filter(
-        paciente=usuario,
-        # status__in=[0, 4]
-        horario__gt=datetime.utcnow()
-    ).order_by('horario').values(
-        'id',
-        'profissional_id',
-        'profissional__nome',
-        'profissional__ocupacao',
-        'profissional__logradouro',
-        'profissional__numero',
-        'profissional__complemento',
-        'horario',
-        'valor',
-        'tarifa',
-        'duracao_em_minutos',
-        'status'
-    )
+    # consultas = Consulta.objects.filter(
+    #     paciente=usuario,
+    #     # status__in=[0, 4]
+    #     horario__gt=datetime.utcnow()
+    # ).order_by('horario').values(
+    #     'id',
+    #     'profissional_id',
+    #     'profissional__nome',
+    #     'profissional__ocupacao',
+    #     'profissional__logradouro',
+    #     'profissional__numero',
+    #     'profissional__complemento',
+    #     'horario',
+    #     'valor',
+    #     'tarifa',
+    #     'duracao_em_minutos',
+    #     'status'
+    # )
 
     return Response(consultas)
 
@@ -55,58 +57,58 @@ def createAppointment(request):
         duracao: Duracao em minutos
     """
 
-    body = json.loads(request.body.decode('utf-8'))
+    # body = json.loads(request.body.decode('utf-8'))
 
-    try: 
-        usuario = Usuario.objects.get(id=body['user_id'])
-    except Usuario.DoesNotExist:
-        raise ParseError(f"Usuário com id={body['user_id']} não foi encontrado")
+    # try: 
+    #     usuario = Usuario.objects.get(id=body['user_id'])
+    # except Usuario.DoesNotExist:
+    #     raise ParseError(f"Usuário com id={body['user_id']} não foi encontrado")
 
-    try: 
-        profissional = Usuario.objects.get(id=body['professional_id'])
-    except Usuario.DoesNotExist:
-        raise ParseError(f"Profissional com id={body['professional_id']} não foi encontrado")
+    # try: 
+    #     profissional = Usuario.objects.get(id=body['professional_id'])
+    # except Usuario.DoesNotExist:
+    #     raise ParseError(f"Profissional com id={body['professional_id']} não foi encontrado")
 
-    consultaProfissional = Consulta.objects.filter(
-        profissional=profissional,
-        horario = body['horario']
-    ).exclude(
-        status=1 # consulta cancelada
-    ).count()
+    # consultaProfissional = Consulta.objects.filter(
+    #     profissional=profissional,
+    #     horario = body['horario']
+    # ).exclude(
+    #     status=1 # consulta cancelada
+    # ).count()
 
-    consultaPaciente = Consulta.objects.filter(
-        paciente=usuario,
-        horario = body['horario']
-    ).exclude(
-        status=1 # consulta cancelada
-    ).count()
+    # consultaPaciente = Consulta.objects.filter(
+    #     paciente=usuario,
+    #     horario = body['horario']
+    # ).exclude(
+    #     status=1 # consulta cancelada
+    # ).count()
 
-    if (consultaProfissional != 0 or consultaPaciente != 0):
-        return Response("Horário indisponível para consulta", 400)
+    # if (consultaProfissional != 0 or consultaPaciente != 0):
+    #     return Response("Horário indisponível para consulta", 400)
 
-    # TODO: Chamar método que define valores
-    valor = 0
-    if(profissional.ocupacao == 1):
-        valor = 100
-    if(profissional.ocupacao == 2):
-        valor = 90
-    if(profissional.ocupacao == 3):
-        valor = 120
+    # # TODO: Chamar método que define valores
+    # valor = 0
+    # if(profissional.ocupacao == 1):
+    #     valor = 100
+    # if(profissional.ocupacao == 2):
+    #     valor = 90
+    # if(profissional.ocupacao == 3):
+    #     valor = 120
 
-    # TODO: Chamar método que gera tarifa
-    tarifa = 0.2 * valor
+    # # TODO: Chamar método que gera tarifa
+    # tarifa = 0.2 * valor
     
-    consulta = Consulta.objects.create(
-        paciente=usuario,
-        profissional=profissional,
-        horario = body['horario'],
-        duracao_em_minutos = body['duracao'],
-        valor=valor,
-        tarifa=tarifa,
-        status=4 # consulta pendente
-    )
+    # consulta = Consulta.objects.create(
+    #     paciente=usuario,
+    #     profissional=profissional,
+    #     horario = body['horario'],
+    #     duracao_em_minutos = body['duracao'],
+    #     valor=valor,
+    #     tarifa=tarifa,
+    #     status=4 # consulta pendente
+    # )
 
-    return Response("Consulta criada")
+    # return Response("Consulta criada")
 
 @api_view(['POST'])
 def cancelAppointment(request):
@@ -118,27 +120,27 @@ def cancelAppointment(request):
         appointment_id: ID da consulta
     """
 
-    body = json.loads(request.body.decode('utf-8'))
+    # body = json.loads(request.body.decode('utf-8'))
 
-    try: 
-        usuario = Usuario.objects.get(id=body['user_id'])
-    except Usuario.DoesNotExist:
-        raise ParseError(f"Usuário com id={body['user_id']} não foi encontrado")
+    # try: 
+    #     usuario = Usuario.objects.get(id=body['user_id'])
+    # except Usuario.DoesNotExist:
+    #     raise ParseError(f"Usuário com id={body['user_id']} não foi encontrado")
 
-    consulta = Consulta.objects.get(
-        id=body['appointment_id'],
-        paciente=usuario
-    )
+    # consulta = Consulta.objects.get(
+    #     id=body['appointment_id'],
+    #     paciente=usuario
+    # )
 
-    if(consulta):
-        if(consulta.status in [0, 4]):
-            consulta.status = 1
-            consulta.save()
-            return Response("Consulta atualizada")
-        else:
-            return Response("Consulta indisponível para cancelamento", 400)
-    else:
-        return Response("Erro ao atualizar consulta", 400)
+    # if(consulta):
+    #     if(consulta.status in [0, 4]):
+    #         consulta.status = 1
+    #         consulta.save()
+    #         return Response("Consulta atualizada")
+    #     else:
+    #         return Response("Consulta indisponível para cancelamento", 400)
+    # else:
+    #     return Response("Erro ao atualizar consulta", 400)
 
 @api_view(['POST'])
 def payAppointment(request):
@@ -150,24 +152,24 @@ def payAppointment(request):
         appointment_id: ID da consulta
     """
 
-    body = json.loads(request.body.decode('utf-8'))
+    # body = json.loads(request.body.decode('utf-8'))
 
-    try: 
-        usuario = Usuario.objects.get(id=body['user_id'])
-    except Usuario.DoesNotExist:
-        raise ParseError(f"Usuário com id={body['user_id']} não foi encontrado")
+    # try: 
+    #     usuario = Usuario.objects.get(id=body['user_id'])
+    # except Usuario.DoesNotExist:
+    #     raise ParseError(f"Usuário com id={body['user_id']} não foi encontrado")
 
-    consulta = Consulta.objects.get(
-        id=body['appointment_id'],
-        paciente=usuario
-    )
+    # consulta = Consulta.objects.get(
+    #     id=body['appointment_id'],
+    #     paciente=usuario
+    # )
 
-    if(consulta):
-        if(consulta.status == 4):
-            consulta.status = 0
-            consulta.save()
-            return Response("Consulta atualizada")
-        else:
-            return Response("Consulta indisponível para pagamento", 400)
-    else:
-        return Response("Erro ao atualizar consulta", 400)
+    # if(consulta):
+    #     if(consulta.status == 4):
+    #         consulta.status = 0
+    #         consulta.save()
+    #         return Response("Consulta atualizada")
+    #     else:
+    #         return Response("Consulta indisponível para pagamento", 400)
+    # else:
+    #     return Response("Erro ao atualizar consulta", 400)
