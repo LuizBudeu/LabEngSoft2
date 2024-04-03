@@ -40,7 +40,7 @@ class Paciente(models.Model):
     ]
 
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
-    alergias = models.CharField(max_length=200)
+    alergias = models.CharField(max_length=200, blank=True, null=True)
     tipo_diabetes = models.IntegerField(choices=DIABETES_CHOICES)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
