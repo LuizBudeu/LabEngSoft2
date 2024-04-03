@@ -10,7 +10,7 @@ import { EditPerfil } from "./PerfilTabEdit";
 
 const Perfil = () => {
   const navigate = useNavigate();
-  const test_id = 3 // TODO trocar por id do usuário logado na integração
+  const test_id = 4 // TODO trocar por id do usuário logado na integração
   const [userProfile, setUserProfile] = GetProfile(test_id);
   const [showPopUp, setShowPopUp] = useState(false);
 

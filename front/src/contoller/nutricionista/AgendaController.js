@@ -44,6 +44,7 @@ export const GetConsultas = (user_id, start_date, end_date) => {
 export const GetProfile = (user_id) => {
 
     const [userProfile, setUserProfile] = useState();
+    const axios = useAxiosWithToken();
 
     useEffect(() => {
         axios.get("http://localhost:8000/api/paciente/perfil", {
