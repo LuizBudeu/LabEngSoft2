@@ -4,14 +4,16 @@ import { Column } from "../../../components/column";
 import { CustomInput } from "../../../components/customInput";
 import { CustomTextArea } from "../../../components/customTextArea";
 import { CreateWorkOut } from "../../../contoller/preparador/WorkOutController";
+import { useAxiosWithToken } from "../../../utils/useAxiosWithToken";
 
 export const WorkOutForm = ({onSubmit}) => {
     const [workOut, setWorkOut] = useState({title: "", workout: ""});
+    const axios = useAxiosWithToken();
 
     const submit = async (e) => {
       e.preventDefault(); 
 
-      const resp = await CreateWorkOut("3", workOut); 
+      const resp = await CreateWorkOut("3", workOut, axios); 
       
       if(resp) {
         onSubmit();

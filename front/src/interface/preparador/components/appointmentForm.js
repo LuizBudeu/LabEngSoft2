@@ -11,7 +11,7 @@ import { useAxiosWithToken } from "../../../utils/useAxiosWithToken";
 // consulta = models.ForeignKey(Consulta, on_delete=models.CASCADE)
 
 export const AppointmentForm = ({consultaId, onSubmit, onCancel}) => {
-    const [pacienteInfo, setPacientInfo] = useState({nivel_de_atividade_fisica: 0, treino_fisico: 0});
+    const [pacienteInfo, setPacientInfo] = useState({nivel_de_atividade_fisica: 0, treino_fisico: 1});
     const { workOuts } = GetWorkOuts("3");
     const axios = useAxiosWithToken();
 
@@ -114,7 +114,7 @@ export const AppointmentForm = ({consultaId, onSubmit, onCancel}) => {
                             list={workOutsToSelector(workOuts)}
                             value={pacienteInfo.treino_fisico}
                             onChange={(e) => setPacientInfo({...pacienteInfo, treino_fisico:e.target.value})}
-                            />
+                        />
                     </Column>
                 )}
             </Column>
