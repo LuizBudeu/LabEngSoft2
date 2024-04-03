@@ -19,7 +19,9 @@ def pedir_exame(request: HttpRequest):
         titulo: Título do exame
     """
     
-    data = request.POST
+    data = json.loads(request.body.decode('utf-8'))
+
+    print(data)
     
     try:
         paciente = Usuario.objects.get(id=data.get('paciente_id'))
