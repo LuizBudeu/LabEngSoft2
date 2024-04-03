@@ -8,7 +8,7 @@ from .views.usuario import create as usuario_create
 from .views.medico.consulta import consulta as medico_consulta
 from .views.medico.consulta import comeca_consulta as medico_comeca_consulta
 from .views.medico.medico import create_medico
-from .views.medico.exame import pedir_exames as medico_pedir_exame
+from .views.medico.exame import pedir_exame as medico_pedir_exame
 from .views.medico.exame import pegar_exames as medico_pegar_exames
 from .views.medico.exame import finalizar_exame as medico_finalizar_exame
 from .views.medico.agenda import agenda as medico_agenda

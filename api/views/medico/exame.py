@@ -10,10 +10,10 @@ from api.models import PedidoExameMedico
 from api.models import Usuario
 
 @api_view(http_method_names=['POST'])
-def pedir_exames(request: HttpRequest):
+def pedir_exame(request: HttpRequest):
     """
     Cria um pedido de exame médico para um paciente.
-    Query parameters:
+    Body parameters:
         paciente_id: ID usuário do paciente
         medico_id: ID usuário do médico
         titulo: Título do exame
