@@ -32,6 +32,7 @@ from .views.nutricionista.avaliacao import avaliacao as avaliacao_nutricional
 from .views.nutricionista.consulta import consulta as nutricionista_consulta
 from .views.nutricionista.dieta import dieta
 from .views.nutricionista.dieta import salvaDieta
+from .views.nutricionista.dieta import salvaDieta
 from .views.nutricionista.exame import pedirExame as nutricionista_exame
 from .views.nutricionista.perfil import perfil as nutricionista_perfil
 from .views.nutricionista.perfil import update_perfil as nutricionista_update_perfil
