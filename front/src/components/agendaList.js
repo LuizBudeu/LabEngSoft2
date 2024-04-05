@@ -8,7 +8,7 @@ export const AgendaList = ({appointments, selectedAppointment, onItemClick}) => 
         <div 
             key={item.id} 
             onClick={() => onItemClick(item)}
-            style={{'background-color': selectedAppointment.id === item.id ? Colors.LightGray : null}}
+            style={{'backgroundColor': selectedAppointment?.id === item.id ? Colors.LightGray : null}}
         >
           <table>
             <tr>

@@ -1,12 +1,14 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { GroupByDate } from "../../utils/group";
+import { API_PROTOCOL_HOSTNAME_PORT } from "../../utils/utils";
+import { useAxiosWithToken } from "../../utils/useAxiosWithToken";
 
 export const GetAgenda = (user_id, start_date, end_date) => {
     const [agenda, setAgenda] = useState();
+    const axios = useAxiosWithToken();
 
-    useEffect(() => {
-        axios.get(process.env.REACT_APP_PROTOCOL_HOSTNAME_PORT + "/api/preparador/agenda/", {
+    const fetchAgenda = () => {
+        axios.get(API_PROTOCOL_HOSTNAME_PORT + "/api/preparador/agenda", {
             params: {
                 user_id: user_id,
                 start_date: start_date,
@@ -18,7 +20,15 @@ export const GetAgenda = (user_id, start_date, end_date) => {
         }).catch((e) => {
             console.log(e);
         });
-    }, [user_id, start_date, end_date]);
+    }
+
+    useEffect(() => {
+        fetchAgenda();
+    }, []);
     
-    return [agenda, setAgenda];
+    const refetch = () => {
+        fetchAgenda();
+    };
+
+    return { agenda, refetch };
 };

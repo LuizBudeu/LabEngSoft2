@@ -8,18 +8,17 @@ import { GetAgenda } from "../../contoller/preparador/AgendaController";
 import { GetHourMinute } from "../../utils/date";
 import { CustomButton } from "../../components/customButton";
 import { CenterContent } from "../../components/centerContent";
-
-const mockedAgenda = [
-    {id: "001", paciente__nome: "Vinicius", horario: "2024-03-21 15:00:00", duracao: 60},
-    {id: "002", paciente__nome: "Henrique", horario: "2024-03-21 16:00:00", duracao: 60},
-    {id: "003", paciente__nome: "Luis", horario: "2024-03-22 13:00:00", duracao: 60},
-    {id: "004", paciente__nome: "Felipe", horario: "2024-03-23 10:00:00", duracao: 60},
-    {id: "005", paciente__nome: "Rafael", horario: "2024-03-23 11:00:00", duracao: 60},
-];
+import { FormContainer } from "../../components/formContainer";
+import { PopUpContainer } from "../../components/popUpContainer";
+import { AppointmentForm } from "./components/appointmentForm";
+import { Column } from "../../components/column";
+import { FinalizarConsulta } from "../../contoller/preparador/ConsultaController";
+import { GetPacienteExtraInfo } from "../../contoller/preparador/ConsultaController";
+import { TipoDiabetesNumberToString } from "../../utils/utils";
+import { useAxiosWithToken } from "../../utils/useAxiosWithToken";
 
 export const AgendaTab = () => {
-    const [agenda] = GetAgenda("3", "2024-03-20", "2024-04-24");
-    // const appts = groupByDate(mockedAgenda);
+    const { agenda } = GetAgenda("3", "2024-03-20", "2024-06-24");
 
     const [selectedAppointment, setSelectedAppointment] = useState("");
     
@@ -56,15 +55,47 @@ export const AgendaTab = () => {
     );
 };
 
-const AppointmentInfo = ({appointment}) => {
+const AppointmentInfo = ({appointment, onFormClick}) => {
+    const [showPopUp, setShowPopUp] = useState(false);
+    const { extraInfo } = GetPacienteExtraInfo(appointment.id);
+    const axios = useAxiosWithToken();
+    
+    const handleSubmit = () => {
+        FinalizarConsulta(appointment.id, axios);
+        setShowPopUp(false);
+    }
+
     return (
         <div>
-            <div style={{flexGrow: 1, width: "100%", padding: "16px"}}>
-                <body>Paciente: {appointment.paciente__nome}</body>
-                <body>Horário da consulta: {GetHourMinute(appointment.horario, appointment.duracao)}</body>
-            </div>
+            <PopUpContainer showPopUp={showPopUp} closePopUp={() => setShowPopUp(false)}>
+                <CenterContent>
+                    <FormContainer>
+                        <AppointmentForm 
+                            consultaId={appointment.id}
+                            onSubmit={handleSubmit}
+                            onCancel={() => setShowPopUp(false)}
+                        />
+                    </FormContainer>
+                </CenterContent>
+            </PopUpContainer>
+            <Column>
+                <h4>Dados Básicos</h4>
+                <text>Paciente: {appointment.paciente__nome}</text>
+                <text>Horário da consulta: {GetHourMinute(appointment.horario, appointment.duracao)}</text>
+                <br></br>
+                {extraInfo && (
+                    <>
+                        <h4>Informações médicas</h4>
+                        <text>{extraInfo.medical?.alergias}</text>
+                        <text>{TipoDiabetesNumberToString[extraInfo.medical?.tipo_diabetes]}</text>
+                        <h4>Informações nutricionais</h4>
+                        <text>{extraInfo.nutrition?.dieta}</text>
+                        <text>{extraInfo.nutrition?.detalhes_adicionais}</text>
+                    </>
+                )}
+            </Column>
             <Row>
-                <CustomButton title="Realizar consulta" onClick={() => console.log("Realizar consulta")} type="primary" />
+                <CustomButton title="Realizar consulta" onClick={() => setShowPopUp(true)} type="primary" />
             </Row>
         </div>
     );

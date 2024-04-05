@@ -3,7 +3,7 @@ export const AppointmentStatus = {
     cancelada: 1,
     realizada: 2,
     vencida: 3,
-    pendente: 4
+    pendente: 4,
 };
 
 export const AppointmentStatusString = {
@@ -11,15 +11,24 @@ export const AppointmentStatusString = {
     1: "Cancelada",
     2: "Realizada",
     3: "Vencida",
-    4: "Pagamento Pendente"
+    4: "Pagamento Pendente",
 };
 
-export const formatNumber = (n) =>{
-    return n > 9 ? "" + n: "0" + n;
-}
+export const formatNumber = (n) => {
+    return n > 9 ? "" + n : "0" + n;
+};
 
 export const ProfissionalIcons = {
     1: "img/MedicoIcon.png",
     2: "img/DietaIcon.png",
     3: "img/TreinoIcon.png",
 };
+
+export const API_PROTOCOL_HOSTNAME_PORT = process.env.REACT_APP_PROTOCOL_HOSTNAME_PORT ?? "http://localhost:8000";
+export const ENVIRONMENT = process.env.REACT_APP_ENVIRONMENT === "prod" ? "prod" : "dev";
+export const TipoDiabetesNumberToString = {
+    0: "Não possui diabetes",
+    1: "Diabetes tipo 1",
+    2: "Diabetes tipo 2",
+}
+

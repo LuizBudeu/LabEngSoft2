@@ -4,17 +4,20 @@ import { Column } from "../../../components/column";
 import { CustomInput } from "../../../components/customInput";
 import { CustomTextArea } from "../../../components/customTextArea";
 import { CreateWorkOut } from "../../../contoller/preparador/WorkOutController";
+import { useAxiosWithToken } from "../../../utils/useAxiosWithToken";
 
 export const WorkOutForm = ({onSubmit}) => {
     const [workOut, setWorkOut] = useState({title: "", workout: ""});
+    const axios = useAxiosWithToken();
 
     const submit = async (e) => {
       e.preventDefault(); 
-      console.log("O formulário foi submetido", e.target);
-      const resp = await CreateWorkOut("3", workOut); 
-      if(resp){
+
+      const resp = await CreateWorkOut("3", workOut, axios); 
+      
+      if(resp) {
         onSubmit();
-      }else{
+      } else {
         alert("Erro ao salvar os dados");
       }
     };
@@ -23,7 +26,7 @@ export const WorkOutForm = ({onSubmit}) => {
         <form onSubmit={submit}>
             <Column>  
                 <Column>
-                  <body>Título do treino</body>
+                  <text>Título do treino</text>
                   <CustomInput
                     name="title"
                     onChange={(e) => setWorkOut({...workOut, title:e.target.value})}
@@ -32,7 +35,7 @@ export const WorkOutForm = ({onSubmit}) => {
                   />
                 </Column>
                 <Column>
-                  <body>Descrição do treino</body>
+                  <text>Descrição do treino</text>
                   <CustomTextArea
                     name="workout"
                     onChange={(e) => setWorkOut({...workOut, workout:e.target.value})}
