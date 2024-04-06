@@ -15,7 +15,7 @@ export const Auth = () => {
             let resp = response.data['user_id'];
             if(resp != null)
                 setUserId(resp);
-                setSearchParams({...searchParams, 'id': resp});
+                setSearchParams({'id': resp});
         }).catch((e) => {
             console.log(e);
         });
@@ -31,7 +31,7 @@ export const Auth = () => {
             let resp = response.data['user_id'];
             if(resp != null)
                 setUserId(resp);
-                setSearchParams({...searchParams, 'id': resp});
+                setSearchParams({'id': resp});
         }).catch((e) => {
             console.log(e);
         });
