@@ -8,6 +8,7 @@ export const GetAppointments = (user_id) => {
     const [selectedAppointment, setSelectedAppointment] = useState();
     const [showNewAppointmentPopUp, setShowNewAppointmentPopUp] = useState(false);
     const [showPayAppointmentPopUp, setPayNewAppointmentPopUp] = useState(false);
+    const axios = useAxiosWithToken();
 
     const refreshAppointments = () => {
         axios.get(API_PROTOCOL_HOSTNAME_PORT + "/api/paciente/agenda", {
@@ -32,7 +33,7 @@ export const GetAppointments = (user_id) => {
     }
 
     const cancelAppointment = async (appointment_id) => {
-        const response = await axios.post(process.env.REACT_APP_PROTOCOL_HOSTNAME_PORT + "/api/paciente/cancel_consulta", {
+        const response = await axios.post(API_PROTOCOL_HOSTNAME_PORT + "/api/paciente/cancel_consulta", {
             user_id: user_id,
             appointment_id: appointment_id
         });
