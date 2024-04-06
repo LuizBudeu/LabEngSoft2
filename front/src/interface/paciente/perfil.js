@@ -17,7 +17,7 @@ const Perfil = () => {
     submitProfile,
     showPopUp,
     setShowPopUp    
-  ] = GetProfile("1");
+  ] = GetProfile();
 
   const closePopUp = () => {
     setShowPopUp(false);

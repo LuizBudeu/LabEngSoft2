@@ -58,7 +58,7 @@ export const AgendaTab = () => {
 const AppointmentInfo = ({appointment, onFormClick}) => {
     const [showPopUp, setShowPopUp] = useState(false);
     const { extraInfo } = GetPacienteExtraInfo(appointment.id);
-    const axios = useAxiosWithToken();
+    const [axios] = useAxiosWithToken();
     
     const handleSubmit = () => {
         FinalizarConsulta(appointment.id, axios);

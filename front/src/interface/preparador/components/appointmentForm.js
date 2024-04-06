@@ -13,7 +13,7 @@ import { useAxiosWithToken } from "../../../utils/useAxiosWithToken";
 export const AppointmentForm = ({consultaId, onSubmit, onCancel}) => {
     const [pacienteInfo, setPacientInfo] = useState({nivel_de_atividade_fisica: 0, treino_fisico: 1});
     const { workOuts } = GetWorkOuts("3");
-    const axios = useAxiosWithToken();
+    const [axios] = useAxiosWithToken();
 
     const submit = (e) => {
         e.preventDefault();

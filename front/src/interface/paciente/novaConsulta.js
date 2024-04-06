@@ -31,7 +31,7 @@ export const NovaConsulta = ({onSuccess}) => {
     changeSelectedProfessional,
     horarios,
     requestAppointment
-  ] = GetProfessionals("1", onSuccess);
+  ] = GetProfessionals(onSuccess);
 
   return (
     <Row>

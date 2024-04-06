@@ -18,8 +18,6 @@ GENDER_CHOICES = [
 ]
 
 class Usuario(models.Model):
-    email = models.CharField(max_length=100)
-    senha = models.CharField(max_length=100)
     ocupacao = models.IntegerField(choices=OCUPACAO_CHOICES)
     nome = models.CharField(max_length=100)
     cpf = models.CharField(max_length=11)
@@ -64,6 +62,9 @@ class Consulta(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+class ExtUsuario(models.Model):
+    ext_id = models.CharField(max_length=100)
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, blank=True, null=True)
 
 class Medico(models.Model):
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)

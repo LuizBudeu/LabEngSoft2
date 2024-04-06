@@ -1,12 +1,16 @@
 import { useState, useEffect } from "react";
 import { API_PROTOCOL_HOSTNAME_PORT } from "../../utils/utils";
 import { useAxiosWithToken } from "../../utils/useAxiosWithToken";
+import { useSearchParams } from "react-router-dom";
 
-export const GetProfile = (user_id) => {
+export const GetProfile = () => {
 
     const [userProfile, setUserProfile] = useState();
     const [showPopUp, setShowPopUp] = useState(false);
-    const axios = useAxiosWithToken();
+    const [axios] = useAxiosWithToken();
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const user_id = searchParams.get("id");
 
     const refreshUserInfo = () => {
         axios.get(API_PROTOCOL_HOSTNAME_PORT + "/api/paciente/perfil", {

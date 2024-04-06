@@ -13,6 +13,8 @@ from .views.medico.exame import pegar_exames as medico_pegar_exames
 from .views.medico.exame import finalizar_exame as medico_finalizar_exame
 from .views.medico.agenda import agenda as medico_agenda
 
+from .views.paciente.perfil import create_profile as paciente_create
+from .views.paciente.perfil import user_id as paciente_id
 from .views.paciente.perfil import update_perfil as paciente_update_perfil
 from .views.paciente.busca import buscaProfissionais as paciente_busca_profissionais
 from .views.paciente.busca import horarios as paciente_horarios
@@ -50,6 +52,8 @@ urlpatterns = [
     path('medico/finalizar_exame', medico_finalizar_exame, name='medico_finalizar_exame'),
     path('medico/create', create_medico, name='medico_create'),
     
+    path('paciente/id', paciente_id, name='paciente_id'),
+    path('paciente/create_profile', paciente_create, name='paciente_create'),
     path('paciente/agenda', paciente_agenda, name='paciente_agenda'),
     path('paciente/perfil', paciente_perfil, name='paciente_perfil'),
     path('paciente/update_perfil', paciente_update_perfil, name='paciente_update_perfil'),

@@ -1,14 +1,18 @@
 import { useState, useEffect } from "react";
 import { formatNumber, API_PROTOCOL_HOSTNAME_PORT } from "../../utils/utils";
 import { useAxiosWithToken } from "../../utils/useAxiosWithToken";
+import { useSearchParams } from "react-router-dom";
 
-export const GetAppointments = (user_id) => {
+export const GetAppointments = () => {
 
     const [appointments, setAppointments] = useState([]);
     const [selectedAppointment, setSelectedAppointment] = useState();
     const [showNewAppointmentPopUp, setShowNewAppointmentPopUp] = useState(false);
     const [showPayAppointmentPopUp, setPayNewAppointmentPopUp] = useState(false);
-    const axios = useAxiosWithToken();
+    const [axios] = useAxiosWithToken();
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const user_id = searchParams.get("id");
 
     const refreshAppointments = () => {
         axios.get(API_PROTOCOL_HOSTNAME_PORT + "/api/paciente/agenda", {
@@ -79,14 +83,17 @@ export const GetAppointments = (user_id) => {
     
 };
 
-export const GetProfessionals = (user_id, onSuccess) => {
+export const GetProfessionals = (onSuccess) => {
 
     const [professionals, setProfessionals] = useState([]);
     const [horarios, setHorarios] = useState([]);
     const [selectedProfessional, setSelectedProfessional] = useState();
     const [professionalType, setProfessionalType] = useState(1);
     const [professionalName, setProfessionalName] = useState("");
-    const axios = useAxiosWithToken();
+    const [axios] = useAxiosWithToken();
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const user_id = searchParams.get("id");
 
     const submitSearch = () => {
         

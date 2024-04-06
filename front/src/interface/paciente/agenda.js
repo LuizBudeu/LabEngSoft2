@@ -30,7 +30,7 @@ const Agenda = () => {
     setPayNewAppointmentPopUp,
     cancelAppointment,
     payAppointment
-  ] = GetAppointments("1");
+  ] = GetAppointments();
 
   return (
     <div style={{height: "100%"}}>
