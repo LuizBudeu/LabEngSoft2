@@ -20,7 +20,7 @@ export const PedirExameMedico = async (paciente_id, medico_id, titulo, axios) =>
 
 export const GetPedidosExames = (user_id) => {
     const [pedidosExames, setPedidosExames] = useState([]);
-    const axios = useAxiosWithToken();
+    const [axios] = useAxiosWithToken();
 
     useEffect(() => {
         axios

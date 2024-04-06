@@ -16,7 +16,7 @@ export const AcompanhamentoInfo = ({acompanhamento, type, scheduleAppointment}) 
       nome_profissional = acompanhamento.medico__nome
       break;
     default:
-      nome_profissional = acompanhamento.Nutricionista__nome
+      nome_profissional = acompanhamento.nutricionista__nome
   }
 
   return (

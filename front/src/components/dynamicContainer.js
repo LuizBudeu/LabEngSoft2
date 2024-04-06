@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { Colors } from "../utils/colors";
 
-export const MainContainer = styled.div`
+export const DynamicContainer = styled.div`
     margin: 32px;
     padding: 16px;
     border-radius: 10px;

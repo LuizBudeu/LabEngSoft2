@@ -26,18 +26,22 @@ export const AppointmentInfo = ({appointment, cancelAppointment, payAppointment}
       <br/>
       <Row>
         {appointment.status == AppointmentStatus.pendente &&
-          <CustomButton
-            type="primary"
-            title="Realizar pagamento"
-            onClick={payAppointment}
-          />
+          <RowItem grow center noPadding>
+            <CustomButton
+              type="primary"
+              title="Realizar pagamento"
+              onClick={payAppointment}
+            />
+          </RowItem>
         }
         {appointment.status != AppointmentStatus.cancelada &&
-          <CustomButton
-            type="secondary"
-            title="Cancelar"
-            onClick={cancelAppointment}
-          />
+          <RowItem grow center noPadding>
+            <CustomButton
+              type="cancel"
+              title="Cancelar"
+              onClick={cancelAppointment}
+            />
+          </RowItem>
         }
       </Row>
     </div>

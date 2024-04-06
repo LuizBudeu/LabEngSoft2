@@ -24,7 +24,7 @@ export const CreateWorkOut = async (user_id, workOut, axios) => {
 
 export const GetWorkOuts = (user_id) => {
     const [workOuts, setWorkOuts] = useState([]);
-    const axios = useAxiosWithToken();
+    const [axios] = useAxiosWithToken();
 
     const fetchWorkOuts = () => {
         axios.get(API_PROTOCOL_HOSTNAME_PORT + "/api/preparador/workouts", {

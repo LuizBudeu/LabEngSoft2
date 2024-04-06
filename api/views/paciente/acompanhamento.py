@@ -1,5 +1,6 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.exceptions import ParseError
 
 from api.models import Usuario, RelatorioNutricionista, RelatorioPreparadorFisico, PedidoExameMedico, PedidoExameNutricionista
 
@@ -30,7 +31,6 @@ def acompanhamento(request):
         'dieta__calorias',
     ).order_by('-created_at').first()
 
-    # TODO: Add title
     treino = RelatorioPreparadorFisico.objects.filter(
         consulta__paciente=usuario,
     ).values(
@@ -51,7 +51,6 @@ def acompanhamento(request):
         'titulo',
     ).order_by('-created_at')
 
-    # TODO: Add Exame nutricionista
     examesNutricionista = PedidoExameNutricionista.objects.filter(
         paciente=usuario,
         status=0

@@ -3,5 +3,7 @@ import { Colors } from "../utils/colors";
 
 export const BackgroundContainer = styled.div`
     background-color: ${Colors.BackgroundGray};
-    height: 100%;
+    height: ${window.innerHeight}px;
+    display: flex;
+    flex-flow: column;
 `

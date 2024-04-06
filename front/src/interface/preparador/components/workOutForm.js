@@ -8,7 +8,7 @@ import { useAxiosWithToken } from "../../../utils/useAxiosWithToken";
 
 export const WorkOutForm = ({onSubmit}) => {
     const [workOut, setWorkOut] = useState({title: "", workout: ""});
-    const axios = useAxiosWithToken();
+    const [axios] = useAxiosWithToken();
 
     const submit = async (e) => {
       e.preventDefault(); 

@@ -36,7 +36,7 @@ export const FinalizarConsulta = async (consulta_id, axios) => {
 
 export const GetPacienteExtraInfo = (consulta_id) => {
     const [extraInfo, setExtraInfo] = useState({});
-    const axios = useAxiosWithToken();
+    const [axios] = useAxiosWithToken();
 
     const path = `${API_PROTOCOL_HOSTNAME_PORT}/api/preparador/consultas/${consulta_id}`
     

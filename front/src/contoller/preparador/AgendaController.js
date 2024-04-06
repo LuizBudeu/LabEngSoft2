@@ -5,7 +5,7 @@ import { useAxiosWithToken } from "../../utils/useAxiosWithToken";
 
 export const GetAgenda = (user_id, start_date, end_date) => {
     const [agenda, setAgenda] = useState();
-    const axios = useAxiosWithToken();
+    const [axios] = useAxiosWithToken();
 
     const fetchAgenda = () => {
         axios.get(API_PROTOCOL_HOSTNAME_PORT + "/api/preparador/agenda", {
