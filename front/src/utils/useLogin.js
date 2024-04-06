@@ -29,8 +29,6 @@ export const useLogin = (clientSecret) => {
             })
                 .then(response => {
                     setCookie("access_token", response.data.access_token);
-                    const {code, newSearchParams} = {...searchParams}
-                    setSearchParams(newSearchParams);
                 })
                 .catch(error => {
                     console.log(error);

@@ -160,7 +160,7 @@ def update_perfil(request):
         raise ParseError(f"Usuário com id={body['user_id']} não foi encontrado")
 
     try:
-        paciente = Paciente.objects.get(id=body['user_id'])
+        paciente = Paciente.objects.get(usuario_id=body['user_id'])
         paciente.alergias = body['alergias']
         paciente.tipo_diabetes = body['tipo_diabetes']
         paciente.save()
