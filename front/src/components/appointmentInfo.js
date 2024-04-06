@@ -37,7 +37,7 @@ export const AppointmentInfo = ({appointment, cancelAppointment, payAppointment}
         {appointment.status != AppointmentStatus.cancelada &&
           <RowItem grow center noPadding>
             <CustomButton
-              type="secondary"
+              type="cancel"
               title="Cancelar"
               onClick={cancelAppointment}
             />
