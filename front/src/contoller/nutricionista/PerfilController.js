@@ -1,12 +1,14 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
+import { useAxiosWithToken } from "../../utils/useAxiosWithToken";
+import { API_PROTOCOL_HOSTNAME_PORT } from "../../utils/utils";
 
 export const GetProfile = (user_id) => {
 
     const [userProfile, setUserProfile] = useState();
+    const axios = useAxiosWithToken();
 
     useEffect(() => {
-        axios.get("http://localhost:8000/api/nutricionista/perfil", {
+        axios.get(API_PROTOCOL_HOSTNAME_PORT + "/api/nutricionista/perfil", {
             params: {
                 user_id: user_id
             }
@@ -23,8 +25,10 @@ export const GetProfile = (user_id) => {
 };
 
 export const UpdateProfile = async (user_id, userProfile) => {
+    const axios = useAxiosWithToken();
+
     try{
-        const response = await axios.post("http://localhost:8000/api/nutricionista/update_perfil", 
+        const response = await axios.post(API_PROTOCOL_HOSTNAME_PORT + "/api/nutricionista/update_perfil", 
             {...userProfile, user_id: user_id}
         ); 
         if(response.status != 200){

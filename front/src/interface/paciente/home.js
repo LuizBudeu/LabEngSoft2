@@ -6,22 +6,32 @@ import Acompanhamento from "./acompanhamento";
 import { MainContainer } from "../../components/mainContainer";
 import { BackgroundContainer } from "../../components/backgroundContainer";
 import { SecondaryNavBar } from "../../components/secondaryNavBar";
+import { useLogin } from "../../utils/useLogin";
+import { useLogout } from "../../utils/useLogout";
+import { ENVIRONMENT } from "../../utils/utils";
+
+const LOGIN_URL = process.env.REACT_APP_PACIENTE_LOGIN_URL;
+const AUTH_SECRET = process.env.REACT_APP_PACIENTE_AUTH_SECRET;
 
 export const PacienteHome = () => {
     const [activeTab, setActiveTab] = useState("tab1");
+    const loggedIn = useLogin(AUTH_SECRET);
+    const logout = useLogout();
 
-    const tabs = [{
-        id: "tab1",
-        displayName: "Agenda"
-     },
-     {
-        id: "tab2",
-        displayName: "Acompanhamento"
-     },
-     {
-        id: "tab3",
-        displayName: "Perfil"
-     }];
+    const tabs = [
+        {
+            id: "tab1",
+            displayName: "Agenda",
+        },
+        {
+            id: "tab2",
+            displayName: "Acompanhamento",
+        },
+        {
+            id: "tab3",
+            displayName: "Perfil",
+        },
+    ];
 
     const handleTab1 = () => {
         setActiveTab("tab1");
@@ -34,6 +44,14 @@ export const PacienteHome = () => {
     const handleTab3 = () => {
         setActiveTab("tab3");
     };
+
+    if (ENVIRONMENT === "prod" && !loggedIn)
+        return (
+            <>
+                <p>Bem-vindo ao portal do paciente!</p>
+                <a href={LOGIN_URL}>Registre-se ou faça Login.</a>
+            </>
+        );
 
     return (
         <BackgroundContainer>
@@ -49,6 +67,7 @@ export const PacienteHome = () => {
                     {activeTab === "tab3" && <Perfil />}
                 </MainContainer>   
             </div>  
+            <button onClick={logout}>Logout</button>
         </BackgroundContainer>
     );
 };

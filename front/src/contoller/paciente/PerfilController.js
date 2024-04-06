@@ -1,10 +1,12 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
+import { API_PROTOCOL_HOSTNAME_PORT } from "../../utils/utils";
+import { useAxiosWithToken } from "../../utils/useAxiosWithToken";
 
 export const GetProfile = (user_id) => {
 
     const [userProfile, setUserProfile] = useState();
     const [showPopUp, setShowPopUp] = useState(false);
+    const axios = useAxiosWithToken();
 
     const refreshUserInfo = () => {
         axios.get(process.env.REACT_APP_PROTOCOL_HOSTNAME_PORT + "/api/paciente/perfil", {

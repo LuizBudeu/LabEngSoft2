@@ -1,5 +1,4 @@
 // Import the react JS packages
-import axios from "axios";
 import { useState, useHook } from "react"; // Define the Login function.
 import { FaSearch } from "react-icons/fa";
 import { GetProfessionals } from "../../contoller/paciente/AgendaController"; 

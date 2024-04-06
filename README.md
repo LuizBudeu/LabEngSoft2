@@ -20,6 +20,8 @@ cd front
 
 npm install
 
+Adicionar o `.env` em `./front`
+
 npm start
 
 Utilização:
@@ -28,13 +30,15 @@ Backend API em `http://127.0.0.1:8000/`
 
 Frontend em `http://localhost:3000/`
 
-# Rodar com Docker
-- Gerar certificado e chaves TLS:
+# Rodar com Docker localmente
+- Gerar certificado e chaves TLS dentro de `./proxy`:
 ```
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout tls.key -out tls.crt
 ```
 - Buildar a imagem do proxy com `docker build -t rafnak1/labengsoft:proxy ./proxy`
-- Criar um `api.env` com a senha do banco de dados: `DB_PASSWORD`
-- Buildar a imagem da API com `docker build -t rafnak1/labengsoft:api --build-arg DB_PASSWORD=$DB_PASSWORD .`
-- Rodar o front sem docker, de acordo com a seção "Developer setup"
-- Rodar com orquestração: `docker compose up`
+- Criar na raíz um `api.env` com a senha do banco de dados na nuvem
+- Buildar a imagem da API com `docker build -t rafnak1/labengsoft:api --secret id=DB_PASSWORD,src=./api.env .`
+- Adicionar o `.env` em `./front`
+- Mudar a variável `REACT_APP_PROTOCOL_HOSTNAME_PORT` para `https://localhost`
+- Rodar o back com orquestração: `docker compose up`
+- Rodar o front sem docker, com `npm install` e `npm start`
