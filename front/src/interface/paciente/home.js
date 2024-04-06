@@ -9,8 +9,8 @@ import { SecondaryNavBar } from "../../components/secondaryNavBar";
 import { useLogin } from "../../utils/useLogin";
 import { ENVIRONMENT } from "../../utils/utils";
 import { TopBar } from "../../components/TopBar";
-import { Auth } from "../../contoller/paciente/AuthController";
 import { CreatePerfil } from "./perfilCreate";
+import { Auth } from "../../contoller/paciente/PerfilController";
 
 const LOGIN_URL = process.env.REACT_APP_PACIENTE_LOGIN_URL;
 const AUTH_SECRET = process.env.REACT_APP_PACIENTE_AUTH_SECRET;
