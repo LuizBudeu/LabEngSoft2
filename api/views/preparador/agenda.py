@@ -47,3 +47,36 @@ def agenda(request: HttpRequest) -> Response:
     )
 
     return Response(consultas)
+
+@api_view(['GET'])
+def consulta_paciente(request):
+    """
+    Pega as consultas de paciente. Retorna todas as consultas marcadas para ele após a data de hoje, 
+    com informações do profissional.
+
+    Query parameters:
+        user_id: ID usuário do paciente
+    """
+
+    data = request.GET
+
+    consultas = Consulta.objects.filter(
+        paciente_id=data['user_id'],
+        profissional__ocupacao=3, # Preparador
+        horario__gt=datetime.utcnow()
+    ).order_by('horario').values(
+        'id',
+        'profissional_id',
+        'profissional__nome',
+        'profissional__ocupacao',
+        'profissional__logradouro',
+        'profissional__numero',
+        'profissional__complemento',
+        'horario',
+        'valor',
+        'tarifa',
+        'duracao_em_minutos',
+        'status'
+    )
+
+    return Response(consultas)

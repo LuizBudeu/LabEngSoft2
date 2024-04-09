@@ -1,6 +1,7 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.exceptions import ParseError
+import requests
 
 from api.models import Consulta, Usuario
 from datetime import datetime
@@ -21,24 +22,28 @@ def agenda(request):
         usuario = Usuario.objects.get(id=data['user_id'])
     except Usuario.DoesNotExist:
         raise ParseError(f"Usuário com id={data['user_id']} não foi encontrado")
-    
-    consultas = Consulta.objects.filter(
-        paciente=usuario,
-        horario__gt=datetime.utcnow()
-    ).order_by('horario').values(
-        'id',
-        'profissional_id',
-        'profissional__nome',
-        'profissional__ocupacao',
-        'profissional__logradouro',
-        'profissional__numero',
-        'profissional__complemento',
-        'horario',
-        'valor',
-        'tarifa',
-        'duracao_em_minutos',
-        'status'
-    )
+
+    payload = {'user_id': data['user_id']}
+    resp = requests.get('http://127.0.0.1:8000/api/medico/consulta_paciente', params=payload)
+    consultas_medico = []
+    if(resp.status_code == 200):
+        consultas_medico = resp.json()
+
+    resp = requests.get('http://127.0.0.1:8000/api/nutricionista/consulta_paciente', params=payload)
+    consultas_nutricionista = []
+    if(resp.status_code == 200):
+        consultas_nutricionista = resp.json()
+
+    resp = requests.get('http://127.0.0.1:8000/api/preparador/consulta_paciente', params=payload)
+    consultas_preparador = []
+    if(resp.status_code == 200):
+        consultas_preparador = resp.json()
+
+    consultas = consultas_medico
+    consultas.extend(consultas_nutricionista)
+    consultas.extend(consultas_preparador)
+
+    consultas.sort(key=lambda x: x['horario'])
 
     return Response(consultas)
 
