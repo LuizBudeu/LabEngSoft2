@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework.exceptions import ParseError
 from django.http import HttpRequest
 from datetime import datetime
+from datetime import date
 
 from api.models import Consulta
 from api.models import Usuario
@@ -80,3 +81,31 @@ def consulta_paciente(request):
     )
 
     return Response(consultas)
+
+@api_view(['GET'])
+def horarios_profissional(request):
+    
+    """
+    Lista horários com consultata do profissional. para 1 mês após a data atual.
+
+    Query parameters:
+        professional_id: ID usuário do profissional
+    """
+
+    data = request.GET
+
+    try: 
+        profissional = Usuario.objects.get(id=data['professional_id'])
+    except Usuario.DoesNotExist:
+        raise ParseError(f"profissional com id={data['professional_id']} não foi encontrado")
+
+    professionalSchedule =  Consulta.objects.filter(
+        profissional=profissional,
+        horario__gt=date.today()
+    ).exclude(
+        status=1 # Exclui consultas canceladas
+    ).values(
+        'horario'
+    )
+
+    return Response(professionalSchedule)
