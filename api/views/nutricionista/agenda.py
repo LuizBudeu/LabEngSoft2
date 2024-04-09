@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework.exceptions import ParseError
 from django.http import HttpRequest
 from datetime import datetime
+from datetime import date
 
 from api.models import Consulta
 from api.models import Usuario
@@ -47,3 +48,64 @@ def agenda(request: HttpRequest) -> Response:
     )
 
     return Response({'message': consultas.values()})
+
+@api_view(['GET'])
+def consulta_paciente(request):
+    """
+    Pega as consultas de paciente. Retorna todas as consultas marcadas para ele após a data de hoje, 
+    com informações do profissional.
+
+    Query parameters:
+        user_id: ID usuário do paciente
+    """
+
+    data = request.GET
+
+    consultas = Consulta.objects.filter(
+        paciente_id=data['user_id'],
+        profissional__ocupacao=2, # Nutricionista
+        horario__gt=datetime.utcnow()
+    ).order_by('horario').values(
+        'id',
+        'profissional_id',
+        'profissional__nome',
+        'profissional__ocupacao',
+        'profissional__logradouro',
+        'profissional__numero',
+        'profissional__complemento',
+        'horario',
+        'valor',
+        'tarifa',
+        'duracao_em_minutos',
+        'status'
+    )
+
+    return Response(consultas)
+
+@api_view(['GET'])
+def horarios_profissional(request):
+    
+    """
+    Lista horários com consultata do profissional. para 1 mês após a data atual.
+
+    Query parameters:
+        professional_id: ID usuário do profissional
+    """
+
+    data = request.GET
+
+    try: 
+        profissional = Usuario.objects.get(id=data['professional_id'])
+    except Usuario.DoesNotExist:
+        raise ParseError(f"profissional com id={data['professional_id']} não foi encontrado")
+
+    professionalSchedule =  Consulta.objects.filter(
+        profissional=profissional,
+        horario__gt=date.today()
+    ).exclude(
+        status=1 # Exclui consultas canceladas
+    ).values(
+        'horario'
+    )
+
+    return Response(professionalSchedule)

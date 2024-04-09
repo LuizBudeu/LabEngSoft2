@@ -6,6 +6,7 @@ import json
 
 from api.models import TreinoFisico
 from api.models import Usuario
+from api.models import RelatorioPreparadorFisico
 
 @api_view(['POST'])
 def create(request: HttpRequest) -> Response:
@@ -53,3 +54,24 @@ def workouts(request: HttpRequest) -> Response:
     )
 
     return Response(treinos)
+
+@api_view(['GET'])
+def treino_paciente(request):
+    """
+    Retorna o treino mais recente do usuário.
+
+    Query parameters:
+        user_id: ID usuário do paciente
+    """
+
+    data = request.GET
+
+    treino = RelatorioPreparadorFisico.objects.filter(
+        consulta__paciente_id=data['user_id'],
+    ).values(
+        'consulta__profissional__nome',
+        'treino_fisico__treino',
+        'treino_fisico__titulo',
+    ).order_by('-created_at').first()
+
+    return Response(treino)

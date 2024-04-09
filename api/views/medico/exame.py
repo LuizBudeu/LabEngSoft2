@@ -87,3 +87,29 @@ def pegar_exames(request: HttpRequest) -> Response:
     )
 
     return Response(treinos)
+
+@api_view(['GET'])
+def exames_paciente(request):
+    """
+    Retorna os exames abertos do usuário.
+
+    Query parameters:
+        user_id: ID usuário do paciente
+    """
+
+    data = request.GET
+
+    examesMedicos = PedidoExameMedico.objects.filter(
+        paciente_id=data['user_id'],
+        status=0
+    ).values(
+        'medico_id',
+        'medico__ocupacao',
+        'medico__nome',
+        'medico__logradouro',
+        'medico__numero',
+        'medico__complemento',
+        'titulo',
+    ).order_by('-created_at')
+
+    return Response(examesMedicos)

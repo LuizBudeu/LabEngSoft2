@@ -122,7 +122,8 @@ export const GetProfessionals = (onSuccess) => {
         axios.get(API_PROTOCOL_HOSTNAME_PORT + "/api/paciente/horarios", {
             params: {
                 user_id: user_id,
-                professional_id: professional.id
+                professional_id: professional.id,
+                type: professional.ocupacao
             }
         }).then((response) => {
             setHorarios(response.data);
