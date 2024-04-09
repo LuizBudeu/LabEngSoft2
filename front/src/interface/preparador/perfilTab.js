@@ -6,9 +6,9 @@ import { PerfilForm } from "./components/perfilForm";
 import { FormContainer } from "../../components/formContainer";
 
 export const PerfilTab = () => {
-    const { userProfile, refetch } = GetProfile("3");
+    const { userProfile, refetch } = GetProfile();
     const [showPopUp, setShowPopUp] = useState(false);
-
+    
     const handleSubmit = () => {
         refetch();
         setShowPopUp(false);

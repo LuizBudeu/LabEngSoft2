@@ -4,10 +4,14 @@ import { CustomInput } from "../../../components/customInput";
 import { CustomButton } from "../../../components/customButton";
 import { UpdateProfile } from "../../../contoller/preparador/PerfilController";
 import { useAxiosWithToken } from "../../../utils/useAxiosWithToken";
+import { useSearchParams } from "react-router-dom";
 
 export const PerfilForm = ({perfil, onSubmit}) => {
     const [userInfo, setUserInfo] = useState({...perfil});
-    const axios = useAxiosWithToken();
+    const [axios] = useAxiosWithToken();
+    const [searchParams] = useSearchParams();
+
+    const user_id = searchParams.get("id");
 
     const perfilItem = (infoKey) => {
         return(
@@ -26,7 +30,7 @@ export const PerfilForm = ({perfil, onSubmit}) => {
 
     const submit = async (e) => {
         e.preventDefault();
-        const resp = await UpdateProfile("3", userInfo, axios);
+        const resp = await UpdateProfile(user_id, userInfo, axios);
         if(resp) {
             onSubmit();
           } else {

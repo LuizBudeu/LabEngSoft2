@@ -2,11 +2,39 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.exceptions import ParseError
 from django.http import HttpRequest
+
 import json
+import jwt
 
 from api.models import Usuario
-from api.models import Paciente
+from api.models import ExtUsuario
 
+@api_view(['GET'])
+def user_id(request: HttpRequest) -> Response:
+    """
+        Pega id do paciente.
+    """
+    token = request.headers.get('Authorization')
+
+    if(token != ""):
+        token = token.split(" ", 1)[1]
+
+        token_decoded = jwt.decode(token, options={"verify_signature": False})["oid"]
+
+        user_id = None
+
+        try: 
+            ext_usuario = ExtUsuario.objects.get(ext_id=token_decoded)
+            user_id = ext_usuario.usuario_id
+        except ExtUsuario.DoesNotExist:
+            ext_usuario = ExtUsuario.objects.create(
+                ext_id=token_decoded,
+            )
+        return Response({
+            'user_id': user_id
+        })
+    else:
+        return Response("Token inválido", 401)
 
 @api_view(['GET'])
 def perfil(request: HttpRequest) -> Response:
@@ -25,7 +53,6 @@ def perfil(request: HttpRequest) -> Response:
         raise ParseError(f"Usuário com id={data['user_id']} não foi encontrado")
 
     resp = {
-        'email': usuario.email,
         'nome': usuario.nome,
         'cpf': usuario.cpf,
         'data_de_nascimento': usuario.data_de_nascimento,

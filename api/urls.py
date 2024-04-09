@@ -30,6 +30,7 @@ from .views.preparador.workout import workouts
 from .views.preparador.workout import create as workout_create
 from .views.preparador.perfil import perfil as preparador_perfil
 from .views.preparador.perfil import update_perfil as preparador_update_perfil
+from .views.preparador.perfil import user_id as preparador_id
 
 from .views.nutricionista.agenda import agenda as nutricionista_agenda
 from .views.nutricionista.avaliacao import avaliacao as avaliacao_nutricional
@@ -66,6 +67,7 @@ urlpatterns = [
     path('paciente/pay_consulta', paciente_pay_appointment, name='paciente_pay_appointment'),
     path('paciente/acompanhamento', paciente_acompanhamento, name='paciente_acompanhamento'),
 
+    path('preparador/id', preparador_id, name='preparador_id'),
     path('preparador/agenda', preparador_agenda, name='preparador_agenda'),
     path('preparador/create_workout', workout_create, name='workout_create'),
     path('preparador/workouts', workouts, name='workouts'),
