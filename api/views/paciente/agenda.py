@@ -24,7 +24,6 @@ def agenda(request):
     
     consultas = Consulta.objects.filter(
         paciente=usuario,
-        # status__in=[0, 4]
         horario__gt=datetime.utcnow()
     ).order_by('horario').values(
         'id',
