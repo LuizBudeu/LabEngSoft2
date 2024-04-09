@@ -4,7 +4,7 @@ from django.http import HttpRequest
 from rest_framework.exceptions import ParseError
 
 
-from api.models import Medico, Usuario
+from api.models import Medico, Usuario, DadosBancariosRecebimento
 
 
 @api_view(http_method_names=['POST'])
@@ -51,3 +51,23 @@ def lista_profissionais(request):
     )
 
     return Response(profissionais)
+
+@api_view(['GET'])
+def informacao_bancaria(request):
+    
+    """
+    Retorna o número da conta do profissional.
+
+    Query parameters:
+        user_id: Id do prifissional
+    """
+
+    data = request.GET
+
+    try:
+        conta =  DadosBancariosRecebimento.objects.get(
+            profissional_id=data['user_id']
+        )
+        return Response(conta.conta)
+    except Usuario.DoesNotExist:
+        raise ParseError(f"Conta para profissional com id={body['user_id']} não foi encontrado")

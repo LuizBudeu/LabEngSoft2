@@ -8,6 +8,7 @@ import { BackgroundContainer } from "../../components/backgroundContainer";
 import { useLogout } from "../../utils/useLogout";
 import { useLogin } from "../../utils/useLogin";
 import { ENVIRONMENT } from "../../utils/utils";
+import { AnonymousPage } from "../../components/AnonymousPage";
 
 const LOGIN_URL = process.env.REACT_APP_MEDICO_LOGIN_URL;
 const AUTH_SECRET = process.env.REACT_APP_MEDICO_AUTH_SECRET;
@@ -24,10 +25,10 @@ const Tabs = () => {
 
     if (ENVIRONMENT === "prod" && !loggedIn)
         return (
-            <>
-                <p>Bem-vindo ao portal do médico!</p>
-                <a href={LOGIN_URL}>Registre-se ou faça Login.</a>
-            </>
+            <AnonymousPage
+                text="Bem-vindo ao portal do médico!"
+                url={LOGIN_URL}
+            />
         );
 
     return (

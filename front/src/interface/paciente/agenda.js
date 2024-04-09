@@ -16,6 +16,8 @@ import { GetHourMinute, FormatDate } from "../../utils/date";
 import { formatCurrency } from "../../utils/utils";
 import { NovaConsulta } from "./novaConsulta";
 import { DynamicContainer } from "../../components/dynamicContainer";
+import { CustomInput } from "../../components/customInput";
+import { Column } from "../../components/column";
 
 const Agenda = () => {
   const navigate = useNavigate();
@@ -29,8 +31,16 @@ const Agenda = () => {
     showPayAppointmentPopUp, 
     setPayNewAppointmentPopUp,
     cancelAppointment,
-    payAppointment
+    payAppointment,
+    cardNumber, 
+    setCardNumber
   ] = GetAppointments();
+
+  const submit = async (e) => {
+    e.preventDefault();
+    payAppointment(selectedAppointment.id, selectedAppointment.profissional__ocupacao);
+    setPayNewAppointmentPopUp(false);
+  }
 
   return (
     <div style={{height: "100%"}}>
@@ -44,18 +54,31 @@ const Agenda = () => {
       </PopUpContainer>
       <PopUpContainer showPopUp={showPayAppointmentPopUp} closePopUp={() => setPayNewAppointmentPopUp(false)} center>
         <DynamicContainer>
-          <text style={{'font-weight': 'bold'}}>Pagar consuta</text>
-          <text>{formatCurrency(selectedAppointment?.valor+selectedAppointment?.tarifa)}</text>
-          <br/>
-          <CustomButton
-            type="primary"
-            title="Pagar consulta"
-            onClick={() => {
-              payAppointment(selectedAppointment.id);
-              setPayNewAppointmentPopUp(false);
-            }}
-          />
-          
+          <form onSubmit={submit}>
+            <Column>
+              <text style={{'font-weight': 'bold'}}>Pagar consuta</text>
+              <text>Valor a ser pago: {formatCurrency(selectedAppointment?.valor+selectedAppointment?.tarifa)}</text>
+              <br/>
+              <text style={{fontWeight: "bold"}}>Número do cartão</text>
+              <Row>
+                <CustomInput
+                  name="cardNumber"
+                  value={cardNumber}
+                  onChange={(e) => setCardNumber(e.target.value)}
+                  type="text"
+                />
+              </Row>
+              <Row>
+                <RowItem grow center>
+                  <CustomButton
+                    type="primary"
+                    title="Pagar consulta"
+                    isSubmit
+                  />
+                </RowItem>
+              </Row>
+            </Column>
+          </form>          
         </DynamicContainer>
       
       </PopUpContainer>
