@@ -2,36 +2,34 @@ import { useEffect, useState } from "react";
 import { API_PROTOCOL_HOSTNAME_PORT } from "../../utils/utils";
 import { useAxiosWithToken } from "../../utils/useAxiosWithToken";
 
-export const RegistrarFormulario = async (consulta_id, pacientInfo, axios) => {
+export const RegistrarFormulario = (consulta_id, pacientInfo) => {
+    const [axios] = useAxiosWithToken();
     const path = `${API_PROTOCOL_HOSTNAME_PORT}/api/preparador/consultas/${consulta_id}/formulario`
-    try {
-        const response = await axios.post(path, {...pacientInfo});
-        
-        if (response.status != 200){
-            console.log("Resposta da criação", response.data);
-            return false;
-        }
-
-        return true;
-    } catch(e) {
-        console.log("Erro ao criar relatório", e);
-        return false;
+    
+    const registerForm = ({onSuccess, onError}) => {
+        axios.post(path, {...pacientInfo}
+        ).then(() => 
+            onSuccess()
+        ).catch((e) =>
+            onError(e)
+        );
     }
+
+    return { registerForm };
 };
 
-export const FinalizarConsulta = async (consulta_id, axios) => {
+export const FinalizarConsulta = (consulta_id) => {
+    const [axios] = useAxiosWithToken();
     const path = `${API_PROTOCOL_HOSTNAME_PORT}/api/preparador/consultas/${consulta_id}`
-    try {
-        const response = await axios.patch(path);
-        
-        if (response.status != 200) {
-            return false;
-        }
-        return true;
-    } catch(e) {
-        console.log("Erro ao alterar estado da consulta", e);
-        return false;
+
+    const finalizar = () => {
+        axios.patch(path,
+        ).catch((e) =>
+            console.log(e)
+        );
     }
+
+    return { finalizar };
 }
 
 export const GetPacienteExtraInfo = (consulta_id) => {
