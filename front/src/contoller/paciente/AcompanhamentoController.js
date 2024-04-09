@@ -21,6 +21,7 @@ export const GetAcompanhemntos = () => {
         if(type=="exameMedico"){
             professional = {
                 id: acompanhamento.medico_id,
+                ocupacao: acompanhamento.medico__ocupacao,
                 nome: acompanhamento.medico__nome,
                 logradouro: acompanhamento.medico__logradouro,
                 numero: acompanhamento.medico__numero,
@@ -29,6 +30,7 @@ export const GetAcompanhemntos = () => {
         }else if(type=="exameNutricionista"){
             professional = {
                 id: acompanhamento.nutricionista_id,
+                ocupacao: acompanhamento.nutricionista__ocupacao,
                 nome: acompanhamento.nutricionista__nome,
                 logradouro: acompanhamento.nutricionista__logradouro,
                 numero: acompanhamento.nutricionista__numero,
