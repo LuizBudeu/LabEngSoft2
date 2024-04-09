@@ -1,6 +1,7 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.exceptions import ParseError
+import requests
 
 from api.models import Usuario, Consulta
 from datetime import timedelta
@@ -25,17 +26,18 @@ def buscaProfissionais(request):
     except Usuario.DoesNotExist:
         raise ParseError(f"Usuário com id={data['user_id']} não foi encontrado")
 
-    profissionais =  Usuario.objects.filter(
-        ocupacao=data['type'],
-        nome__contains=("" if data['name'] == None else data['name'])
-    ).values(
-        'id',
-        'nome',
-        'ocupacao',
-        'logradouro',
-        'numero',
-        'complemento'
-    )
+    professional_type = "medico"
+    if(data['type'] == '2'):
+        professional_type = "nutricionista"
+    elif(data['type'] == '3'):
+        professional_type = "preparador"
+    
+
+    payload = {'name': data['name']}
+    resp = requests.get('http://127.0.0.1:8000/api/'+professional_type+'/lista_profissionais', params=payload)
+    profissionais = []
+    if(resp.status_code == 200):
+        profissionais = resp.json()
 
     return Response(profissionais)
 

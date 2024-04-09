@@ -94,3 +94,29 @@ def update_perfil(request):
         raise ParseError(f"Nutricionista com id={body['user_id']} não foi encontrado")
 
     return Response("Nutricionista atualizado")
+
+@api_view(['GET'])
+def lista_profissionais(request):
+    
+    """
+    Lista médicos.
+
+    Query parameters:
+        name: Nome do prifissional. (opcional)
+    """
+
+    data = request.GET
+
+    profissionais =  Usuario.objects.filter(
+        ocupacao=2, # Nutricionista
+        nome__contains=("" if data['name'] == None else data['name'])
+    ).values(
+        'id',
+        'nome',
+        'ocupacao',
+        'logradouro',
+        'numero',
+        'complemento'
+    )
+
+    return Response(profissionais)

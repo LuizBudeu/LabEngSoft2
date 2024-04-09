@@ -25,3 +25,29 @@ def create_medico(request: HttpRequest):
         raise ParseError(f"Erro ao criar médico: {e}")
     
     return Response({'message': f"Médico {medico.id} criado."})
+
+@api_view(['GET'])
+def lista_profissionais(request):
+    
+    """
+    Lista médicos.
+
+    Query parameters:
+        name: Nome do prifissional. (opcional)
+    """
+
+    data = request.GET
+
+    profissionais =  Usuario.objects.filter(
+        ocupacao=1, # Médico
+        nome__contains=("" if data['name'] == None else data['name'])
+    ).values(
+        'id',
+        'nome',
+        'ocupacao',
+        'logradouro',
+        'numero',
+        'complemento'
+    )
+
+    return Response(profissionais)

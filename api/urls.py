@@ -13,6 +13,7 @@ from .views.medico.exame import pegar_exames as medico_pegar_exames
 from .views.medico.exame import finalizar_exame as medico_finalizar_exame
 from .views.medico.agenda import agenda as medico_agenda
 from .views.medico.agenda import consulta_paciente as medico_consulta_paciente
+from .views.medico.medico import lista_profissionais as medico_lista_profissionais
 
 from .views.paciente.perfil import create_profile as paciente_create
 from .views.paciente.perfil import user_id as paciente_id
@@ -29,10 +30,13 @@ from .views.paciente.agenda import agenda as paciente_agenda
 from .views.preparador.agenda import agenda as preparador_agenda
 from .views.preparador.workout import workouts
 from .views.preparador.workout import create as workout_create
-from .views.preparador.agenda import consulta_paciente as preparador_consulta_paciente
 from .views.preparador.perfil import perfil as preparador_perfil
 from .views.preparador.perfil import update_perfil as preparador_update_perfil
 from .views.preparador.perfil import user_id as preparador_id
+from .views.preparador.consulta import registrar_formulario
+from .views.preparador.consulta import consulta_request
+from .views.preparador.agenda import consulta_paciente as preparador_consulta_paciente
+from .views.preparador.perfil import lista_profissionais as preparador_lista_profissionais
 
 from .views.nutricionista.agenda import agenda as nutricionista_agenda
 from .views.nutricionista.avaliacao import avaliacao as avaliacao_nutricional
@@ -42,8 +46,7 @@ from .views.nutricionista.exame import pedirExame as nutricionista_exame
 from .views.nutricionista.perfil import perfil as nutricionista_perfil
 from .views.nutricionista.perfil import update_perfil as nutricionista_update_perfil
 from .views.nutricionista.agenda import consulta_paciente as nutricionista_consulta_paciente
-from .views.preparador.consulta import registrar_formulario
-from .views.preparador.consulta import consulta_request
+from .views.nutricionista.perfil import lista_profissionais as nutricionista_lista_profissionais
 
 urlpatterns = [
     path('hello-world', hello_world, name='hello_world'),
@@ -58,6 +61,7 @@ urlpatterns = [
     path('medico/finalizar_exame', medico_finalizar_exame, name='medico_finalizar_exame'),
     path('medico/create', create_medico, name='medico_create'),
     path('medico/consulta_paciente', medico_consulta_paciente, name='medico_consulta_paciente'),
+    path('medico/lista_profissionais', medico_lista_profissionais, name='medico_lista_profissionais'),
     
     path('paciente/id', paciente_id, name='paciente_id'),
     path('paciente/create_profile', paciente_create, name='paciente_create'),
@@ -80,6 +84,7 @@ urlpatterns = [
     path('preparador/consultas/<int:consulta_id>/formulario', registrar_formulario, name='finalizar_consulta'),
     path('preparador/consultas/<int:consulta_id>', consulta_request, name='consulta_request'),
     path('preparador/consulta_paciente', preparador_consulta_paciente, name='preparador_consulta_paciente'),
+    path('preparador/lista_profissionais', preparador_lista_profissionais, name='preparador_lista_profissionais'),
 
     path('nutricionista/agenda', nutricionista_agenda, name='nutricionista_agenda'),
     path('nutricionista/avaliacao', avaliacao_nutricional, name='avaliacao_nutricional'),
@@ -89,6 +94,7 @@ urlpatterns = [
     path('nutricionista/perfil', nutricionista_perfil, name='nutricionista_perfil'),
     path('nutricionista/update_perfil', nutricionista_update_perfil, name='nutricionista_update_perfil'),
     path('nutricionista/consulta_paciente', nutricionista_consulta_paciente, name='nutricionista_consulta_paciente'),
+    path('nutricionista/lista_profissionais', nutricionista_lista_profissionais, name='nutricionista_lista_profissionais'),
 
     # path('logout/', views.LogoutView.as_view(), name ='logout')
 ]
