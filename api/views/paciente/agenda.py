@@ -9,7 +9,7 @@ import json
 from dotenv import load_dotenv, find_dotenv
 import os
 
-load_dotenv(find_dotenv('.env'))
+load_dotenv(find_dotenv('api.env'))
 
 @api_view(['GET'])
 def agenda(request):
@@ -97,6 +97,7 @@ def createAppointment(request):
     if(body['professional_type'] == 3):
         valor = 120
 
+    print(os.environ.get('TARIFA_URL_CODE'))
     url = "https://labengsoft.azurewebsites.net/api/Tarifagem?code="+os.environ.get('TARIFA_URL_CODE')
 
     payload = json.dumps({
