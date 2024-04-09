@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { API_PROTOCOL_HOSTNAME_PORT } from "../../utils/utils";
 import { useAxiosWithToken } from "../../utils/useAxiosWithToken";
+import { useSearchParams } from "react-router-dom";
 
 export const CreateWorkOut = async (user_id, workOut, axios) => {
 
@@ -22,9 +23,12 @@ export const CreateWorkOut = async (user_id, workOut, axios) => {
 
 };
 
-export const GetWorkOuts = (user_id) => {
+export const GetWorkOuts = () => {
     const [workOuts, setWorkOuts] = useState([]);
     const [axios] = useAxiosWithToken();
+    const [searchParams] = useSearchParams();
+
+    const user_id = searchParams.get("id");
 
     const fetchWorkOuts = () => {
         axios.get(API_PROTOCOL_HOSTNAME_PORT + "/api/preparador/workouts", {

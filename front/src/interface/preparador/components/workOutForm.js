@@ -5,15 +5,19 @@ import { CustomInput } from "../../../components/customInput";
 import { CustomTextArea } from "../../../components/customTextArea";
 import { CreateWorkOut } from "../../../contoller/preparador/WorkOutController";
 import { useAxiosWithToken } from "../../../utils/useAxiosWithToken";
+import { useSearchParams } from "react-router-dom";
 
 export const WorkOutForm = ({onSubmit}) => {
     const [workOut, setWorkOut] = useState({title: "", workout: ""});
     const [axios] = useAxiosWithToken();
+    const [searchParams] = useSearchParams();
 
+    const user_id = searchParams.get("id");
+  
     const submit = async (e) => {
       e.preventDefault(); 
 
-      const resp = await CreateWorkOut("3", workOut, axios); 
+      const resp = await CreateWorkOut(user_id, workOut, axios); 
       
       if(resp) {
         onSubmit();
