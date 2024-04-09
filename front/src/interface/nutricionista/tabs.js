@@ -7,6 +7,7 @@ import { SecondaryNavBar } from "../../components/secondaryNavBar";
 import { useLogout } from "../../utils/useLogout";
 import { useLogin } from "../../utils/useLogin";
 import { ENVIRONMENT } from "../../utils/utils";
+import { AnonymousPage } from "../../components/AnonymousPage";
 
 const LOGIN_URL = process.env.REACT_APP_NUTRICIONISTA_LOGIN_URL;
 const AUTH_SECRET = process.env.REACT_APP_NUTRICIONISTA_AUTH_SECRET;
@@ -27,10 +28,10 @@ const Tabs = () => {
 
      if (ENVIRONMENT === "prod" && !loggedIn)
      return (
-         <>
-             <p>Bem-vindo ao portal do nutricionista!</p>
-             <a href={LOGIN_URL}>Registre-se ou faça Login.</a>
-         </>
+        <AnonymousPage
+            text="Bem-vindo ao portal do nutricionista!"
+            url={LOGIN_URL}
+        />
      );
 
     return (
