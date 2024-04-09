@@ -3,8 +3,6 @@ import { Column } from "../../../components/column";
 import { CustomInput } from "../../../components/customInput";
 import { CustomButton } from "../../../components/customButton";
 import { UpdateProfile } from "../../../contoller/preparador/PerfilController";
-import { useAxiosWithToken } from "../../../utils/useAxiosWithToken";
-import { useSearchParams } from "react-router-dom";
 
 export const PerfilForm = ({perfil, onSubmit}) => {
     const [userInfo, setUserInfo] = useState({...perfil});
