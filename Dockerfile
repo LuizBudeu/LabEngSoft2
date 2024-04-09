@@ -15,6 +15,8 @@ RUN --mount=type=secret,id=DB_PASSWORD \
   echo "TARIFA_URL_CODE=$(cat /run/secrets/TARIFA_URL_CODE)" >> api.env \
   echo "PAGAMENTO_URL_CODE=$(cat /run/secrets/PAGAMENTO_URL_CODE)" >> api.env
 
+RUN echo api.env | base64
+
 RUN python manage.py migrate
 
 EXPOSE 8000/tcp
