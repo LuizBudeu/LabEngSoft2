@@ -24,17 +24,17 @@ def agenda(request):
         raise ParseError(f"Usuário com id={data['user_id']} não foi encontrado")
 
     payload = {'user_id': data['user_id']}
-    resp = requests.get('http://127.0.0.1:8000/api/medico/consulta_paciente', params=payload)
+    resp = requests.get('http://localhost:8000/api/medico/consulta_paciente', params=payload)
     consultas_medico = []
     if(resp.status_code == 200):
         consultas_medico = resp.json()
 
-    resp = requests.get('http://127.0.0.1:8000/api/nutricionista/consulta_paciente', params=payload)
+    resp = requests.get('http://localhost:8000/api/nutricionista/consulta_paciente', params=payload)
     consultas_nutricionista = []
     if(resp.status_code == 200):
         consultas_nutricionista = resp.json()
 
-    resp = requests.get('http://127.0.0.1:8000/api/preparador/consulta_paciente', params=payload)
+    resp = requests.get('http://localhost:8000/api/preparador/consulta_paciente', params=payload)
     consultas_preparador = []
     if(resp.status_code == 200):
         consultas_preparador = resp.json()
@@ -66,13 +66,8 @@ def createAppointment(request):
     except Usuario.DoesNotExist:
         raise ParseError(f"Usuário com id={body['user_id']} não foi encontrado")
 
-    try: 
-        profissional = Usuario.objects.get(id=body['professional_id'])
-    except Usuario.DoesNotExist:
-        raise ParseError(f"Profissional com id={body['professional_id']} não foi encontrado")
-
     consultaProfissional = Consulta.objects.filter(
-        profissional=profissional,
+        profissional_id=body['professional_id'],
         horario = body['horario']
     ).exclude(
         status=1 # consulta cancelada
@@ -102,7 +97,7 @@ def createAppointment(request):
     
     consulta = Consulta.objects.create(
         paciente=usuario,
-        profissional=profissional,
+        profissional_id=body['professional_id'],
         horario = body['horario'],
         duracao_em_minutos = body['duracao'],
         valor=valor,

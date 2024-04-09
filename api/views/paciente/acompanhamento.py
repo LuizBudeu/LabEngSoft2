@@ -24,22 +24,23 @@ def acompanhamento(request):
 
     payload = {'user_id': data['user_id']}
 
-    resp = requests.get('http://127.0.0.1:8000/api/nutricionista/dieta_paciente', params=payload)
+    resp = requests.get('http://localhost:8000/api/nutricionista/dieta_paciente', params=payload)
+    # resp = requests.get('../../nutricionista/dieta_paciente', params=payload)
     dieta = None
     if(resp.status_code == 200):
         dieta = resp.json()
 
-    resp = requests.get('http://127.0.0.1:8000/api/preparador/treino_paciente', params=payload)
+    resp = requests.get('http://localhost:8000/api/preparador/treino_paciente', params=payload)
     treino = None
     if(resp.status_code == 200):
         treino = resp.json()
 
-    resp = requests.get('http://127.0.0.1:8000/api/medico/exames_paciente', params=payload)
+    resp = requests.get('http://localhost:8000/api/medico/exames_paciente', params=payload)
     examesMedicos = []
     if(resp.status_code == 200):
         examesMedicos = resp.json()
 
-    resp = requests.get('http://127.0.0.1:8000/api/nutricionista/exames_paciente', params=payload)
+    resp = requests.get('http://localhost:8000/api/nutricionista/exames_paciente', params=payload)
     examesNutricionista = []
     if(resp.status_code == 200):
         examesNutricionista = resp.json()
