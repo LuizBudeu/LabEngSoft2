@@ -11,6 +11,7 @@ import { useLogout } from "../../utils/useLogout";
 import { PerfilTab } from "./perfilTab";
 import { TopBar } from "../../components/TopBar";
 import { Auth } from "../../contoller/preparador/PerfilController";
+import { AnonymousPage } from "../../components/AnonymousPage";
 
 const LOGIN_URL = process.env.REACT_APP_PREPARADOR_LOGIN_URL;
 const AUTH_SECRET = process.env.REACT_APP_PREPARADOR_AUTH_SECRET;
@@ -29,10 +30,10 @@ export const PreparadorHome = () => {
 
     if (ENVIRONMENT === "prod" && !loggedIn) {
         return (
-            <>
-                <p>Bem-vindo ao portal do preparador físico!</p>
-                <a href={LOGIN_URL}>Registre-se ou faça Login.</a>
-            </>
+            <AnonymousPage
+                text="Bem-vindo ao portal do preparador físico!"
+                url={LOGIN_URL}
+            />
         );
     }
 
