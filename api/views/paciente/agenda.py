@@ -165,6 +165,8 @@ def payAppointment(request):
     Query parameters:
         user_id: ID usuário do paciente
         appointment_id: ID da consulta
+        card_number: Número do cartão
+        professional_type: tipo de profissional
     """
 
     body = json.loads(request.body.decode('utf-8'))
@@ -179,11 +181,38 @@ def payAppointment(request):
         paciente=usuario
     )
 
+    professional_type = "medico"
+    if(body['professional_type'] == 2):
+        professional_type = "nutricionista"
+    elif(body['professional_type'] == 3):
+        professional_type = "preparador"
+
     if(consulta):
         if(consulta.status == 4):
-            consulta.status = 0
-            consulta.save()
-            return Response("Consulta atualizada")
+            payload = {'user_id': consulta.profissional_id}
+            resp = requests.get('http://127.0.0.1:8000/api/'+professional_type+'/informacao_bancaria', params=payload)
+            if(resp.status_code == 200):
+                professional_bank_account = resp.json()
+
+                url = "https://labengsoft.azurewebsites.net/api/Pagamento?code="+os.environ.get('PAGAMENTO_URL_CODE')
+
+                payload = json.dumps({
+                    "valorPagamento": consulta.valor + consulta.tarifa,
+                    "numeroCartao": body['card_number'],
+                    "numeroContaRecebedor": professional_bank_account
+                })
+                headers = {
+                    'Content-Type': 'application/json'
+                }
+
+                resp = requests.request("POST", url, headers=headers, data=payload)
+                if(resp.status_code == 200):
+                    resp_data = resp.json()
+                    if(resp_data["pagamentoBemSucedido"]):
+                        consulta.status = 0
+                        consulta.save()
+                        return Response("Consulta atualizada")
+            return Response("Erro no processamento do pagamento pagamento", 400)
         else:
             return Response("Consulta indisponível para pagamento", 400)
     else:

@@ -7,6 +7,7 @@ export const GetAppointments = () => {
 
     const [appointments, setAppointments] = useState([]);
     const [selectedAppointment, setSelectedAppointment] = useState();
+    const [cardNumber, setCardNumber] = useState();
     const [showNewAppointmentPopUp, setShowNewAppointmentPopUp] = useState(false);
     const [showPayAppointmentPopUp, setPayNewAppointmentPopUp] = useState(false);
     const [axios] = useAxiosWithToken();
@@ -50,10 +51,13 @@ export const GetAppointments = () => {
         return true;
     }
 
-    const payAppointment = async (appointment_id) => {
+    const payAppointment = async (appointment_id, ocupacao) => {
+        console.log(ocupacao)
         const response = await axios.post(API_PROTOCOL_HOSTNAME_PORT + "/api/paciente/pay_consulta", {
             user_id: user_id,
-            appointment_id: appointment_id
+            appointment_id: appointment_id,
+            professional_type: ocupacao,
+            card_number: cardNumber
         });
         if(response.status != 200){
             console.log(response.data);
@@ -78,7 +82,9 @@ export const GetAppointments = () => {
         showPayAppointmentPopUp, 
         setPayNewAppointmentPopUp,
         cancelAppointment,
-        payAppointment
+        payAppointment,
+        cardNumber, 
+        setCardNumber
     ];
     
 };

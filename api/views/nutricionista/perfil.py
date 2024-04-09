@@ -2,7 +2,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 import json
 
-from api.models import Usuario, Nutricionista
+from api.models import Usuario, Nutricionista, DadosBancariosRecebimento
 
 
 @api_view(['GET'])
@@ -120,3 +120,23 @@ def lista_profissionais(request):
     )
 
     return Response(profissionais)
+
+@api_view(['GET'])
+def informacao_bancaria(request):
+    
+    """
+    Retorna o número da conta do profissional.
+
+    Query parameters:
+        user_id: Id do prifissional
+    """
+
+    data = request.GET
+
+    try:
+        conta =  DadosBancariosRecebimento.objects.get(
+            profissional_id=data['user_id']
+        )
+        return Response(conta.conta)
+    except Usuario.DoesNotExist:
+        raise ParseError(f"Conta para profissional com id={body['user_id']} não foi encontrado")
