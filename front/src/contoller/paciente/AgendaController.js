@@ -139,6 +139,7 @@ export const GetProfessionals = (onSuccess) => {
         axios.post(API_PROTOCOL_HOSTNAME_PORT + "/api/paciente/create_consulta", {
             user_id: user_id,
             professional_id: professional.id,
+            professional_type: professional.ocupacao,
             horario: date,
             duracao: 60
         }).then((response) => {

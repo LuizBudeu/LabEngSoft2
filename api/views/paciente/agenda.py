@@ -6,6 +6,10 @@ import requests
 from api.models import Consulta, Usuario
 from datetime import datetime
 import json
+from dotenv import load_dotenv, find_dotenv
+import os
+
+load_dotenv(find_dotenv('.env'))
 
 @api_view(['GET'])
 def agenda(request):
@@ -55,6 +59,7 @@ def createAppointment(request):
     Query parameters:
         user_id: ID usuário do paciente
         professional_id: ID usuário do profissional
+        professional_type: Tipo do profissional
         horario: Data e hora da consulta
         duracao: Duracao em minutos
     """
@@ -85,27 +90,40 @@ def createAppointment(request):
 
     # TODO: Chamar método que define valores
     valor = 0
-    if(profissional.ocupacao == 1):
+    if(body['professional_type'] == 1):
         valor = 100
-    if(profissional.ocupacao == 2):
+    if(body['professional_type'] == 2):
         valor = 90
-    if(profissional.ocupacao == 3):
+    if(body['professional_type'] == 3):
         valor = 120
 
-    # TODO: Chamar método que gera tarifa
-    tarifa = 0.2 * valor
-    
-    consulta = Consulta.objects.create(
-        paciente=usuario,
-        profissional_id=body['professional_id'],
-        horario = body['horario'],
-        duracao_em_minutos = body['duracao'],
-        valor=valor,
-        tarifa=tarifa,
-        status=4 # consulta pendente
-    )
+    url = "https://labengsoft.azurewebsites.net/api/Tarifagem?code="+os.environ.get('TARIFA_URL_CODE')
 
-    return Response("Consulta criada")
+    payload = json.dumps({
+        "valorBruto": valor
+    })
+    headers = {
+        'Content-Type': 'application/json'
+    }
+
+    resp = requests.request("POST", url, headers=headers, data=payload)
+    if(resp.status_code == 200):
+        resp_data = resp.json()
+        tarifa = resp_data["tarifa"]
+
+        consulta = Consulta.objects.create(
+            paciente=usuario,
+            profissional_id=body['professional_id'],
+            horario = body['horario'],
+            duracao_em_minutos = body['duracao'],
+            valor=valor,
+            tarifa=tarifa,
+            status=4 # consulta pendente
+        )
+
+        return Response("Consulta criada")
+
+    return Response("Erro ao criar consulta", 400)
 
 @api_view(['POST'])
 def cancelAppointment(request):
