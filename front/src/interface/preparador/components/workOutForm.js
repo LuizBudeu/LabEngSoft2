@@ -4,22 +4,17 @@ import { Column } from "../../../components/column";
 import { CustomInput } from "../../../components/customInput";
 import { CustomTextArea } from "../../../components/customTextArea";
 import { CreateWorkOut } from "../../../contoller/preparador/WorkOutController";
-import { useAxiosWithToken } from "../../../utils/useAxiosWithToken";
 
 export const WorkOutForm = ({onSubmit}) => {
     const [workOut, setWorkOut] = useState({title: "", workout: ""});
-    const axios = useAxiosWithToken();
-
+    const { create } = CreateWorkOut(workOut);
+  
     const submit = async (e) => {
       e.preventDefault(); 
-
-      const resp = await CreateWorkOut("3", workOut, axios); 
-      
-      if(resp) {
-        onSubmit();
-      } else {
-        alert("Erro ao salvar os dados");
-      }
+      create({
+        onSuccess: () => onSubmit(),
+        onError: () => console.log("Erro ao salvar")
+      });
     };
 
     return(

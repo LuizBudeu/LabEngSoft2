@@ -5,7 +5,7 @@ import { API_PROTOCOL_HOSTNAME_PORT } from "../../utils/utils";
 export const GetProfile = (user_id) => {
 
     const [userProfile, setUserProfile] = useState();
-    const axios = useAxiosWithToken();
+    const [axios] = useAxiosWithToken();
 
     useEffect(() => {
         axios.get(API_PROTOCOL_HOSTNAME_PORT + "/api/nutricionista/perfil", {
@@ -25,7 +25,7 @@ export const GetProfile = (user_id) => {
 };
 
 export const UpdateProfile = async (user_id, userProfile) => {
-    const axios = useAxiosWithToken();
+    const [axios] = useAxiosWithToken();
 
     try{
         const response = await axios.post(API_PROTOCOL_HOSTNAME_PORT + "/api/nutricionista/update_perfil", 

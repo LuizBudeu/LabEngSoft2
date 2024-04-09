@@ -18,7 +18,7 @@ import { TipoDiabetesNumberToString } from "../../utils/utils";
 import { useAxiosWithToken } from "../../utils/useAxiosWithToken";
 
 export const AgendaTab = () => {
-    const { agenda } = GetAgenda("3", "2024-03-20", "2024-06-24");
+    const { agenda } = GetAgenda("2024-03-20", "2024-12-30");
 
     const [selectedAppointment, setSelectedAppointment] = useState("");
     
@@ -58,10 +58,10 @@ export const AgendaTab = () => {
 const AppointmentInfo = ({appointment, onFormClick}) => {
     const [showPopUp, setShowPopUp] = useState(false);
     const { extraInfo } = GetPacienteExtraInfo(appointment.id);
-    const axios = useAxiosWithToken();
-    
+    const { finalizar } = FinalizarConsulta(appointment.id);
+
     const handleSubmit = () => {
-        FinalizarConsulta(appointment.id, axios);
+        finalizar();
         setShowPopUp(false);
     }
 

@@ -6,10 +6,10 @@ import { RowItem } from "../../components/rowItem";
 import { Column } from "../../components/column";
 import { GenderOptions, DiabetesOptions } from "../../utils/options";
 
-export const EditPerfil = ({closePopUp, userProfile, setUserProfile, submitProfile}) => {
+export const CreatePerfil = ({userProfile, setUserProfile, submitProfile}) => {
   return (
     <div>
-      <h3 className="Auth-form-title">Editar perfil</h3>
+      <h3 className="Auth-form-title">Novo perfil</h3>
       <form onSubmit={submitProfile}>
         <Column>
           <Row>
@@ -26,23 +26,12 @@ export const EditPerfil = ({closePopUp, userProfile, setUserProfile, submitProfi
             </RowItem>
             <RowItem grow>
               <Column>
-                <text style={{fontWeight: "bold"}}>Email</text>
-                <CustomInput
-                  name="email"
-                  value={userProfile?.email}
-                  type="email"
-                  disabled
-                />
-              </Column>
-            </RowItem>
-            <RowItem grow>
-              <Column>
                 <text style={{fontWeight: "bold"}}>CPF</text>
                 <CustomInput
                   name="cpf"
                   value={userProfile?.cpf}
+                  onChange={(e) => setUserProfile({...userProfile, cpf:e.target.value})}
                   type="text"
-                  disabled
                 />
               </Column>
             </RowItem>
@@ -113,6 +102,7 @@ export const EditPerfil = ({closePopUp, userProfile, setUserProfile, submitProfi
                   onChange={(e) => setUserProfile({...userProfile, complemento:e.target.value})}
                   value={userProfile?.complemento}
                   type="text"
+                  notRequired
                 />
               </Column>
             </RowItem>
@@ -126,6 +116,7 @@ export const EditPerfil = ({closePopUp, userProfile, setUserProfile, submitProfi
                   onChange={(e) => setUserProfile({...userProfile, alergias:e.target.value})}
                   value={userProfile?.alergias}
                   type="text"
+                  notRequired
                 />
               </Column>
             </RowItem>
@@ -145,13 +136,7 @@ export const EditPerfil = ({closePopUp, userProfile, setUserProfile, submitProfi
               <CustomButton
                 type="primary"
                 isSubmit
-                title="Salvar alterações"
-              />
-            </RowItem>
-            <RowItem grow center noPadding>
-              <CustomButton
-                onClick={() => closePopUp()}
-                title="Cancelar"
+                title="Submeter alterações"
               />
             </RowItem>
           </Row>

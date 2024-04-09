@@ -24,7 +24,7 @@ const Acompanhamento = () => {
     changeSelectedAcompanhamento,
     showPopUp, 
     setShowPopUp
-  ] = GetAcompanhemntos("1");
+  ] = GetAcompanhemntos();
 
   const [
     professionals, 
@@ -37,7 +37,7 @@ const Acompanhamento = () => {
     changeSelectedProfessional,
     horarios,
     requestAppointment
-  ] = GetProfessionals("1", ()=>setShowPopUp(false));
+  ] = GetProfessionals(()=>setShowPopUp(false));
 
   return (
     <div>
@@ -76,7 +76,7 @@ const Acompanhamento = () => {
                   selected={treino == selectedAcompanhamento?.acompanhamento}
                 />
               )}
-              {(examesMedico || examesNutricionais) && <h4 className="Auth-form-title">Exames</h4>}
+              {(examesMedico.length != 0 || examesNutricionais.length != 0) && <h4 className="Auth-form-title">Exames</h4>}
               {examesMedico.map((exame)=>(
                 <AppointmentItem
                   type={TipoProfissionalId.medico}

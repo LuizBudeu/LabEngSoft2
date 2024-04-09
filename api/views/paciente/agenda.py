@@ -1,5 +1,6 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.exceptions import ParseError
 
 from api.models import Consulta, Usuario
 from datetime import datetime
@@ -34,6 +35,8 @@ def agenda(request):
         'profissional__numero',
         'profissional__complemento',
         'horario',
+        'valor',
+        'tarifa',
         'duracao_em_minutos',
         'status'
     )
@@ -80,12 +83,26 @@ def createAppointment(request):
 
     if (consultaProfissional != 0 or consultaPaciente != 0):
         return Response("Horário indisponível para consulta", 400)
+
+    # TODO: Chamar método que define valores
+    valor = 0
+    if(profissional.ocupacao == 1):
+        valor = 100
+    if(profissional.ocupacao == 2):
+        valor = 90
+    if(profissional.ocupacao == 3):
+        valor = 120
+
+    # TODO: Chamar método que gera tarifa
+    tarifa = 0.2 * valor
     
     consulta = Consulta.objects.create(
         paciente=usuario,
         profissional=profissional,
         horario = body['horario'],
         duracao_em_minutos = body['duracao'],
+        valor=valor,
+        tarifa=tarifa,
         status=4 # consulta pendente
     )
 

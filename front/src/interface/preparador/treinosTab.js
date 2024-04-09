@@ -11,7 +11,7 @@ import { PopUpContainer } from "../../components/popUpContainer";
 import { FormContainer } from "../../components/formContainer";
 
 export const TreinosTab = () => {
-    const { workOuts, refetch } = GetWorkOuts("3");
+    const { workOuts, refetch } = GetWorkOuts();
     const [selectedWorkOut, setSelectedWorkOut] = useState();
 
     const [visible, setVisible] = useState(false);

@@ -1,11 +1,13 @@
 import axios from "axios"
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { useIsLoggedIn } from "./useIsLoggedIn";
+import { API_PROTOCOL_HOSTNAME_PORT } from "./utils";
 
 export const useAxiosWithToken = () => {
     const [cookies] = useCookies();
     const loggedIn = useIsLoggedIn();
+    const [hasToken, setHasToken] = useState(false);
 
     const axiosWithToken = axios.create();
 
@@ -15,8 +17,9 @@ export const useAxiosWithToken = () => {
                 config.headers = { ...config.headers, Authorization: 'Bearer ' + cookies.access_token }
                 return config;
             });
+            setHasToken(true);
         }
     }, [cookies.access_token, axiosWithToken.interceptors.request, loggedIn])
 
-    return axiosWithToken;
+    return [axiosWithToken, hasToken];
 }

@@ -18,8 +18,6 @@ GENDER_CHOICES = [
 ]
 
 class Usuario(models.Model):
-    email = models.CharField(max_length=100)
-    senha = models.CharField(max_length=100)
     ocupacao = models.IntegerField(choices=OCUPACAO_CHOICES)
     nome = models.CharField(max_length=100)
     cpf = models.CharField(max_length=11)
@@ -40,7 +38,7 @@ class Paciente(models.Model):
     ]
 
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
-    alergias = models.CharField(max_length=200)
+    alergias = models.CharField(max_length=200, blank=True, null=True)
     tipo_diabetes = models.IntegerField(choices=DIABETES_CHOICES)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -59,9 +57,14 @@ class Consulta(models.Model):
     horario = models.DateTimeField()
     duracao_em_minutos = models.IntegerField(blank=True, null=True)
     status = models.IntegerField(choices=CONSULTA_CHOICES)
+    valor = models.FloatField(blank=True, null=True)
+    tarifa = models.FloatField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+class ExtUsuario(models.Model):
+    ext_id = models.CharField(max_length=100)
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, blank=True, null=True)
 
 class Medico(models.Model):
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)

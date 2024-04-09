@@ -13,7 +13,9 @@ import { PopUpContainer } from "../../components/popUpContainer";
 import { MainContainer } from "../../components/mainContainer";
 import { ScrollContainer } from "../../components/scrollContainer";
 import { GetHourMinute, FormatDate } from "../../utils/date";
+import { formatCurrency } from "../../utils/utils";
 import { NovaConsulta } from "./novaConsulta";
+import { DynamicContainer } from "../../components/dynamicContainer";
 
 const Agenda = () => {
   const navigate = useNavigate();
@@ -22,72 +24,95 @@ const Agenda = () => {
     refreshAppointments,
     selectedAppointment, 
     setSelectedAppointment,
-    showPopUp, 
-    setShowPopUp,
+    showNewAppointmentPopUp, 
+    setShowNewAppointmentPopUp,
+    showPayAppointmentPopUp, 
+    setPayNewAppointmentPopUp,
     cancelAppointment,
     payAppointment
-  ] = GetAppointments("1");
+  ] = GetAppointments();
 
   return (
-    <div>
-      <PopUpContainer showPopUp={showPopUp} closePopUp={() => setShowPopUp(false)}>
+    <div style={{height: "100%"}}>
+      <PopUpContainer showPopUp={showNewAppointmentPopUp} closePopUp={() => setShowNewAppointmentPopUp(false)}>
         <MainContainer>
           <NovaConsulta onSuccess={() => {
-              setShowPopUp(false);
+              setShowNewAppointmentPopUp(false);
               refreshAppointments();
             }}/>
         </MainContainer>
       </PopUpContainer>
-      <Row>
-        <RowItem grow noPadding>
-          <ScrollContainer>
-            <div>
-              <h3 className="Auth-form-title">Suas consultas</h3>
-              <CustomButton
-                type="primary"
-                title="Nova consulta"
-                onClick={() => setShowPopUp(true)}
+      <PopUpContainer showPopUp={showPayAppointmentPopUp} closePopUp={() => setPayNewAppointmentPopUp(false)} center>
+        <DynamicContainer>
+          <text style={{'font-weight': 'bold'}}>Pagar consuta</text>
+          <text>{formatCurrency(selectedAppointment?.valor+selectedAppointment?.tarifa)}</text>
+          <br/>
+          <CustomButton
+            type="primary"
+            title="Pagar consulta"
+            onClick={() => {
+              payAppointment(selectedAppointment.id);
+              setPayNewAppointmentPopUp(false);
+            }}
+          />
+          
+        </DynamicContainer>
+      
+      </PopUpContainer>
+      <div style={{height: "100%"}}>
+        <Row>
+          <RowItem grow noPadding>
+            <ScrollContainer>
+              <div>
+                <h3 className="Auth-form-title">Suas consultas</h3>
+                <CustomButton
+                  type="primary"
+                  title="Nova consulta"
+                  onClick={() => setShowNewAppointmentPopUp(true)}
+                />
+                {appointmentsByDay && <div>
+                  {Object.entries(appointmentsByDay).map(([key, appointments]) => (
+                    <div>
+                      <h4>{FormatDate(key)}</h4>
+                      {appointments.map((value) => (
+                        <AppointmentItem
+                          type={value.profissional__ocupacao}
+                          text={GetHourMinute(value.horario, value.duracao) + " - " + value.profissional__nome}
+                          status={value.status}
+                          onClick={() => setSelectedAppointment(value)}
+                          selected={value.id == selectedAppointment?.id}
+                        />
+                      ))}
+                    </div>
+                  ))}
+                </div>}
+              </div>
+            </ScrollContainer>
+          </RowItem>
+          <RowItem noPadding>
+            <VerticalLine/>
+          </RowItem>
+          <RowItem grow noPadding>
+            {selectedAppointment ? (
+              <AppointmentInfo 
+                appointment={selectedAppointment} 
+                cancelAppointment={() => {
+                  cancelAppointment(selectedAppointment.id)
+                }}
+                payAppointment={() => {
+                  setPayNewAppointmentPopUp(true)
+                }}
               />
-              {appointmentsByDay && <div>
-                {Object.entries(appointmentsByDay).map(([key, appointments]) => (
-                  <div>
-                    <h4>{FormatDate(key)}</h4>
-                    {appointments.map((value) => (
-                      <AppointmentItem
-                        type={value.profissional__ocupacao}
-                        text={GetHourMinute(value.horario, value.duracao) + " - " + value.profissional__nome}
-                        status={value.status}
-                        onClick={() => setSelectedAppointment(value)}
-                        selected={value.id == selectedAppointment?.id}
-                      />
-                    ))}
-                  </div>
-                ))}
-              </div>}
-            </div>
-          </ScrollContainer>
-        </RowItem>
-        <RowItem noPadding>
-          <VerticalLine/>
-        </RowItem>
-        <RowItem grow noPadding>
-          {selectedAppointment ? (
-            <AppointmentInfo 
-              appointment={selectedAppointment} 
-              cancelAppointment={() => {
-                cancelAppointment(selectedAppointment.id)
-              }}
-              payAppointment={() => {
-                payAppointment(selectedAppointment.id)
-              }}
-            />
-          ) : (
-            <CenterContent>
-              <text>Selecione uma consulta</text>
-            </CenterContent>
-          )}
-        </RowItem>
-      </Row>      
+            ) : (
+              <CenterContent>
+                <text>Selecione uma consulta</text>
+              </CenterContent>
+            )}
+          </RowItem>
+        </Row> 
+      </div>
+        
+           
     </div>
   );
 };
