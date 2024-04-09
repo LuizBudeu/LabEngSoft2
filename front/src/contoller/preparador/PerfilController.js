@@ -54,20 +54,21 @@ export const GetProfile = () => {
 
 };
 
-export const UpdateProfile = async (user_id, userProfile, axios) => {
+export const UpdateProfile = (userProfile) => {
+    const [axios] = useAxiosWithToken();
+    const [searchParams] = useSearchParams();
 
-    try{
-        const response = await axios.post(API_PROTOCOL_HOSTNAME_PORT + "/api/preparador/update_perfil",
-            {...userProfile, user_id: user_id}
+    const user_id = searchParams.get("id");
+
+    const update = ({onSuccess, onError}) => {
+        axios.post(API_PROTOCOL_HOSTNAME_PORT + "/api/preparador/update_perfil", 
+            {...userProfile, user_id}
+        ).then(() => 
+            onSuccess()
+        ).catch(() =>
+            onError()
         );
-        if(response.status !== 200){
-            console.log(response.data);
-            return false;
-        }
-        return true;
-    }catch(e) {
-        console.log(e);
-        return false;
-    }
+    };
 
+    return { update };
 };

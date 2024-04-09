@@ -24,7 +24,7 @@ export const PerfilTab = () => {
             {userProfile && (
                 <>
                     {Object.entries(userProfile).map(userInfo => (
-                        <div><b>{userInfo[0] + ": "}</b><text>{userInfo[1]}</text></div>
+                        <div style={{margin: "10px 0"}}><b>{userInfo[0] + ": "}</b><text>{userInfo[1]}</text></div>
                     ))}
                 </>
             )}

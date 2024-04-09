@@ -8,10 +8,8 @@ import { useSearchParams } from "react-router-dom";
 
 export const PerfilForm = ({perfil, onSubmit}) => {
     const [userInfo, setUserInfo] = useState({...perfil});
-    const [axios] = useAxiosWithToken();
-    const [searchParams] = useSearchParams();
+    const { update } = UpdateProfile(userInfo);
 
-    const user_id = searchParams.get("id");
 
     const perfilItem = (infoKey) => {
         return(
@@ -30,12 +28,10 @@ export const PerfilForm = ({perfil, onSubmit}) => {
 
     const submit = async (e) => {
         e.preventDefault();
-        const resp = await UpdateProfile(user_id, userInfo, axios);
-        if(resp) {
-            onSubmit();
-          } else {
-            alert("Erro ao salvar os dados")
-          }
+        update({
+            onSuccess: () => onSubmit(),
+            onError: () => console.log("Erro ao salvar dados")
+        });
     };
 
     return(
