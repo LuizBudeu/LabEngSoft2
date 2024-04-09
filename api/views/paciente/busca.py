@@ -34,7 +34,7 @@ def buscaProfissionais(request):
     
 
     payload = {'name': data['name']}
-    resp = requests.get('http://localhost:8000/api/'+professional_type+'/lista_profissionais', params=payload)
+    resp = requests.get('http://127.0.0.1:8000/api/'+professional_type+'/lista_profissionais', params=payload)
     profissionais = []
     if(resp.status_code == 200):
         profissionais = resp.json()
@@ -67,7 +67,7 @@ def horarios(request):
         professional_type = "preparador"
 
     payload = {'professional_id': data['professional_id']}
-    resp = requests.get('http://localhost:8000/api/'+professional_type+'/horarios_profissional', params=payload)
+    resp = requests.get('http://127.0.0.1:8000/api/'+professional_type+'/horarios_profissional', params=payload)
     professionalSchedule = []
     if(resp.status_code == 200):
         professionalSchedule = resp.json()
