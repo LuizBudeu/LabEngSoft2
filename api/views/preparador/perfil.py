@@ -98,3 +98,29 @@ def update_perfil(request: HttpRequest) -> Response:
         raise ParseError(f"Usuário com id={body['user_id']} não foi encontrado")
 
     return Response("Perfil atualizado")
+
+@api_view(['GET'])
+def lista_profissionais(request):
+    
+    """
+    Lista médicos.
+
+    Query parameters:
+        name: Nome do prifissional. (opcional)
+    """
+
+    data = request.GET
+
+    profissionais =  Usuario.objects.filter(
+        ocupacao=3, # Preparador
+        nome__contains=("" if data['name'] == None else data['name'])
+    ).values(
+        'id',
+        'nome',
+        'ocupacao',
+        'logradouro',
+        'numero',
+        'complemento'
+    )
+
+    return Response(profissionais)

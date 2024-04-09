@@ -1,6 +1,7 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.exceptions import ParseError
+import requests
 
 from api.models import Usuario, Consulta
 from datetime import timedelta
@@ -25,17 +26,18 @@ def buscaProfissionais(request):
     except Usuario.DoesNotExist:
         raise ParseError(f"Usuário com id={data['user_id']} não foi encontrado")
 
-    profissionais =  Usuario.objects.filter(
-        ocupacao=data['type'],
-        nome__contains=("" if data['name'] == None else data['name'])
-    ).values(
-        'id',
-        'nome',
-        'ocupacao',
-        'logradouro',
-        'numero',
-        'complemento'
-    )
+    professional_type = "medico"
+    if(data['type'] == '2'):
+        professional_type = "nutricionista"
+    elif(data['type'] == '3'):
+        professional_type = "preparador"
+    
+
+    payload = {'name': data['name']}
+    resp = requests.get('http://127.0.0.1:8000/api/'+professional_type+'/lista_profissionais', params=payload)
+    profissionais = []
+    if(resp.status_code == 200):
+        profissionais = resp.json()
 
     return Response(profissionais)
 
@@ -48,6 +50,7 @@ def horarios(request):
     Query parameters:
         user_id: ID usuário do paciente
         professional_id: ID usuário do profissional
+        type: Tipo de profissionais
     """
 
     data = request.GET
@@ -57,19 +60,17 @@ def horarios(request):
     except Usuario.DoesNotExist:
         raise ParseError(f"Usuário com id={data['user_id']} não foi encontrado")
 
-    try: 
-        profissional = Usuario.objects.get(id=data['professional_id'])
-    except Usuario.DoesNotExist:
-        raise ParseError(f"profissional com id={data['professional_id']} não foi encontrado")
+    professional_type = "medico"
+    if(data['type'] == '2'):
+        professional_type = "nutricionista"
+    elif(data['type'] == '3'):
+        professional_type = "preparador"
 
-    professionalSchedule =  Consulta.objects.filter(
-        profissional=profissional,
-        horario__gt=datetime.date.today()
-    ).exclude(
-        status=1 # Exclui consultas canceladas
-    ).values(
-        'horario'
-    )
+    payload = {'professional_id': data['professional_id']}
+    resp = requests.get('http://127.0.0.1:8000/api/'+professional_type+'/horarios_profissional', params=payload)
+    professionalSchedule = []
+    if(resp.status_code == 200):
+        professionalSchedule = resp.json()
 
     usuarioSchedule =  Consulta.objects.filter(
         paciente=usuario,
@@ -100,9 +101,9 @@ def horarios(request):
                 status = 1
             else:
                 for consulta in professionalSchedule:
-                    if str.startswith(str(consulta['horario']), date_str):
-                            status = 1
-                            break
+                    if str.startswith(str(consulta['horario'].replace("T", " ")), date_str):
+                        status = 1
+                        break
 
                 if status == 0:
                     for consulta in usuarioSchedule:
