@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { API_PROTOCOL_HOSTNAME_PORT } from "../../utils/utils";
-import { useAxiosWithToken } from "../../utils/useAxiosWithToken";
+import { useAxiosWithTokenPaciente } from "../../utils/useAxiosWithToken";
 import { useSearchParams } from "react-router-dom";
 
 export const GetAcompanhemntos = () => {
@@ -11,7 +11,7 @@ export const GetAcompanhemntos = () => {
     const [examesNutricionais, setExamesNutricionais] = useState([]);
     const [selectedAcompanhamento, setSelectedAcompanhamento] = useState();
     const [showPopUp, setShowPopUp] = useState(false);
-    const [axios] = useAxiosWithToken();
+    const [axios] = useAxiosWithTokenPaciente();
     const [searchParams, setSearchParams] = useSearchParams();
 
     const user_id = searchParams.get("id");

@@ -1,6 +1,7 @@
+import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 
-export const useIsLoggedIn = () => {
+export const useIsLoggedIn = (client_type) => {
     const [cookies] = useCookies();
-    return !!cookies.access_token;
+    return client_type != '' && !!cookies['access_token_'+client_type];
 }
