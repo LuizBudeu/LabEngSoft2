@@ -31,6 +31,7 @@ export const EditPerfil = ({closePopUp, userProfile, setUserProfile, submitProfi
                   name="cpf"
                   value={userProfile?.cpf}
                   type="text"
+                  mask="999.999.999-99"
                   disabled
                 />
               </Column>
@@ -69,6 +70,7 @@ export const EditPerfil = ({closePopUp, userProfile, setUserProfile, submitProfi
                   name="cep"
                   onChange={(e) => setUserProfile({...userProfile, cep:e.target.value})}
                   value={userProfile?.cep}
+                  mask="99999-999"
                   type="text"
                 />
               </Column>
@@ -116,6 +118,7 @@ export const EditPerfil = ({closePopUp, userProfile, setUserProfile, submitProfi
                   onChange={(e) => setUserProfile({...userProfile, alergias:e.target.value})}
                   value={userProfile?.alergias}
                   type="text"
+                  notRequired
                 />
               </Column>
             </RowItem>
