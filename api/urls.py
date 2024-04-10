@@ -25,7 +25,6 @@ from .views.paciente.perfil import create_profile as paciente_create
 from .views.paciente.perfil import user_id as paciente_id
 from .views.paciente.perfil import update_perfil as paciente_update_perfil
 from .views.paciente.perfil import perfil as paciente_perfil
-from .views.paciente.perfil import perfil_nutricional as paciente_perfil_nutricional
 from .views.paciente.busca import buscaProfissionais as paciente_busca_profissionais
 from .views.paciente.busca import horarios as paciente_horarios
 from .views.paciente.agenda import createAppointment as paciente_create_appointment
@@ -105,7 +104,6 @@ urlpatterns = [
     path('paciente/pay_consulta', paciente_pay_appointment, name='paciente_pay_appointment'),
     path('paciente/acompanhamento', paciente_acompanhamento, name='paciente_acompanhamento'),
     path('paciente/informacoes_medicas', informacoes_medicas, name='informacoes_medicas'),
-    path('paciente/perfil_nutricional', paciente_perfil_nutricional, name='paciente_perfil_nutricional'),
 
     path('preparador/id', preparador_id, name='preparador_id'),
     path('preparador/agenda', preparador_agenda, name='preparador_agenda'),
