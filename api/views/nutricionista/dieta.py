@@ -1,7 +1,10 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.exceptions import ParseError
+from django.http import HttpRequest
+import requests
 
-from api.models import Consulta, RelatorioNutricionista, PedidoExameNutricionista
+from api.models import Usuario, Paciente, Consulta, RelatorioNutricionista, PedidoExameNutricionista
 
 
 @api_view(['GET'])
@@ -72,3 +75,28 @@ def exames_paciente(request):
     ).order_by('-created_at')
 
     return Response(examesNutricionista)
+
+
+@api_view(['GET'])
+def informacoesNutricionais(request: HttpRequest) -> Response:
+    """
+    Pega informações pertinentes para a formulação de uma dieta, incluindo dados de gasto calórico.
+
+    Query Parameters:
+        paciente_id: ID de usuário do paciente da requisição.
+    """
+
+    data = request.GET
+
+    paciente_id = data.get('paciente_id')
+    try:
+        user_obj = Usuario.objects.get(id=paciente_id)
+    except Usuario.DoesNotExist:
+        raise ParseError(f"Usuário de id={paciente_id} não foi encontrado.")
+
+    payload = {'user_id': user_obj.pk}
+    infos_nutricionais = requests.get("http://127.0.0.1:8000/api/paciente/perfil_nutricional", params=payload).json()
+    infos_caloricas = requests.get("http://127.0.0.1:8000/api/preparador/informacoes_fisicas_paciente", params=payload).json()
+    
+    return Response({**infos_nutricionais, **infos_caloricas})
+    
