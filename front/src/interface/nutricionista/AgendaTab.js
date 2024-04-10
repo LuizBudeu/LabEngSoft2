@@ -13,8 +13,7 @@ import { MainContainer } from "../../components/mainContainer";
 import { EditPerfil } from "./DietaForm";
 
 export const AgendaTab = () => {
-    const test_id = 4 // TODO substituir por user_id do usuário logado na integração
-    const [agenda] = GetConsultas(test_id, "2024-01-01", "3024-01-01");
+    const [agenda] = GetConsultas("2024-01-01", "3024-01-01");
 
     const [selectedAppointment, setSelectedAppointment] = useState("");
     

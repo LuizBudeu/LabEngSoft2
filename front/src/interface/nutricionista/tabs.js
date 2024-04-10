@@ -47,7 +47,6 @@ const Tabs = () => {
                     {activeTab === "tab2" && <PerfilTab />}
                 </MainContainer>
             </div>
-            <button onClick={logout}>Logout</button>
         </BackgroundContainer>
     );
 };
