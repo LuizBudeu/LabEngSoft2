@@ -175,7 +175,7 @@ class RelatorioPreparadorFisico(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 class DadosBancariosRecebimento(models.Model):
-    profissional = models.IntegerField(choices=OCUPACAO_CHOICES)
+    profissional = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='profissional_conta')
     agencia = models.CharField(max_length=4)
     conta = models.CharField(max_length=9)
     digito_verificador = models.CharField(max_length=1)

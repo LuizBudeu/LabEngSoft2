@@ -51,16 +51,11 @@ const Perfil = () => {
           </RowItem>
           <RowItem grow>
             <Column>
-              <text style={{fontWeight: "bold"}}>Email</text>
-              <text>{userProfile.email}</text>
-            </Column>
-          </RowItem>
-          <RowItem grow>
-            <Column>
               <text style={{fontWeight: "bold"}}>CPF</text>
               <text>{userProfile.cpf}</text>
             </Column>
           </RowItem>
+          <RowItem grow/>
         </Row>
         <Row>
           <RowItem grow>

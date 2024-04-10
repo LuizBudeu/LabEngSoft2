@@ -1,10 +1,15 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.exceptions import ParseError
+import requests
 
 from api.models import Consulta, Usuario
 from datetime import datetime
 import json
+from dotenv import load_dotenv, find_dotenv
+import os
+
+load_dotenv(find_dotenv('.env'))
 
 @api_view(['GET'])
 def agenda(request):
@@ -21,25 +26,28 @@ def agenda(request):
         usuario = Usuario.objects.get(id=data['user_id'])
     except Usuario.DoesNotExist:
         raise ParseError(f"Usuário com id={data['user_id']} não foi encontrado")
-    
-    consultas = Consulta.objects.filter(
-        paciente=usuario,
-        # status__in=[0, 4]
-        horario__gt=datetime.utcnow()
-    ).order_by('horario').values(
-        'id',
-        'profissional_id',
-        'profissional__nome',
-        'profissional__ocupacao',
-        'profissional__logradouro',
-        'profissional__numero',
-        'profissional__complemento',
-        'horario',
-        'valor',
-        'tarifa',
-        'duracao_em_minutos',
-        'status'
-    )
+
+    payload = {'user_id': data['user_id']}
+    resp = requests.get('http://127.0.0.1:8000/api/medico/consulta_paciente', params=payload)
+    consultas_medico = []
+    if(resp.status_code == 200):
+        consultas_medico = resp.json()
+
+    resp = requests.get('http://127.0.0.1:8000/api/nutricionista/consulta_paciente', params=payload)
+    consultas_nutricionista = []
+    if(resp.status_code == 200):
+        consultas_nutricionista = resp.json()
+
+    resp = requests.get('http://127.0.0.1:8000/api/preparador/consulta_paciente', params=payload)
+    consultas_preparador = []
+    if(resp.status_code == 200):
+        consultas_preparador = resp.json()
+
+    consultas = consultas_medico
+    consultas.extend(consultas_nutricionista)
+    consultas.extend(consultas_preparador)
+
+    consultas.sort(key=lambda x: x['horario'])
 
     return Response(consultas)
 
@@ -51,6 +59,7 @@ def createAppointment(request):
     Query parameters:
         user_id: ID usuário do paciente
         professional_id: ID usuário do profissional
+        professional_type: Tipo do profissional
         horario: Data e hora da consulta
         duracao: Duracao em minutos
     """
@@ -62,13 +71,8 @@ def createAppointment(request):
     except Usuario.DoesNotExist:
         raise ParseError(f"Usuário com id={body['user_id']} não foi encontrado")
 
-    try: 
-        profissional = Usuario.objects.get(id=body['professional_id'])
-    except Usuario.DoesNotExist:
-        raise ParseError(f"Profissional com id={body['professional_id']} não foi encontrado")
-
     consultaProfissional = Consulta.objects.filter(
-        profissional=profissional,
+        profissional_id=body['professional_id'],
         horario = body['horario']
     ).exclude(
         status=1 # consulta cancelada
@@ -86,27 +90,40 @@ def createAppointment(request):
 
     # TODO: Chamar método que define valores
     valor = 0
-    if(profissional.ocupacao == 1):
+    if(body['professional_type'] == 1):
         valor = 100
-    if(profissional.ocupacao == 2):
+    if(body['professional_type'] == 2):
         valor = 90
-    if(profissional.ocupacao == 3):
+    if(body['professional_type'] == 3):
         valor = 120
 
-    # TODO: Chamar método que gera tarifa
-    tarifa = 0.2 * valor
-    
-    consulta = Consulta.objects.create(
-        paciente=usuario,
-        profissional=profissional,
-        horario = body['horario'],
-        duracao_em_minutos = body['duracao'],
-        valor=valor,
-        tarifa=tarifa,
-        status=4 # consulta pendente
-    )
+    url = "https://labengsoft.azurewebsites.net/api/Tarifagem?code="+os.environ.get('TARIFA_URL_CODE')
 
-    return Response("Consulta criada")
+    payload = json.dumps({
+        "valorBruto": valor
+    })
+    headers = {
+        'Content-Type': 'application/json'
+    }
+
+    resp = requests.request("POST", url, headers=headers, data=payload)
+    if(resp.status_code == 200):
+        resp_data = resp.json()
+        tarifa = resp_data["tarifa"]
+
+        consulta = Consulta.objects.create(
+            paciente=usuario,
+            profissional_id=body['professional_id'],
+            horario = body['horario'],
+            duracao_em_minutos = body['duracao'],
+            valor=valor,
+            tarifa=tarifa,
+            status=4 # consulta pendente
+        )
+
+        return Response("Consulta criada")
+
+    return Response("Erro ao criar consulta", 400)
 
 @api_view(['POST'])
 def cancelAppointment(request):
@@ -148,6 +165,8 @@ def payAppointment(request):
     Query parameters:
         user_id: ID usuário do paciente
         appointment_id: ID da consulta
+        card_number: Número do cartão
+        professional_type: tipo de profissional
     """
 
     body = json.loads(request.body.decode('utf-8'))
@@ -162,11 +181,38 @@ def payAppointment(request):
         paciente=usuario
     )
 
+    professional_type = "medico"
+    if(body['professional_type'] == 2):
+        professional_type = "nutricionista"
+    elif(body['professional_type'] == 3):
+        professional_type = "preparador"
+
     if(consulta):
         if(consulta.status == 4):
-            consulta.status = 0
-            consulta.save()
-            return Response("Consulta atualizada")
+            payload = {'user_id': consulta.profissional_id}
+            resp = requests.get('http://127.0.0.1:8000/api/'+professional_type+'/informacao_bancaria', params=payload)
+            if(resp.status_code == 200):
+                professional_bank_account = resp.json()
+
+                url = "https://labengsoft.azurewebsites.net/api/Pagamento?code="+os.environ.get('PAGAMENTO_URL_CODE')
+
+                payload = json.dumps({
+                    "valorPagamento": consulta.valor + consulta.tarifa,
+                    "numeroCartao": body['card_number'],
+                    "numeroContaRecebedor": professional_bank_account
+                })
+                headers = {
+                    'Content-Type': 'application/json'
+                }
+
+                resp = requests.request("POST", url, headers=headers, data=payload)
+                if(resp.status_code == 200):
+                    resp_data = resp.json()
+                    if(resp_data["pagamentoBemSucedido"]):
+                        consulta.status = 0
+                        consulta.save()
+                        return Response("Consulta atualizada")
+            return Response("Erro no processamento do pagamento pagamento", 400)
         else:
             return Response("Consulta indisponível para pagamento", 400)
     else:

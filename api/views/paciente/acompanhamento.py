@@ -1,6 +1,7 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.exceptions import ParseError
+import requests
 
 from api.models import Usuario, RelatorioNutricionista, RelatorioPreparadorFisico, PedidoExameMedico, PedidoExameNutricionista
 
@@ -21,48 +22,27 @@ def acompanhamento(request):
     except Usuario.DoesNotExist:
         raise ParseError(f"Usuário com id={data['user_id']} não foi encontrado")
 
-    dieta = RelatorioNutricionista.objects.filter(
-        consulta__paciente=usuario,
-    ).values(
-        'consulta__profissional__nome',
-        'dieta__descricao_curta',
-        'dieta__descricao',
-        'dieta__duracao_em_dias',
-        'dieta__calorias',
-    ).order_by('-created_at').first()
+    payload = {'user_id': data['user_id']}
 
-    treino = RelatorioPreparadorFisico.objects.filter(
-        consulta__paciente=usuario,
-    ).values(
-        'consulta__profissional__nome',
-        'treino_fisico__treino',
-        'treino_fisico__titulo',
-    ).order_by('-created_at').first()
+    resp = requests.get('http://127.0.0.1:8000/api/nutricionista/dieta_paciente', params=payload)
+    dieta = None
+    if(resp.status_code == 200):
+        dieta = resp.json()
 
-    examesMedicos = PedidoExameMedico.objects.filter(
-        paciente=usuario,
-        status=0
-    ).values(
-        'medico_id',
-        'medico__nome',
-        'medico__logradouro',
-        'medico__numero',
-        'medico__complemento',
-        'titulo',
-    ).order_by('-created_at')
+    resp = requests.get('http://127.0.0.1:8000/api/preparador/treino_paciente', params=payload)
+    treino = None
+    if(resp.status_code == 200):
+        treino = resp.json()
 
-    examesNutricionista = PedidoExameNutricionista.objects.filter(
-        paciente=usuario,
-        status=0
-    ).values(
-        'nutricionista_id',
-        'nutricionista__nome',
-        'nutricionista__logradouro',
-        'nutricionista__numero',
-        'nutricionista__complemento',
-        'tipo_exame',
-    ).order_by('-created_at')
+    resp = requests.get('http://127.0.0.1:8000/api/medico/exames_paciente', params=payload)
+    examesMedicos = []
+    if(resp.status_code == 200):
+        examesMedicos = resp.json()
 
+    resp = requests.get('http://127.0.0.1:8000/api/nutricionista/exames_paciente', params=payload)
+    examesNutricionista = []
+    if(resp.status_code == 200):
+        examesNutricionista = resp.json()
 
     return Response({
         "dieta": dieta,

@@ -8,6 +8,7 @@ import jwt
 
 from api.models import Usuario
 from api.models import ExtUsuario
+from api.models import DadosBancariosRecebimento
 
 @api_view(['GET'])
 def user_id(request: HttpRequest) -> Response:
@@ -98,3 +99,49 @@ def update_perfil(request: HttpRequest) -> Response:
         raise ParseError(f"Usuário com id={body['user_id']} não foi encontrado")
 
     return Response("Perfil atualizado")
+
+@api_view(['GET'])
+def lista_profissionais(request):
+    
+    """
+    Lista médicos.
+
+    Query parameters:
+        name: Nome do prifissional. (opcional)
+    """
+
+    data = request.GET
+
+    profissionais =  Usuario.objects.filter(
+        ocupacao=3, # Preparador
+        nome__contains=("" if data['name'] == None else data['name'])
+    ).values(
+        'id',
+        'nome',
+        'ocupacao',
+        'logradouro',
+        'numero',
+        'complemento'
+    )
+
+    return Response(profissionais)
+
+@api_view(['GET'])
+def informacao_bancaria(request):
+    
+    """
+    Retorna o número da conta do profissional.
+
+    Query parameters:
+        user_id: Id do prifissional
+    """
+
+    data = request.GET
+
+    try:
+        conta =  DadosBancariosRecebimento.objects.get(
+            profissional_id=data['user_id']
+        )
+        return Response(conta.conta)
+    except Usuario.DoesNotExist:
+        raise ParseError(f"Conta para profissional com id={body['user_id']} não foi encontrado")

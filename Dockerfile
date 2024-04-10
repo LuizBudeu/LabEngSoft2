@@ -9,7 +9,11 @@ RUN bash install_odbc.sh
 ENV DJANGO_SETTINGS_MODULE=plataforma_digital.settings_prod
 
 RUN --mount=type=secret,id=DB_PASSWORD \
-  echo "DB_PASSWORD=$(cat /run/secrets/DB_PASSWORD)" > api.env
+    --mount=type=secret,id=TARIFA_URL_CODE \
+    --mount=type=secret,id=PAGAMENTO_URL_CODE \
+  echo "DB_PASSWORD=$(cat /run/secrets/DB_PASSWORD)" >> api.env &&\
+  echo "TARIFA_URL_CODE=$(cat /run/secrets/TARIFA_URL_CODE)" >> api.env &&\
+  echo "PAGAMENTO_URL_CODE=$(cat /run/secrets/PAGAMENTO_URL_CODE)" >> api.env
 
 RUN python manage.py migrate
 
