@@ -3,6 +3,7 @@ import { Column } from "../../../components/column";
 import { CustomInput } from "../../../components/customInput";
 import { CustomButton } from "../../../components/customButton";
 import { UpdateProfile } from "../../../contoller/preparador/PerfilController";
+import { ProfileFieldToLabel } from "../../../utils/utils";
 
 export const PerfilForm = ({perfil, onSubmit}) => {
     const [userInfo, setUserInfo] = useState({...perfil});
@@ -12,7 +13,7 @@ export const PerfilForm = ({perfil, onSubmit}) => {
     const perfilItem = (infoKey) => {
         return(
             <Column>
-                <text>{infoKey}</text>
+                <b style={{marginTop: 10}}>{ProfileFieldToLabel[infoKey]}</b>
                 <CustomInput
                     name={infoKey}
                     onChange={(e) => setUserInfo({...userInfo, [infoKey]:e.target.value})}

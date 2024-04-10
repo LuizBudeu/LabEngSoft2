@@ -9,6 +9,7 @@ import { WorkOutForm } from "./components/workOutForm";
 import { GetWorkOuts } from "../../contoller/preparador/WorkOutController";
 import { PopUpContainer } from "../../components/popUpContainer";
 import { FormContainer } from "../../components/formContainer";
+import { CiDumbbell } from "react-icons/ci";
 
 export const TreinosTab = () => {
     const { workOuts, refetch } = GetWorkOuts();
@@ -21,6 +22,30 @@ export const TreinosTab = () => {
         setVisible(false);
     };
 
+    const workOutItem = (item) => (
+        <div 
+            key={item.id}
+            style={{
+                backgroundColor: selectedWorkOut?.id === item.id ? Colors.LightGray : null, 
+                borderRadius: "10px 0 0 10px",
+                display: 'flex',
+                flexDirection: 'row'
+            }}
+            onClick={()=> setSelectedWorkOut(item)}
+        >
+            <Row>
+                <RowItem customPadding={5}>
+                    <CiDumbbell size={50}/>
+                </RowItem>
+                <RowItem grow>
+                    <Row>
+                        <text style={{alignSelf: "center"}}>{item.titulo}</text>
+                    </Row>
+                </RowItem>
+            </Row> 
+        </div>   
+    )
+
     return(
         <>
             <WorkOutFormModal visible={visible} onSubmit={handleSubmit} onClose={() => setVisible(false)}/>
@@ -29,7 +54,9 @@ export const TreinosTab = () => {
                     <div style={{width: "100%"}}>
                         <h2>Seus treinos</h2>
                         <CustomButton title="Novo treino" onClick={() => setVisible(true)} type="primary" />
-                        {workOuts && workOuts.map((workout) => <div key={workout.id} style={{backgroundColor: selectedWorkOut?.id === workout.id ? Colors.LightGray : null}} onClick={()=> setSelectedWorkOut(workout)}>{workout.titulo}</div>)}
+                        <div style={{marginTop: 10}}>
+                            {workOuts && workOuts.map(workOutItem)}
+                        </div>
                     </div>
                 </RowItem>
                 <RowItem>

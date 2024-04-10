@@ -38,3 +38,14 @@ export const TipoDiabetesNumberToString = {
     2: "Diabetes tipo 2",
 }
 
+export const ProfileFieldToLabel = {
+    ocupacao: 'Ocupação',
+    nome: 'Nome',
+    cpf: 'CPF',
+    data_de_nascimento: 'Data de Nascimento',
+    genero: 'Gênero',
+    cep: 'CEP',
+    logradouro: 'Logradouro',
+    numero: 'Número',
+    complemento: 'Complemento'
+}
