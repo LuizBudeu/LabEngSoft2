@@ -9,6 +9,7 @@ import { useLogout } from "../../utils/useLogout";
 import { useLogin } from "../../utils/useLogin";
 import { ENVIRONMENT } from "../../utils/utils";
 import { AnonymousPage } from "../../components/AnonymousPage";
+import {TopBar} from "../../components/TopBar";
 
 const LOGIN_URL = process.env.REACT_APP_MEDICO_LOGIN_URL;
 const AUTH_SECRET = process.env.REACT_APP_MEDICO_AUTH_SECRET;
@@ -33,12 +34,12 @@ const Tabs = () => {
 
     return (
         <BackgroundContainer>
+            <TopBar/>
             <SecondaryNavBar tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
             <MainContainer>
                 {activeTab === "tab1" && <AgendaTab />}
                 {activeTab === "tab2" && <ExamesTab />}
             </MainContainer>
-            <button onClick={logout}>Logout</button>
         </BackgroundContainer>
     );
 };

@@ -5,8 +5,8 @@ from .views.hello_world import hello_world
 from .views.home import home
 from .views.usuario import create as usuario_create
 
-from .views.medico.consulta import consulta as medico_consulta
-from .views.medico.consulta import comeca_consulta as medico_comeca_consulta
+from .views.medico.consulta import registrar_formulario as medico_registrar_formulario
+from .views.medico.consulta import consulta_request as medico_consulta_request
 from .views.medico.medico import create_medico
 from .views.medico.exame import pedir_exame as medico_pedir_exame
 from .views.medico.exame import pegar_exames as medico_pegar_exames
@@ -65,8 +65,9 @@ urlpatterns = [
     path('usuario/create', usuario_create, name='usuario_create'),
     
     path('medico/agenda', medico_agenda, name='medico_agenda'),
-    path('medico/consulta', medico_consulta, name='medico_consulta'),
-    path('medico/comeca_consulta', medico_comeca_consulta, name='medico_comeca_consulta'),
+    path('medico/consultas/<int:consulta_id>/formulario', medico_registrar_formulario, name='finalizar_consulta'),
+    path('medico/consultas/<int:consulta_id>', medico_consulta_request, name='consulta_request'),
+    path('medico/consulta_paciente', medico_consulta_paciente, name='preparador_consulta_paciente'),
     path('medico/pedir_exame', medico_pedir_exame, name='medico_pedir_exame'),
     path('medico/pegar_exames', medico_pegar_exames, name='medico_pegar_exames'),
     path('medico/finalizar_exame', medico_finalizar_exame, name='medico_finalizar_exame'),

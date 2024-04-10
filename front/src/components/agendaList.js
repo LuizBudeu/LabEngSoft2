@@ -7,7 +7,7 @@ export const AgendaList = ({appointments, selectedAppointment, onItemClick}) => 
     
     const appointmentItem = (item) => (
         <AppointmentItem
-            type={3}
+            type={item.type}
             text={GetHourMinute(item.horario, item.duracao) + " - " + item.paciente__nome}
             status={item.status}
             onClick={() => onItemClick(item)}
