@@ -5,8 +5,8 @@ from .views.hello_world import hello_world
 from .views.home import home
 from .views.usuario import create as usuario_create
 
-from .views.medico.consulta import consulta as medico_consulta
-from .views.medico.consulta import comeca_consulta as medico_comeca_consulta
+from .views.medico.consulta import registrar_formulario as medico_registrar_formulario
+from .views.medico.consulta import consulta_request as medico_consulta_request
 from .views.medico.medico import create_medico
 from .views.medico.exame import pedir_exame as medico_pedir_exame
 from .views.medico.exame import pegar_exames as medico_pegar_exames
@@ -17,6 +17,9 @@ from .views.medico.medico import lista_profissionais as medico_lista_profissiona
 from .views.medico.agenda import horarios_profissional as medico_horarios_profissional
 from .views.medico.exame import exames_paciente as medico_exames_paciente
 from .views.medico.medico import informacao_bancaria as medico_informacao_bancaria
+from .views.medico.perfil import perfil as medico_perfil
+from .views.medico.perfil import update_perfil as medico_update_perfil
+from .views.medico.perfil import user_id as medico_id
 
 from .views.paciente.perfil import create_profile as paciente_create
 from .views.paciente.perfil import user_id as paciente_id
@@ -29,6 +32,7 @@ from .views.paciente.agenda import payAppointment as paciente_pay_appointment
 from .views.paciente.acompanhamento import acompanhamento as paciente_acompanhamento
 from .views.paciente.perfil import perfil as paciente_perfil
 from .views.paciente.agenda import agenda as paciente_agenda
+from .views.paciente.perfil import informacoes_medicas
 
 from .views.preparador.agenda import agenda as preparador_agenda
 from .views.preparador.workout import workouts
@@ -43,6 +47,7 @@ from .views.preparador.perfil import lista_profissionais as preparador_lista_pro
 from .views.preparador.agenda import horarios_profissional as preparador_horarios_profissional
 from .views.preparador.workout import treino_paciente as preparador_treino_paciente
 from .views.preparador.perfil import informacao_bancaria as preparador_informacao_bancaria
+from .views.preparador.consulta import informacoes_fisicas_paciente
 
 from .views.nutricionista.agenda import agenda as nutricionista_agenda
 from .views.nutricionista.avaliacao import avaliacao as avaliacao_nutricional
@@ -57,15 +62,18 @@ from .views.nutricionista.agenda import horarios_profissional as nutricionista_h
 from .views.nutricionista.dieta import dieta_paciente as nutricionista_dieta_paciente
 from .views.nutricionista.dieta import exames_paciente as nutricionista_exames_paciente
 from .views.nutricionista.perfil import informacao_bancaria as nutricionista_informacao_bancaria
+from .views.nutricionista.consulta import informacoes_nutricionais_paciente
 
 urlpatterns = [
     path('hello-world', hello_world, name='hello_world'),
     path('home', home, name='home'),
     path('usuario/create', usuario_create, name='usuario_create'),
-    
+
+    path('medico/id', medico_id, name='medico_id'),
     path('medico/agenda', medico_agenda, name='medico_agenda'),
-    path('medico/consulta', medico_consulta, name='medico_consulta'),
-    path('medico/comeca_consulta', medico_comeca_consulta, name='medico_comeca_consulta'),
+    path('medico/consultas/<int:consulta_id>/formulario', medico_registrar_formulario, name='finalizar_consulta'),
+    path('medico/consultas/<int:consulta_id>', medico_consulta_request, name='consulta_request'),
+    path('medico/consulta_paciente', medico_consulta_paciente, name='preparador_consulta_paciente'),
     path('medico/pedir_exame', medico_pedir_exame, name='medico_pedir_exame'),
     path('medico/pegar_exames', medico_pegar_exames, name='medico_pegar_exames'),
     path('medico/finalizar_exame', medico_finalizar_exame, name='medico_finalizar_exame'),
@@ -75,7 +83,9 @@ urlpatterns = [
     path('medico/horarios_profissional', medico_horarios_profissional, name='medico_horarios_profissional'),
     path('medico/exames_paciente', medico_exames_paciente, name='medico_exames_paciente'),
     path('medico/informacao_bancaria', medico_informacao_bancaria, name='medico_informacao_bancaria'),
-    
+    path('medico/perfil', medico_perfil, name='medico_perfil'),
+    path('medico/update_perfil', medico_update_perfil, name='medico_update_perfil'),
+
     path('paciente/id', paciente_id, name='paciente_id'),
     path('paciente/create_profile', paciente_create, name='paciente_create'),
     path('paciente/agenda', paciente_agenda, name='paciente_agenda'),
@@ -87,6 +97,7 @@ urlpatterns = [
     path('paciente/cancel_consulta', paciente_cancel_appointment, name='paciente_cancel_appointment'),
     path('paciente/pay_consulta', paciente_pay_appointment, name='paciente_pay_appointment'),
     path('paciente/acompanhamento', paciente_acompanhamento, name='paciente_acompanhamento'),
+    path('paciente/informacoes_medicas', informacoes_medicas, name='informacoes_medicas'),
 
     path('preparador/id', preparador_id, name='preparador_id'),
     path('preparador/agenda', preparador_agenda, name='preparador_agenda'),
@@ -101,6 +112,7 @@ urlpatterns = [
     path('preparador/horarios_profissional', preparador_horarios_profissional, name='preparador_horarios_profissional'),
     path('preparador/treino_paciente', preparador_treino_paciente, name='preparador_treino_paciente'),
     path('preparador/informacao_bancaria', preparador_informacao_bancaria, name='preparador_informacao_bancaria'),
+    path('preparador/informacoes_fisicas_paciente', informacoes_fisicas_paciente, name='informacoes_fisicas_paciente'),
 
     path('nutricionista/agenda', nutricionista_agenda, name='nutricionista_agenda'),
     path('nutricionista/avaliacao', avaliacao_nutricional, name='avaliacao_nutricional'),
@@ -115,6 +127,7 @@ urlpatterns = [
     path('nutricionista/dieta_paciente', nutricionista_dieta_paciente, name='nutricionista_dieta_paciente'),
     path('nutricionista/exames_paciente', nutricionista_exames_paciente, name='nutricionista_exames_paciente'),
     path('nutricionista/informacao_bancaria', nutricionista_informacao_bancaria, name='nutricionista_informacao_bancaria'),
+    path('nutricionista/informacoes_nutricionais_paciente', informacoes_nutricionais_paciente, name='informacoes_nutricionais_paciente'),
 
     # path('logout/', views.LogoutView.as_view(), name ='logout')
 ]

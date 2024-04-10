@@ -7,7 +7,6 @@ import { MainContainer } from "../../components/mainContainer";
 import { BackgroundContainer } from "../../components/backgroundContainer";
 import { ENVIRONMENT } from "../../utils/utils";
 import { useLogin } from "../../utils/useLogin";
-import { useLogout } from "../../utils/useLogout";
 import { PerfilTab } from "./perfilTab";
 import { TopBar } from "../../components/TopBar";
 import { Auth } from "../../contoller/preparador/PerfilController";
@@ -50,7 +49,6 @@ export const PreparadorHome = () => {
                 {activeTab === "tab2" && <TreinosTab />}
                 {activeTab === "tab3" && <PerfilTab />}
             </MainContainer>
-            <button onClick={logout}>Logout</button>
         </BackgroundContainer>
     );
 };

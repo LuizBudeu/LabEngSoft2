@@ -24,6 +24,7 @@ export const AgendaTab = () => {
                         <h2>Suas consultas</h2>
                         {agenda &&
                             <AgendaList
+                                professionalType={2}
                                 appointments={agenda}
                                 selectedAppointment={selectedAppointment}
                                 onItemClick={(itemId) => setSelectedAppointment(itemId)}

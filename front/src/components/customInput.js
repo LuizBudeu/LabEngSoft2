@@ -8,6 +8,7 @@ const InputStyle = styled(InputMask)`
   border-radius: 10px;
   padding: 10px;
   border-color: transparent;
+  box-sizing: border-box;
 `;
 
 export const CustomInput = ({name, onChange, value, placeholder, type, disabled, notRequired, mask}) => {

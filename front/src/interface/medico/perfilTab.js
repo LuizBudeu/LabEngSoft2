@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { GetProfile } from "../../contoller/preparador/PerfilController";
+import { GetProfile } from "../../contoller/medico/PerfilController";
 import { PopUpContainer } from "../../components/popUpContainer";
 import { CustomButton } from "../../components/customButton";
 import { PerfilForm } from "./components/perfilForm";
@@ -31,7 +31,7 @@ export const PerfilTab = () => {
                 </>
             )}
             <CustomButton
-                title="Editat Perfil"
+                title="Editar Perfil"
                 type="primary"
                 onClick={() => setShowPopUp(true)}
             />
