@@ -12,6 +12,10 @@ export const useAxiosWithTokenMedico = () => {
     return useAxiosWithToken("medico");
 }
 
+export const useAxiosWithTokenPreparador = () => {
+    return useAxiosWithToken("preparador");
+}
+
 export const useAxiosWithToken = (client_type) => {
     const [cookies] = useCookies();
     const loggedIn = useIsLoggedIn(client_type);
