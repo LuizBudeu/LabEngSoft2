@@ -17,6 +17,9 @@ from .views.medico.medico import lista_profissionais as medico_lista_profissiona
 from .views.medico.agenda import horarios_profissional as medico_horarios_profissional
 from .views.medico.exame import exames_paciente as medico_exames_paciente
 from .views.medico.medico import informacao_bancaria as medico_informacao_bancaria
+from .views.medico.perfil import perfil as medico_perfil
+from .views.medico.perfil import update_perfil as medico_update_perfil
+from .views.medico.perfil import user_id as medico_id
 
 from .views.paciente.perfil import create_profile as paciente_create
 from .views.paciente.perfil import user_id as paciente_id
@@ -63,7 +66,8 @@ urlpatterns = [
     path('hello-world', hello_world, name='hello_world'),
     path('home', home, name='home'),
     path('usuario/create', usuario_create, name='usuario_create'),
-    
+
+    path('medico/id', medico_id, name='medico_id'),
     path('medico/agenda', medico_agenda, name='medico_agenda'),
     path('medico/consultas/<int:consulta_id>/formulario', medico_registrar_formulario, name='finalizar_consulta'),
     path('medico/consultas/<int:consulta_id>', medico_consulta_request, name='consulta_request'),
@@ -77,7 +81,9 @@ urlpatterns = [
     path('medico/horarios_profissional', medico_horarios_profissional, name='medico_horarios_profissional'),
     path('medico/exames_paciente', medico_exames_paciente, name='medico_exames_paciente'),
     path('medico/informacao_bancaria', medico_informacao_bancaria, name='medico_informacao_bancaria'),
-    
+    path('medico/perfil', medico_perfil, name='medico_perfil'),
+    path('medico/update_perfil', medico_update_perfil, name='medico_update_perfil'),
+
     path('paciente/id', paciente_id, name='paciente_id'),
     path('paciente/create_profile', paciente_create, name='paciente_create'),
     path('paciente/agenda', paciente_agenda, name='paciente_agenda'),
