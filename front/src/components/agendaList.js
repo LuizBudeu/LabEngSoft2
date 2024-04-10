@@ -1,13 +1,12 @@
 import React from "react";
-import { Colors } from "../utils/colors";
 import { FormatDate, GetHourMinute } from "../utils/date";
 import { AppointmentItem } from "./appointmentItem";
 
-export const AgendaList = ({appointments, selectedAppointment, onItemClick}) => {
+export const AgendaList = ({professionalType, appointments, selectedAppointment, onItemClick}) => {
     
     const appointmentItem = (item) => (
         <AppointmentItem
-            type={item.type}
+            type={professionalType}
             text={GetHourMinute(item.horario, item.duracao) + " - " + item.paciente__nome}
             status={item.status}
             onClick={() => onItemClick(item)}

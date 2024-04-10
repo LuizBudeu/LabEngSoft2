@@ -20,7 +20,6 @@ def create(request: HttpRequest) -> Response:
     """
 
     body = json.loads(request.body.decode('utf-8'))
-    print(body)
 
     try:
         usuario = Usuario.objects.get(id=body['user_id'])

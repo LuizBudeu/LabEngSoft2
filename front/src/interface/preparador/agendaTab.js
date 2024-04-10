@@ -31,9 +31,10 @@ export const AgendaTab = () => {
                             <h2>Suas consultas</h2>
                             {agenda &&
                                 <AgendaList
-                                appointments={agenda}
-                                selectedAppointment={selectedAppointment}
-                                onItemClick={(itemId) => setSelectedAppointment(itemId)}
+                                    professionalType={3}
+                                    appointments={agenda}
+                                    selectedAppointment={selectedAppointment}
+                                    onItemClick={(itemId) => setSelectedAppointment(itemId)}
                                 />
                             }
                         </div>
@@ -81,18 +82,20 @@ const AppointmentInfo = ({appointment, onFormClick}) => {
                 </CenterContent>
             </PopUpContainer>
             <Column>
-                <h4>Dados Básicos</h4>
+                <h2>Dados Básicos</h2>
                 <text>Paciente: {appointment.paciente__nome}</text>
                 <text>Horário da consulta: {GetHourMinute(appointment.horario, appointment.duracao)}</text>
                 <br></br>
                 {extraInfo && (
                     <>
-                        <h4>Informações médicas</h4>
-                        <text>{extraInfo.medical?.alergias}</text>
-                        <text>{TipoDiabetesNumberToString[extraInfo.medical?.tipo_diabetes]}</text>
-                        <h4>Informações nutricionais</h4>
-                        <text>{extraInfo.nutrition?.dieta}</text>
-                        <text>{extraInfo.nutrition?.detalhes_adicionais}</text>
+                        <h3>Informações médicas</h3>
+                        <p><b>Alergias: </b>{extraInfo.medical?.alergias}</p>
+                        <p><b>Diabetes: </b>{TipoDiabetesNumberToString[extraInfo.medical?.tipo_diabetes]}</p>
+                        <h3>Informações nutricionais</h3>
+                        <p><b>Descrição curta:</b> {extraInfo.nutrition?.dieta__descricao_curta}</p>
+                        <p><b>Descrição:</b> {extraInfo.nutrition?.dieta__descricao}</p>
+                        <p><b>Calorias:</b> {extraInfo.nutrition?.dieta__calorias}</p>
+                        <p><b>Detalhes adicionas:</b> {extraInfo.nutrition?.detalhes_adicionais}</p>
                     </>
                 )}
             </Column>
