@@ -25,6 +25,7 @@ export const GetConsultas = (user_id, start_date, end_date) => {
             }
         },
         ).then((response) => {
+            console.log(response)
             setConsultas(GroupByDate(response.data));
             // setConsultas(GroupByDate(consultasTeste));
         }).catch((e) => {
@@ -39,10 +40,10 @@ export const GetConsultas = (user_id, start_date, end_date) => {
 export const GetProfile = (user_id) => {
 
     const [userProfile, setUserProfile] = useState();
-    const axios = useAxiosWithToken();
+    const [axios] = useAxiosWithToken();
 
     useEffect(() => {
-        axios.get("http://localhost:8000/api/paciente/perfil", {
+        axios.get(API_PROTOCOL_HOSTNAME_PORT + "/api/paciente/perfil", {
             params: {
                 user_id: user_id
             }
