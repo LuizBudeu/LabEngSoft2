@@ -21,14 +21,15 @@ from .views.medico.medico import informacao_bancaria as medico_informacao_bancar
 from .views.paciente.perfil import create_profile as paciente_create
 from .views.paciente.perfil import user_id as paciente_id
 from .views.paciente.perfil import update_perfil as paciente_update_perfil
+from .views.paciente.perfil import perfil as paciente_perfil
+from .views.paciente.perfil import perfil_nutricional as paciente_perfil_nutricional
 from .views.paciente.busca import buscaProfissionais as paciente_busca_profissionais
 from .views.paciente.busca import horarios as paciente_horarios
 from .views.paciente.agenda import createAppointment as paciente_create_appointment
 from .views.paciente.agenda import cancelAppointment as paciente_cancel_appointment
 from .views.paciente.agenda import payAppointment as paciente_pay_appointment
-from .views.paciente.acompanhamento import acompanhamento as paciente_acompanhamento
-from .views.paciente.perfil import perfil as paciente_perfil
 from .views.paciente.agenda import agenda as paciente_agenda
+from .views.paciente.acompanhamento import acompanhamento as paciente_acompanhamento
 
 from .views.preparador.agenda import agenda as preparador_agenda
 from .views.preparador.workout import workouts
@@ -45,21 +46,21 @@ from .views.preparador.workout import treino_paciente as preparador_treino_pacie
 from .views.preparador.perfil import informacao_bancaria as preparador_informacao_bancaria
 
 from .views.nutricionista.agenda import agenda as nutricionista_agenda
+from .views.nutricionista.agenda import consulta_paciente as nutricionista_consulta_paciente
+from .views.nutricionista.agenda import horarios_profissional as nutricionista_horarios_profissional
+from .views.nutricionista.avaliacao import avaliacao as avaliacao_nutricional
+from .views.nutricionista.avaliacao import salvaAvaliacao as salva_avaliacao_nutricional
 from .views.nutricionista.avaliacao import avaliacao as avaliacao_nutricional
 from .views.nutricionista.consulta import consulta as nutricionista_consulta
 from .views.nutricionista.dieta import dieta
 from .views.nutricionista.dieta import salvaDieta
 from .views.nutricionista.dieta import salvaDieta
+from .views.nutricionista.dieta import dieta_paciente as nutricionista_dieta_paciente
+from .views.nutricionista.dieta import exames_paciente as nutricionista_exames_paciente
 from .views.nutricionista.exame import pedirExame as nutricionista_exame
 from .views.nutricionista.perfil import perfil as nutricionista_perfil
 from .views.nutricionista.perfil import update_perfil as nutricionista_update_perfil
-from .views.nutricionista.avaliacao import salvaAvaliacao as salva_avaliacao_nutricional
-from .views.nutricionista.avaliacao import avaliacao as avaliacao_nutricional
-from .views.nutricionista.agenda import consulta_paciente as nutricionista_consulta_paciente
 from .views.nutricionista.perfil import lista_profissionais as nutricionista_lista_profissionais
-from .views.nutricionista.agenda import horarios_profissional as nutricionista_horarios_profissional
-from .views.nutricionista.dieta import dieta_paciente as nutricionista_dieta_paciente
-from .views.nutricionista.dieta import exames_paciente as nutricionista_exames_paciente
 from .views.nutricionista.perfil import informacao_bancaria as nutricionista_informacao_bancaria
 
 urlpatterns = [
@@ -91,6 +92,7 @@ urlpatterns = [
     path('paciente/cancel_consulta', paciente_cancel_appointment, name='paciente_cancel_appointment'),
     path('paciente/pay_consulta', paciente_pay_appointment, name='paciente_pay_appointment'),
     path('paciente/acompanhamento', paciente_acompanhamento, name='paciente_acompanhamento'),
+    path('paciente/perfil_nutricional', paciente_perfil_nutricional, name='paciente_perfil_nutricional'),
 
     path('preparador/id', preparador_id, name='preparador_id'),
     path('preparador/agenda', preparador_agenda, name='preparador_agenda'),

@@ -2,82 +2,24 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.exceptions import ParseError
 from django.http import HttpRequest
+import requests
 
-import json
-
-from api.models import Consulta, RelatorioNutricionista, Dieta, PedidoExameNutricionista
+from api.models import Usuario, Paciente, Consulta, RelatorioNutricionista, PedidoExameNutricionista
 
 
 @api_view(['GET'])
-def dieta(request: HttpRequest) -> Response:
-    """
-    Pega uma dieta através do id da consulta.
-
-    Query parameters:
-        appointment_id: ID da consulta de um nutricionista.
-    """
-
-    data = request.GET
-
-    # Data validation
-    try: 
-        consulta_id = Consulta.objects.get(id=data.get('appointment_id')).pk # Nesse caso, primary key == id
-    except Consulta.DoesNotExist:
-        raise ParseError(f"Consulta com id={data.get('appointment_id')} não foi encontrada")
+def dieta(request):
     
-    try:
-        relatorio_nutri = RelatorioNutricionista.objects.get(consulta=consulta_id)
-    except RelatorioNutricionista.DoesNotExist:
-        raise ParseError(f"Relatório referente à consulta com id={consulta_id} não foi encontrado")
-    
-    dieta_object = relatorio_nutri.dieta
-    if not dieta_object:
-        return Response({'message': f"Dieta da consulta com id={consulta_id} não foi encontrada"})
-    
-    resp = {
-        'descricao_curta': dieta_object.descricao_curta,
-        'descricao': dieta_object.descricao,
-        'duracao_em_dias': dieta_object.duracao_em_dias,
-        'calorias': dieta_object.calorias
-    }
-
-    return Response(resp)
+    return Response({'message': 'Connected.'})
 
 
 @api_view(['POST'])
-def salvaDieta(request: HttpRequest) -> Response:
+def salvaDieta(request):
     """
     Salva uma dieta receitada pelo nutricionista.
-
-    Query parameters:
-        consulta_id: ID da consulta em cujo relatório de nutricionista será dada a dieta.
-        descricao_curta: Um resumo da dieta, como "Dieta de hipertrofia sem glúten"
-        descricao: A descrição detalhada e completa da dieta
-        duracao_em_dias: O tempo previsto para manter a dieta sem alterá-la
-        calorias: A quantidade de calorias diárias da dieta, em kcal
     """
-
-    body: dict = json.loads(request.body.decode('utf-8'))
-
-    try:
-        relatorio = RelatorioNutricionista.objects.filter(consulta__id=body.get('consulta_id')).first()
-    except RelatorioNutricionista.DoesNotExist:
-        raise ParseError(f"Relatório da requisição não foi encontrado")
-
-    try:
-        dieta_obj: Dieta = Dieta.objects.create(**{
-            'descricao_curta': body.get('descricao_curta'),
-            'descricao': body.get('descricao'),
-            'duracao_em_dias': body.get('duracao_em_dias'),
-            'calorias': body.get('calorias')
-        })
-    except:
-        raise ParseError('Erro ao salvar dieta.')
     
-    relatorio.dieta = dieta_obj # Associa dieta ao relatório de consulta correspondente à requisição
-    relatorio.save()
-    
-    return Response({'dieta_id': dieta_obj.pk})
+    return Response({'message': 'Connected.'})
 
 @api_view(['GET'])
 def dieta_paciente(request):
@@ -99,6 +41,12 @@ def dieta_paciente(request):
         'dieta__duracao_em_dias',
         'dieta__calorias',
     ).order_by('-created_at').first()
+
+    if(dieta==None):
+        return Response({}, 400)
+    else:
+        return Response(dieta)
+
 
     return Response(dieta)
 
@@ -127,3 +75,29 @@ def exames_paciente(request):
     ).order_by('-created_at')
 
     return Response(examesNutricionista)
+
+
+"preparador/informacoes_fisicas_paciente"
+@api_view(['GET'])
+def informacoesNutricionais(request: HttpRequest) -> Response:
+    """
+    Pega informações pertinentes para a formulação de uma dieta, incluindo dados de gasto calórico.
+
+    Query Parameters:
+        paciente_id: ID de usuário do paciente da requisição.
+    """
+
+    data = request.GET
+
+    paciente_id = data.get('paciente_id')
+    try:
+        user_obj = Usuario.objects.get(id=paciente_id)
+    except Usuario.DoesNotExist:
+        raise ParseError(f"Usuário de id={paciente_id} não foi encontrado.")
+
+    payload = {'user_id': user_obj.pk}
+    infos_nutricionais = requests.get("http://127.0.0.1:8000/api/paciente/perfil_nutricional", params=payload).json()
+    infos_caloricas = requests.get("http://127.0.0.1:8000/api/preparador/informacoes_fisicas_paciente", params=payload).json()
+    
+    return Response({**infos_nutricionais, **infos_caloricas})
+    
