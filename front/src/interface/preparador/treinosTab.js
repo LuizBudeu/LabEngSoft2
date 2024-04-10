@@ -9,7 +9,8 @@ import { WorkOutForm } from "./components/workOutForm";
 import { GetWorkOuts } from "../../contoller/preparador/WorkOutController";
 import { PopUpContainer } from "../../components/popUpContainer";
 import { FormContainer } from "../../components/formContainer";
-import { CiDumbbell } from "react-icons/ci";
+import { CustomImage } from "../../components/customImage";
+import { ProfissionalIcons } from "../../utils/utils";
 
 export const TreinosTab = () => {
     const { workOuts, refetch } = GetWorkOuts();
@@ -35,7 +36,7 @@ export const TreinosTab = () => {
         >
             <Row>
                 <RowItem customPadding={5}>
-                    <CiDumbbell size={50}/>
+                    <CustomImage imageUrl={ProfissionalIcons[3]}/>
                 </RowItem>
                 <RowItem grow>
                     <Row>

@@ -19,9 +19,9 @@ export const formatNumber = (n) => {
 };
 
 export const ProfissionalIcons = {
-    1: "img/MedicoIcon.png",
-    2: "img/DietaIcon.png",
-    3: "img/TreinoIcon.png",
+    1: "../img/MedicoIcon.png",
+    2: "../img/DietaIcon.png",
+    3: "../img/TreinoIcon.png",
 };
 
 export const formatCurrency = (val) =>{
