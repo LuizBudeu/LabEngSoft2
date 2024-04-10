@@ -5,8 +5,8 @@ import { useSearchParams } from "react-router-dom";
 
 export const GetAcompanhemntos = () => {
 
-    const [dieta, setDieta] = useState([]);
-    const [treino, setTreino] = useState([]);
+    const [dieta, setDieta] = useState();
+    const [treino, setTreino] = useState();
     const [examesMedico, setExamesMedico] = useState([]);
     const [examesNutricionais, setExamesNutricionais] = useState([]);
     const [selectedAcompanhamento, setSelectedAcompanhamento] = useState();

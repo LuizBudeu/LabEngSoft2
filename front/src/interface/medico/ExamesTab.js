@@ -4,11 +4,15 @@ import { RowItem } from "../../components/rowItem";
 import { VerticalLine } from "../../components/verticalLine";
 import { CenterContent } from "../../components/centerContent";
 import { Colors } from "../../utils/colors";
-// import { pedidoExameForm } from "./components/pedidoExameForm";
+import { PedidoExameForm } from "./components/exameForm";
 import { GetPedidosExames } from "../../contoller/medico/ExameController";
+import { PopUpContainer } from "../../components/popUpContainer";
+import { FormContainer } from "../../components/formContainer";
+import { CustomButton } from "../../components/customButton";
+
 
 const ExamesTab = () => {
-    const [pedidosExames] = GetPedidosExames("2");
+    const [pedidosExames] = GetPedidosExames();
     const [selectedPedidoExame, setSelectedPedidoExame] = useState();
 
     const [visible, setVisible] = useState(false);
@@ -18,12 +22,19 @@ const ExamesTab = () => {
         1: "Finalizado",
     };
 
+    const handleSubmit = () => {
+        // refetch();
+        setVisible(false);
+    };
+
     return (
         <>
+            <PedidoExameFormModal visible={visible} onSubmit={handleSubmit} onClose={() => setVisible(false)}/>
             <Row>
                 <RowItem grow noPadding>
                     <div style={{ width: "100%" }}>
                         <h2>Seus exames</h2>
+
                         {
                             <>
                                 {pedidosExames &&
@@ -61,5 +72,18 @@ const ExamesTab = () => {
         </>
     );
 };
+
+const PedidoExameFormModal = ({visible, onSubmit, onClose}) => {
+    return(
+        <PopUpContainer showPopUp={visible} closePopUp={onClose}>
+            <CenterContent>
+                <FormContainer>
+                    <PedidoExameForm onSubmit={onSubmit}/>
+                </FormContainer>
+            </CenterContent>
+        </PopUpContainer>
+    );
+}
+
 
 export default ExamesTab;

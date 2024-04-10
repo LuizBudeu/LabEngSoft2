@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Column } from "../../../components/column";
 import { CustomInput } from "../../../components/customInput";
 import { CustomButton } from "../../../components/customButton";
-import { UpdateProfile } from "../../../contoller/preparador/PerfilController";
+import { UpdateProfile } from "../../../contoller/medico/PerfilController";
 import { ProfileFieldToLabel } from "../../../utils/utils";
 
 export const PerfilForm = ({perfil, onSubmit}) => {

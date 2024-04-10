@@ -31,6 +31,7 @@ export const CreatePerfil = ({userProfile, setUserProfile, submitProfile}) => {
                   name="cpf"
                   value={userProfile?.cpf}
                   onChange={(e) => setUserProfile({...userProfile, cpf:e.target.value})}
+                  mask="999.999.999-99"
                   type="text"
                 />
               </Column>
@@ -68,6 +69,7 @@ export const CreatePerfil = ({userProfile, setUserProfile, submitProfile}) => {
                   name="cep"
                   onChange={(e) => setUserProfile({...userProfile, cep:e.target.value})}
                   value={userProfile?.cep}
+                  mask="99999-999"
                   type="text"
                 />
               </Column>

@@ -1,21 +1,17 @@
 import React from "react";
-import { Colors } from "../utils/colors";
 import { FormatDate, GetHourMinute } from "../utils/date";
+import { AppointmentItem } from "./appointmentItem";
 
-export const AgendaList = ({appointments, selectedAppointment, onItemClick}) => {
+export const AgendaList = ({professionalType, appointments, selectedAppointment, onItemClick}) => {
     
     const appointmentItem = (item) => (
-        <div 
-            key={item.id} 
+        <AppointmentItem
+            type={professionalType}
+            text={GetHourMinute(item.horario, item.duracao) + " - " + item.paciente__nome}
+            status={item.status}
             onClick={() => onItemClick(item)}
-            style={{'backgroundColor': selectedAppointment?.id === item.id ? Colors.LightGray : null}}
-        >
-          <table>
-            <tr>
-              <td>{item.paciente__nome} - {GetHourMinute(item.horario, item.duracao)}</td>
-            </tr>
-          </table>
-        </div>
+            selected={selectedAppointment?.id === item.id}
+        />
     );
     
     return(

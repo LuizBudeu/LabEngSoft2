@@ -20,7 +20,6 @@ def create(request: HttpRequest) -> Response:
     """
 
     body = json.loads(request.body.decode('utf-8'))
-    print(body)
 
     try:
         usuario = Usuario.objects.get(id=body['user_id'])
@@ -74,4 +73,7 @@ def treino_paciente(request):
         'treino_fisico__titulo',
     ).order_by('-created_at').first()
 
-    return Response(treino)
+    if(treino==None):
+        return Response({}, 400)
+    else:
+        return Response(treino)

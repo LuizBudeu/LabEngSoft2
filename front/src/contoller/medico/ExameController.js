@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
 import { API_PROTOCOL_HOSTNAME_PORT } from "../../utils/utils";
 import { useAxiosWithToken } from "../../utils/useAxiosWithToken";
+import {useSearchParams} from "react-router-dom";
 
-export const PedirExameMedico = async (paciente_id, medico_id, titulo, axios) => {
+export const PedirExameMedico = async (paciente_id, titulo) => {
+    const [axios] = useAxiosWithToken();
+    const [searchParams] = useSearchParams();
+    const medico_id = searchParams.get("id");
+
     try {
-        const response = await axios.post(API_PROTOCOL_HOSTNAME_PORT + "/api/medico/pedir_exame/", { paciente_id, medico_id, titulo });
+        const response = await axios.post(API_PROTOCOL_HOSTNAME_PORT + "/api/medico/pedir_exame", { paciente_id, medico_id, titulo });
 
         if (response.status != 200) {
             console.log("Resposta da criação", response.data);
@@ -18,15 +23,18 @@ export const PedirExameMedico = async (paciente_id, medico_id, titulo, axios) =>
     }
 };
 
-export const GetPedidosExames = (user_id) => {
+export const GetPedidosExames = () => {
+    const [searchParams] = useSearchParams();
+
+    const user_id = searchParams.get("id");
     const [pedidosExames, setPedidosExames] = useState([]);
     const [axios] = useAxiosWithToken();
 
-    useEffect(() => {
+    const fetchPedidosExames = () => {
         axios
             .get(API_PROTOCOL_HOSTNAME_PORT + "/api/medico/pegar_exames", {
                 params: {
-                    user_id: user_id,
+                    user_id,
                 },
             })
             .then((response) => {
@@ -35,12 +43,21 @@ export const GetPedidosExames = (user_id) => {
             .catch((e) => {
                 console.log(e);
             });
-    }, [user_id]);
+    }
 
-    return [pedidosExames, setPedidosExames];
+    useEffect(() => {
+        fetchPedidosExames();
+    }, []);
+
+    const refetch = () => {
+        fetchPedidosExames();
+    }
+
+    return [pedidosExames, refetch];
 };
 
 export const FinalizaExameMedico = async (exame_id, axios) => {
+
     try {
         const response = await axios.put(API_PROTOCOL_HOSTNAME_PORT + "/api/medico/finaliza_exame", { exame_id });
 

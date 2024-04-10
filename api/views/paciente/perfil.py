@@ -2,6 +2,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.exceptions import ParseError
 from django.http import HttpRequest
+from django.http import HttpRequest
 import json
 import jwt
 
@@ -171,9 +172,8 @@ def update_perfil(request):
 
     return Response("Paciente atualizado")
 
-
 @api_view(['GET'])
-def perfil_nutricional(request: HttpRequest) -> Response:
+def informacoes_medicas(request: HttpRequest) -> Response:
     """
     Pega informações nutricionais de um paciente.
 
@@ -181,15 +181,15 @@ def perfil_nutricional(request: HttpRequest) -> Response:
         user_id: ID usuário do paciente
     """
 
-    data = request.GET
+    id = request.GET.get('user_id')
 
     try: 
-        usuario = Usuario.objects.get(id=data.get('user_id'))
+        usuario = Usuario.objects.get(id=id)
         paciente = Paciente.objects.get(usuario=usuario)
     except Usuario.DoesNotExist:
-        raise ParseError(f"Usuário com id={data.get('user_id')} não foi encontrado")
+        raise ParseError(f"Usuário com id={id} não foi encontrado")
     except Paciente.DoesNotExist:
-        raise ParseError(f"Usuário com id={data.get('user_id')} não é um paciente.")
+        raise ParseError(f"Usuário com id={id} não é um paciente.")
 
     return Response({
         'alergias': paciente.alergias,

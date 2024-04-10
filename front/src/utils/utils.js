@@ -19,9 +19,9 @@ export const formatNumber = (n) => {
 };
 
 export const ProfissionalIcons = {
-    1: "img/MedicoIcon.png",
-    2: "img/DietaIcon.png",
-    3: "img/TreinoIcon.png",
+    1: "../img/MedicoIcon.png",
+    2: "../img/DietaIcon.png",
+    3: "../img/TreinoIcon.png",
 };
 
 export const formatCurrency = (val) =>{
@@ -38,3 +38,14 @@ export const TipoDiabetesNumberToString = {
     2: "Diabetes tipo 2",
 }
 
+export const ProfileFieldToLabel = {
+    ocupacao: 'Ocupação',
+    nome: 'Nome',
+    cpf: 'CPF',
+    data_de_nascimento: 'Data de Nascimento',
+    genero: 'Gênero',
+    cep: 'CEP',
+    logradouro: 'Logradouro',
+    numero: 'Número',
+    complemento: 'Complemento'
+}
