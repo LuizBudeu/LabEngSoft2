@@ -11,7 +11,7 @@ export const PedidoExameForm = ({onSubmit}) => {
     const submit = async (e) => {
       e.preventDefault(); 
 
-      const resp = await PedirExameMedico("1", "2", pedidoExameTitulo); 
+      const resp = await PedirExameMedico("1", pedidoExameTitulo);
       
       if(resp) {
         onSubmit();

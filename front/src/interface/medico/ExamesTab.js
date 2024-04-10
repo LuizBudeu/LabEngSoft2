@@ -12,7 +12,7 @@ import { CustomButton } from "../../components/customButton";
 
 
 const ExamesTab = () => {
-    const [pedidosExames] = GetPedidosExames("2");
+    const [pedidosExames] = GetPedidosExames();
     const [selectedPedidoExame, setSelectedPedidoExame] = useState();
 
     const [visible, setVisible] = useState(false);

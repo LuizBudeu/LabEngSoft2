@@ -2,8 +2,13 @@ import { useEffect, useState } from "react";
 import { API_PROTOCOL_HOSTNAME_PORT } from "../../utils/utils";
 import { useAxiosWithToken } from "../../utils/useAxiosWithToken";
 import axios from "axios";
+import {useSearchParams} from "react-router-dom";
 
-export const PedirExameMedico = async (paciente_id, medico_id, titulo) => {
+export const PedirExameMedico = async (paciente_id, titulo) => {
+
+    const [searchParams] = useSearchParams();
+    const medico_id = searchParams.get("id");
+
     try {
         const response = await axios.post(API_PROTOCOL_HOSTNAME_PORT + "/api/medico/pedir_exame", { paciente_id, medico_id, titulo });
 
@@ -19,7 +24,10 @@ export const PedirExameMedico = async (paciente_id, medico_id, titulo) => {
     }
 };
 
-export const GetPedidosExames = (user_id) => {
+export const GetPedidosExames = () => {
+    const [searchParams] = useSearchParams();
+
+    const user_id = searchParams.get("id");
     const [pedidosExames, setPedidosExames] = useState([]);
     const [axios] = useAxiosWithToken();
 
@@ -27,7 +35,7 @@ export const GetPedidosExames = (user_id) => {
         axios
             .get(API_PROTOCOL_HOSTNAME_PORT + "/api/medico/pegar_exames", {
                 params: {
-                    user_id: user_id,
+                    user_id,
                 },
             })
             .then((response) => {

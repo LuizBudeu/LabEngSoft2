@@ -29,7 +29,7 @@ import { Column } from "../../components/column";
 import { useAxiosWithToken } from "../../utils/useAxiosWithToken";
 
 const AgendaTab = () => {
-    const [agenda] = GetAgenda("2", "2021-01-01", "2024-12-31");
+    const [agenda] = GetAgenda("2021-01-01", "2024-12-31");
     const [selectedAppointment, setSelectedAppointment] = useState("");
 
     return (
