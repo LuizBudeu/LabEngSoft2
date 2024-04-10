@@ -89,7 +89,7 @@ WSGI_APPLICATION = 'plataforma_digital.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'mssql',
-        'NAME': 'MyDatabase',
+        'NAME': 'LabEngSoft',
         'USER': 'labengsoft@labengsoft',
         'PASSWORD': DB_PASSWORD,
         'HOST': 'labengsoft.database.windows.net',
