@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import { API_PROTOCOL_HOSTNAME_PORT } from "../../utils/utils";
 import { useAxiosWithToken } from "../../utils/useAxiosWithToken";
-import axios from "axios";
 import {useSearchParams} from "react-router-dom";
 
 export const PedirExameMedico = async (paciente_id, titulo) => {
-
+    const [axios] = useAxiosWithToken();
     const [searchParams] = useSearchParams();
     const medico_id = searchParams.get("id");
 
@@ -58,6 +57,7 @@ export const GetPedidosExames = () => {
 };
 
 export const FinalizaExameMedico = async (exame_id, axios) => {
+
     try {
         const response = await axios.put(API_PROTOCOL_HOSTNAME_PORT + "/api/medico/finaliza_exame", { exame_id });
 
