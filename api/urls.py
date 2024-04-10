@@ -31,16 +31,20 @@ from .views.preparador.workout import create as workout_create
 from .views.preparador.perfil import perfil as preparador_perfil
 from .views.preparador.perfil import update_perfil as preparador_update_perfil
 from .views.preparador.perfil import user_id as preparador_id
+from .views.preparador.consulta import registrar_formulario
+from .views.preparador.consulta import consulta_request
 
 from .views.nutricionista.agenda import agenda as nutricionista_agenda
 from .views.nutricionista.avaliacao import avaliacao as avaliacao_nutricional
 from .views.nutricionista.consulta import consulta as nutricionista_consulta
+from .views.nutricionista.consulta import consultaPaciente as nutricionista_consulta_paciente
+from .views.nutricionista.consulta import horariosProfissional as nutricionista_horarios_profissional
 from .views.nutricionista.dieta import dieta
 from .views.nutricionista.exame import pedirExame as nutricionista_exame
+from .views.nutricionista.exame import examesPaciente as nutricionista_exames_paciente
 from .views.nutricionista.perfil import perfil as nutricionista_perfil
 from .views.nutricionista.perfil import update_perfil as nutricionista_update_perfil
-from .views.preparador.consulta import registrar_formulario
-from .views.preparador.consulta import consulta_request
+from .views.nutricionista.profissionais import listaProfissionais as nutricionista_lista_profissionais
 
 urlpatterns = [
     path('hello-world', hello_world, name='hello_world'),
@@ -79,10 +83,14 @@ urlpatterns = [
     path('nutricionista/agenda', nutricionista_agenda, name='nutricionista_agenda'),
     path('nutricionista/avaliacao', avaliacao_nutricional, name='avaliacao_nutricional'),
     path('nutricionista/consulta', nutricionista_consulta, name='nutricionista_consulta'),
+    path('nutricionista/consulta_paciente', nutricionista_consulta_paciente, name='nutricionista_consulta_paciente'),
+    path('nutricionista/horarios_profissional', nutricionista_horarios_profissional, name='nutricionista_horarios_profissional'),
     path('nutricionista/dieta', dieta, name='dieta'),
     path('nutricionista/exame', nutricionista_exame, name='nutricionista_exame'),
+    path('nutricionista/exames_paciente', nutricionista_exames_paciente, name='nutricionista_exames_paciente'),
     path('nutricionista/perfil', nutricionista_perfil, name='nutricionista_perfil'),
     path('nutricionista/update_perfil', nutricionista_update_perfil, name='nutricionista_update_perfil'),
+    path('nutricionista/lista_profissionais', nutricionista_lista_profissionais, name='nutricionista_lista_profissionais'),
 
     # path('logout/', views.LogoutView.as_view(), name ='logout')
 ]
