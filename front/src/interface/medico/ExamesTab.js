@@ -23,7 +23,7 @@ const ExamesTab = () => {
             <Row>
                 <RowItem grow noPadding>
                     <div style={{ width: "100%" }}>
-                        <h2>Seus treinos</h2>
+                        <h2>Seus exames</h2>
                         {
                             <>
                                 {pedidosExames &&
@@ -48,9 +48,9 @@ const ExamesTab = () => {
                         {selectedPedidoExame ? (
                             <div style={{ width: "100%" }}>
                                 <h2>{selectedPedidoExame.titulo}</h2>
-                                <p>{selectedPedidoExame.paciente__nome}</p>
-                                <p>{exameStatus[selectedPedidoExame.status]}</p>
-                                <p>{selectedPedidoExame.created_at}</p>
+                                <p>Paciente: {selectedPedidoExame.paciente__nome}</p>
+                                <p>Status: {exameStatus[selectedPedidoExame.status]}</p>
+                                <p>Data: {selectedPedidoExame.created_at}</p>
                             </div>
                         ) : (
                             <span>Selecione o seu pedido de exame</span>

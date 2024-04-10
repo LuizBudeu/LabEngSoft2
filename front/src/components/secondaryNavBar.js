@@ -38,9 +38,5 @@ export const SecondaryNavBar = ({tabs, activeTab, setActiveTab}) => {
                 ))}
             </Row>
         </BackgroundStyle>
-        
     );
 };
-{/* <li className={activeTab === tab.id ? "active" : ""} onClick={setActiveTab(tab.id)}>
-                    <span>{tab.displayName}</span>
-                </li> */}

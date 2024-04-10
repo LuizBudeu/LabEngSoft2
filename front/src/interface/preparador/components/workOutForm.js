@@ -7,17 +7,14 @@ import { CreateWorkOut } from "../../../contoller/preparador/WorkOutController";
 
 export const WorkOutForm = ({onSubmit}) => {
     const [workOut, setWorkOut] = useState({title: "", workout: ""});
-
+    const { create } = CreateWorkOut(workOut);
+  
     const submit = async (e) => {
       e.preventDefault(); 
-
-      const resp = await CreateWorkOut("3", workOut); 
-      
-      if(resp) {
-        onSubmit();
-      } else {
-        alert("Erro ao salvar os dados");
-      }
+      create({
+        onSuccess: () => onSubmit(),
+        onError: () => console.log("Erro ao salvar")
+      });
     };
 
     return(

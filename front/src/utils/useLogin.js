@@ -3,6 +3,8 @@ import { useSearchParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import { useIsLoggedIn } from "./useIsLoggedIn";
+import { API_PROTOCOL_HOSTNAME_PORT } from "./utils";
+import { useAxiosWithToken } from "./useAxiosWithToken";
 
 const TOKEN_URL = process.env.REACT_APP_TOKEN_URL;
 
@@ -27,7 +29,6 @@ export const useLogin = (clientSecret) => {
             })
                 .then(response => {
                     setCookie("access_token", response.data.access_token);
-                    setSearchParams("");
                 })
                 .catch(error => {
                     console.log(error);

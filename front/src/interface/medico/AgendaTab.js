@@ -45,8 +45,8 @@ const AppointmentInfo = ({ appointment }) => {
     return (
         <div>
             <div style={{ flexGrow: 1, width: "100%", padding: "16px" }}>
-                <body>Paciente: {appointment.paciente__nome}</body>
-                <body>Horário da consulta: {GetHourMinute(appointment.horario, appointment.duracao)}</body>
+                <text>Paciente: {appointment.paciente__nome}</text>
+                <text>Horário da consulta: {GetHourMinute(appointment.horario, appointment.duracao)}</text>
             </div>
             <Row>
                 <CustomButton title="Realizar consulta" onClick={() => console.log("Realizar consulta")} type="primary" />

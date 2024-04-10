@@ -8,11 +8,13 @@ from .views.usuario import create as usuario_create
 from .views.medico.consulta import consulta as medico_consulta
 from .views.medico.consulta import comeca_consulta as medico_comeca_consulta
 from .views.medico.medico import create_medico
-from .views.medico.exame import pedir_exames as medico_pedir_exame
+from .views.medico.exame import pedir_exame as medico_pedir_exame
 from .views.medico.exame import pegar_exames as medico_pegar_exames
 from .views.medico.exame import finalizar_exame as medico_finalizar_exame
 from .views.medico.agenda import agenda as medico_agenda
 
+from .views.paciente.perfil import create_profile as paciente_create
+from .views.paciente.perfil import user_id as paciente_id
 from .views.paciente.perfil import update_perfil as paciente_update_perfil
 from .views.paciente.busca import buscaProfissionais as paciente_busca_profissionais
 from .views.paciente.busca import horarios as paciente_horarios
@@ -26,6 +28,9 @@ from .views.paciente.agenda import agenda as paciente_agenda
 from .views.preparador.agenda import agenda as preparador_agenda
 from .views.preparador.workout import workouts
 from .views.preparador.workout import create as workout_create
+from .views.preparador.perfil import perfil as preparador_perfil
+from .views.preparador.perfil import update_perfil as preparador_update_perfil
+from .views.preparador.perfil import user_id as preparador_id
 
 from .views.nutricionista.agenda import agenda as nutricionista_agenda
 from .views.nutricionista.avaliacao import avaliacao as avaliacao_nutricional
@@ -54,6 +59,8 @@ urlpatterns = [
     path('medico/finalizar_exame', medico_finalizar_exame, name='medico_finalizar_exame'),
     path('medico/create', create_medico, name='medico_create'),
     
+    path('paciente/id', paciente_id, name='paciente_id'),
+    path('paciente/create_profile', paciente_create, name='paciente_create'),
     path('paciente/agenda', paciente_agenda, name='paciente_agenda'),
     path('paciente/perfil', paciente_perfil, name='paciente_perfil'),
     path('paciente/update_perfil', paciente_update_perfil, name='paciente_update_perfil'),
@@ -64,9 +71,12 @@ urlpatterns = [
     path('paciente/pay_consulta', paciente_pay_appointment, name='paciente_pay_appointment'),
     path('paciente/acompanhamento', paciente_acompanhamento, name='paciente_acompanhamento'),
 
+    path('preparador/id', preparador_id, name='preparador_id'),
     path('preparador/agenda', preparador_agenda, name='preparador_agenda'),
     path('preparador/create_workout', workout_create, name='workout_create'),
     path('preparador/workouts', workouts, name='workouts'),
+    path('preparador/perfil', preparador_perfil, name='preparador_perfil'),
+    path('preparador/update_perfil', preparador_update_perfil, name='preparador_update_perfil'),
     path('preparador/consultas/<int:consulta_id>/formulario', registrar_formulario, name='finalizar_consulta'),
     path('preparador/consultas/<int:consulta_id>', consulta_request, name='consulta_request'),
 
