@@ -34,7 +34,6 @@ const ExamesTab = () => {
                 <RowItem grow noPadding>
                     <div style={{ width: "100%" }}>
                         <h2>Seus exames</h2>
-                        <CustomButton title="Novo exame" onClick={() => setVisible(true)} type="primary" />
 
                         {
                             <>

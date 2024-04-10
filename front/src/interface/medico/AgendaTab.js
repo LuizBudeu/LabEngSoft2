@@ -1,14 +1,3 @@
-// import React from "react";
-// import "./styles/Tabs.css";
-// import { AgendaList } from "../../components/agendaList";
-
-// import { useState } from "react";
-// import { Row } from "../../components/row";
-// import { RowItem } from "../../components/rowItem";
-// import { VerticalLine } from "../../components/verticalLine";
-// import { GetHourMinute } from "../../utils/date";
-// import { CustomButton } from "../../components/customButton";
-// import { CenterContent } from "../../components/centerContent";
 
 import React from "react";
 import { useState } from "react";
@@ -22,11 +11,20 @@ import { CustomButton } from "../../components/customButton";
 import { CenterContent } from "../../components/centerContent";
 import { FormContainer } from "../../components/formContainer";
 import { PopUpContainer } from "../../components/popUpContainer";
-// import { AppointmentForm } from "./components/appointmentForm";
+import { AppointmentForm } from "./components/appointmentForm";
 import { Column } from "../../components/column";
-// import { FinalizarConsulta } from "../../contoller/preparador/ConsultaController";
-// import { GetPacienteExtraInfo } from "../../contoller/preparador/ConsultaController";
-import { useAxiosWithToken } from "../../utils/useAxiosWithToken";
+import { FinalizarConsulta } from "../../contoller/medico/ConsultaController";
+import { GetPacienteExtraInfo } from "../../contoller/medico/ConsultaController";
+import {TipoDiabetesNumberToString} from "../../utils/utils";
+
+
+const CONSULTA_CHOICES = {
+    "0": 'Agendada',
+    "1": 'Cancelada',
+    "2": 'Realizada',
+    "3": 'Vencida',
+    "4": 'Pendente'
+}
 
 const AgendaTab = () => {
     const [agenda] = GetAgenda("2021-01-01", "2024-12-31");
@@ -60,24 +58,24 @@ const AgendaTab = () => {
 
 const AppointmentInfo = ({ appointment }) => {
     const [showPopUp, setShowPopUp] = useState(false);
-    // const { extraInfo } = GetPacienteExtraInfo(appointment.id);
-    const axios = useAxiosWithToken();
-    
-    // const handleSubmit = () => {
-    //     FinalizarConsulta(appointment.id, axios);
-    //     setShowPopUp(false);
-    // }
+    const { extraInfo } = GetPacienteExtraInfo(appointment.id);
+    const { finalizar } = FinalizarConsulta(appointment.id);
+
+    const handleSubmit = () => {
+        finalizar();
+        setShowPopUp(false);
+    }
 
     return (
         <div>
             <PopUpContainer showPopUp={showPopUp} closePopUp={() => setShowPopUp(false)}>
                 <CenterContent>
                     <FormContainer>
-                        {/* <AppointmentForm 
+                        <AppointmentForm
                             consultaId={appointment.id}
                             onSubmit={handleSubmit}
                             onCancel={() => setShowPopUp(false)}
-                        /> */}
+                        />
                     </FormContainer>
                 </CenterContent>
             </PopUpContainer>
@@ -85,8 +83,16 @@ const AppointmentInfo = ({ appointment }) => {
                 <h4>Dados Básicos</h4>
                 <text>Paciente: {appointment.paciente__nome}</text>
                 <text>Horário da consulta: {GetHourMinute(appointment.horario, appointment.duracao)}</text>
+                <text>Status: {CONSULTA_CHOICES[appointment.status]}</text>
                 <br></br>
-                
+                {extraInfo && (
+                    <>
+                        <h4>Informações médicas</h4>
+                        <text>{extraInfo.medical?.alergias}</text>
+                        <text>{TipoDiabetesNumberToString[extraInfo.medical?.tipo_diabetes]}</text>
+                    </>
+                )}
+
             </Column>
             <Row>
                 <CustomButton title="Realizar consulta" onClick={() => setShowPopUp(true)} type="primary" />

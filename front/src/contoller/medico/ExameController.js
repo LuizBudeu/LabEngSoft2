@@ -31,7 +31,7 @@ export const GetPedidosExames = () => {
     const [pedidosExames, setPedidosExames] = useState([]);
     const [axios] = useAxiosWithToken();
 
-    useEffect(() => {
+    const fetchPedidosExames = () => {
         axios
             .get(API_PROTOCOL_HOSTNAME_PORT + "/api/medico/pegar_exames", {
                 params: {
@@ -44,9 +44,17 @@ export const GetPedidosExames = () => {
             .catch((e) => {
                 console.log(e);
             });
-    }, [user_id]);
+    }
 
-    return [pedidosExames, setPedidosExames];
+    useEffect(() => {
+        fetchPedidosExames();
+    }, []);
+
+    const refetch = () => {
+        fetchPedidosExames();
+    }
+
+    return [pedidosExames, refetch];
 };
 
 export const FinalizaExameMedico = async (exame_id, axios) => {
