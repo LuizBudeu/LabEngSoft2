@@ -39,6 +39,12 @@ def dieta_paciente(request):
         'dieta__calorias',
     ).order_by('-created_at').first()
 
+    if(dieta==None):
+        return Response({}, 400)
+    else:
+        return Response(dieta)
+
+
     return Response(dieta)
 
 @api_view(['GET'])

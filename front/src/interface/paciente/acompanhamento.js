@@ -59,6 +59,11 @@ const Acompanhamento = () => {
           <ScrollContainer>
             <div>
               <h3 className="Auth-form-title">Seus acompanhementos</h3>
+              {!(dieta || treino || examesMedico.length != 0 || examesNutricionais.length != 0) && 
+                <CenterContent>
+                  <text>Não há acompanhamentos</text>
+                </CenterContent>
+              }
               {(dieta || treino) && <h4 className="Auth-form-title">Diretrizes</h4>}
               {dieta && (
                 <AppointmentItem
