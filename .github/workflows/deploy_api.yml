@@ -38,6 +38,8 @@ jobs:
           labels: ${{ steps.meta1.outputs.labels }}
           secrets: |
             "DB_PASSWORD=${{ secrets.SQL_PASSWORD }}"
+            "TARIFA_URL_CODE=${{ secrets.TARIFA_URL_CODE }}"
+            "PAGAMENTO_URL_CODE=${{ secrets.PAGAMENTO_URL_CODE }}"
 
       - name: Create TLS certificate and key
         working-directory: ./proxy
