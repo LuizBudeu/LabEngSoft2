@@ -2,6 +2,26 @@ import { useState, useEffect } from "react";
 import { useAxiosWithToken } from "../../utils/useAxiosWithToken";
 import { API_PROTOCOL_HOSTNAME_PORT } from "../../utils/utils";
 
+
+export const Auth = () => {
+    const [axios, hasToken] = useAxiosWithToken();
+    const [, setSearchParams] = useSearchParams();
+
+    useEffect(() => {
+        if(hasToken){
+            axios.get(API_PROTOCOL_HOSTNAME_PORT + "/api/nutricionista/id",
+            ).then((response) => {
+                let resp = response.data['user_id'];
+                if(resp != null)
+                    setSearchParams({'id': resp});
+            }).catch((e) => {
+                console.log(e);
+            });
+        }
+    }, [hasToken]);
+};
+
+
 export const GetProfile = (user_id) => {
 
     const [userProfile, setUserProfile] = useState();
