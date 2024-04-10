@@ -7,6 +7,7 @@ import json
 from api.models import Consulta
 from api.models import TreinoFisico
 from api.models import RelatorioPreparadorFisico
+from api.models import Usuario
 
 @api_view(['POST'])
 def registrar_formulario (request: HttpRequest, consulta_id) -> Response:
@@ -85,3 +86,33 @@ def finalizar_consulta (consulta_id) -> Response:
     consulta.save()
 
     return Response("Consulta finalizada")
+
+@api_view(['GET'])
+def informacoes_fisicas_paciente(request: HttpRequest) -> Response:
+    """
+    Fornece informações do contexto do preparador físico
+    que sejam úteis para outros tipos de profissionais
+
+    query params:
+        - user_id: id do usuário que se busca as informações
+    """
+    user_id = request.GET['user_id']
+
+    try:
+        usuario = Usuario.objects.get(id=user_id)
+    except:
+        raise ParseError(f"Usuário com id={user_id} não encontrado")   
+    
+    try:
+        relatorio = RelatorioPreparadorFisico.objects.filter(
+            consulta__paciente_id=user_id,
+        ).values().order_by('-created_at').first()
+
+    except:
+        raise ParseError(f"O Usuário com id={user_id} não posssui relatórios de preparadores físicos")
+
+    return Response({
+        'nivel_de_atividade_fisica': relatorio['nivel_de_atividade_fisica'],
+        'porcentagem_de_gordura': relatorio['porcentagem_de_gordura'],
+        'porcentage_de_musculo': relatorio['porcentagem_de_gordura']
+    })
