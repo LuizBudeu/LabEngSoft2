@@ -42,7 +42,7 @@ const Tabs = () => {
                 activeTab={activeTab}
                 setActiveTab={setActiveTab}
             />
-            <div>
+            <div style={{height: "71%"}}>
                 <MainContainer>
                     {activeTab === "tab1" && <AgendaTab />}
                     {activeTab === "tab2" && <PerfilTab />}

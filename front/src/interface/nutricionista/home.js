@@ -5,8 +5,6 @@ import Tabs from "./tabs";
 export const NutricionistaHome = () => {
     return (
         <div className="NutricionistaHome">
-            <TopBar/>
-            <h1>Home</h1>
             <Tabs />
         </div>
     );
