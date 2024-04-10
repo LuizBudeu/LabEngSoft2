@@ -64,7 +64,7 @@ export const PacienteHome = () => {
     }else if(ENVIRONMENT === "prod" && !userId){
         return (
             <BackgroundContainer>
-                <TopBar/>
+                <TopBar type="paciente"/>
                 <MainContainer>
                     <CreatePerfil 
                         submitProfile={createProfile} 

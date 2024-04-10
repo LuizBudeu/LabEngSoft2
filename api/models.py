@@ -63,6 +63,7 @@ class Consulta(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 class ExtUsuario(models.Model):
+    ocupacao = models.IntegerField(choices=OCUPACAO_CHOICES)
     ext_id = models.CharField(max_length=100)
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, blank=True, null=True)
 
