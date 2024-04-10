@@ -29,6 +29,7 @@ from .views.paciente.agenda import payAppointment as paciente_pay_appointment
 from .views.paciente.acompanhamento import acompanhamento as paciente_acompanhamento
 from .views.paciente.perfil import perfil as paciente_perfil
 from .views.paciente.agenda import agenda as paciente_agenda
+from .views.paciente.perfil import informacoes_medicas
 
 from .views.preparador.agenda import agenda as preparador_agenda
 from .views.preparador.workout import workouts
@@ -58,6 +59,7 @@ from .views.nutricionista.agenda import horarios_profissional as nutricionista_h
 from .views.nutricionista.dieta import dieta_paciente as nutricionista_dieta_paciente
 from .views.nutricionista.dieta import exames_paciente as nutricionista_exames_paciente
 from .views.nutricionista.perfil import informacao_bancaria as nutricionista_informacao_bancaria
+from .views.nutricionista.consulta import informacoes_nutricionais_paciente
 
 urlpatterns = [
     path('hello-world', hello_world, name='hello_world'),
@@ -88,6 +90,7 @@ urlpatterns = [
     path('paciente/cancel_consulta', paciente_cancel_appointment, name='paciente_cancel_appointment'),
     path('paciente/pay_consulta', paciente_pay_appointment, name='paciente_pay_appointment'),
     path('paciente/acompanhamento', paciente_acompanhamento, name='paciente_acompanhamento'),
+    path('paciente/informacoes_medicas', informacoes_medicas, name='informacoes_medicas'),
 
     path('preparador/id', preparador_id, name='preparador_id'),
     path('preparador/agenda', preparador_agenda, name='preparador_agenda'),
@@ -117,6 +120,7 @@ urlpatterns = [
     path('nutricionista/dieta_paciente', nutricionista_dieta_paciente, name='nutricionista_dieta_paciente'),
     path('nutricionista/exames_paciente', nutricionista_exames_paciente, name='nutricionista_exames_paciente'),
     path('nutricionista/informacao_bancaria', nutricionista_informacao_bancaria, name='nutricionista_informacao_bancaria'),
+    path('nutricionista/informacoes_nutricionais_paciente', informacoes_nutricionais_paciente, name='informacoes_nutricionais_paciente'),
 
     # path('logout/', views.LogoutView.as_view(), name ='logout')
 ]

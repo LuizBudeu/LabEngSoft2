@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework.exceptions import ParseError
 from django.http import HttpRequest
 import json
+import requests
 
 from api.models import Consulta
 from api.models import TreinoFisico
@@ -63,11 +64,35 @@ mockInfo_UserNutrion = {'dieta': 'Consome 2500 kcal', 'detalhes_adicionais': 'N�
 mockInfo_UserMedical = {'alergias': 'Amendoim', 'tipo_diabetes': '0'}
 
 def informacoes_usuario(consulta_id) -> Response:
-    mockResponse = {
-        'medical': mockInfo_UserMedical,
-        'nutrition': mockInfo_UserNutrion
+    try: 
+        id = Consulta.objects.values('paciente__id').filter(id=consulta_id).first()
+    except Usuario.DoesNotExist:
+        raise ParseError(f"Usuário com id={id} não foi encontrado")
+    
+    payload = {'user_id': id['paciente__id']}
+
+    response_nutrition = requests.get(
+        'http://127.0.0.1:8000/api/nutricionista/informacoes_nutricionais_paciente',
+        params=payload
+    )
+
+    response_medical = requests.get(
+        'http://127.0.0.1:8000/api/paciente/informacoes_medicas',
+        params=payload
+    )
+
+    userData = {
+        'medical': {},
+        'nutrition': {}
     }
-    return Response(mockResponse)
+
+    if(response_nutrition.status_code == 200):
+        userData['nutrition'] = response_nutrition.json()
+
+    if(response_medical.status_code == 200):
+        userData['medical'] = response_medical.json()
+
+    return Response(userData)
 
 
 def finalizar_consulta (consulta_id) -> Response:
@@ -97,19 +122,13 @@ def informacoes_fisicas_paciente(request: HttpRequest) -> Response:
         - user_id: id do usuário que se busca as informações
     """
     user_id = request.GET['user_id']
-
-    try:
-        usuario = Usuario.objects.get(id=user_id)
-    except:
-        raise ParseError(f"Usuário com id={user_id} não encontrado")   
     
-    try:
-        relatorio = RelatorioPreparadorFisico.objects.filter(
-            consulta__paciente_id=user_id,
-        ).values().order_by('-created_at').first()
+    relatorio = RelatorioPreparadorFisico.objects.filter(
+        consulta__paciente_id=user_id,
+    ).values().order_by('-created_at').first()
 
-    except:
-        raise ParseError(f"O Usuário com id={user_id} não posssui relatórios de preparadores físicos")
+    if (relatorio == None):
+        return Response({}, 400)
 
     return Response({
         'nivel_de_atividade_fisica': relatorio['nivel_de_atividade_fisica'],
