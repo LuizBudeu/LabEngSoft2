@@ -4,9 +4,13 @@ import { useCookies } from "react-cookie";
 import { useIsLoggedIn } from "./useIsLoggedIn";
 import { API_PROTOCOL_HOSTNAME_PORT } from "./utils";
 
-export const useAxiosWithToken = () => {
+export const useAxiosWithTokenPaciente = () => {
+    return useAxiosWithToken("paciente");
+}
+
+export const useAxiosWithToken = (client_type) => {
     const [cookies] = useCookies();
-    const loggedIn = useIsLoggedIn();
+    const loggedIn = useIsLoggedIn(client_type);
     const [hasToken, setHasToken] = useState(false);
 
     const axiosWithToken = axios.create();
@@ -14,12 +18,12 @@ export const useAxiosWithToken = () => {
     useEffect(() => {
         if (loggedIn) {
             axiosWithToken.interceptors.request.use(function (config) {
-                config.headers = { ...config.headers, Authorization: 'Bearer ' + cookies.access_token }
+                config.headers = { ...config.headers, Authorization: 'Bearer ' + cookies["access_token_"+client_type] }
                 return config;
             });
             setHasToken(true);
         }
-    }, [cookies.access_token, axiosWithToken.interceptors.request, loggedIn])
+    }, [axiosWithToken.interceptors.request, loggedIn])
 
     return [axiosWithToken, hasToken];
 }

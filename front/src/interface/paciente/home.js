@@ -77,7 +77,7 @@ export const PacienteHome = () => {
     }else{
         return (
             <BackgroundContainer>
-                <TopBar/>
+                <TopBar type="paciente"/>
                 <SecondaryNavBar
                     tabs={tabs}
                     activeTab={activeTab}
