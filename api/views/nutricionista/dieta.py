@@ -77,7 +77,6 @@ def exames_paciente(request):
     return Response(examesNutricionista)
 
 
-"preparador/informacoes_fisicas_paciente"
 @api_view(['GET'])
 def informacoesNutricionais(request: HttpRequest) -> Response:
     """
