@@ -1,6 +1,9 @@
 name: Deploy API
 
-on: [push]
+on: 
+  workflow_dispatch:
+  push:
+    branches: [ main ]
 
 jobs:
   push_to_registry:
