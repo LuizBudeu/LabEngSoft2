@@ -22,19 +22,29 @@ export const Auth = () => {
     }
 
     const createProfile = (e) => {
-        console.log("createProfile");
         e.preventDefault();
-        console.log(userProfile);
-        axios.post(API_PROTOCOL_HOSTNAME_PORT + "/api/paciente/create_profile",
-            userProfile
-        ).then((response) => {
-            let resp = response.data['user_id'];
-            if(resp != null)
-                setUserId(resp);
-                setSearchParams({'id': resp});
-        }).catch((e) => {
-            console.log(e);
-        });
+
+        // Validate inputs
+        if(userProfile.cpf.length == 14 && userProfile.cep.length == 9){
+            let customUserProfile = userProfile;
+            customUserProfile.cpf = customUserProfile.cpf.replaceAll(".", "").replace("-", "")
+            customUserProfile.cep = customUserProfile.cep.replace("-", "")
+
+            // Inputs validos
+            axios.post(API_PROTOCOL_HOSTNAME_PORT + "/api/paciente/create_profile",
+                userProfile
+            ).then((response) => {
+                let resp = response.data['user_id'];
+                if(resp != null)
+                    setUserId(resp);
+                    setSearchParams({'id': resp});
+            }).catch((e) => {
+                console.log(e);
+            });
+            return;
+        }
+        alert("Erro nas informações submentidas");
+        return;
     }
 
     useEffect(() => {

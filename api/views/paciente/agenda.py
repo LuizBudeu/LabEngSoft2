@@ -97,7 +97,7 @@ def createAppointment(request):
     if(body['professional_type'] == 3):
         valor = 120
 
-    url = "https://labengsoftcenterfit.azurewebsites.net/api/Tarifagem?code="+os.environ.get('TARIFA_URL_CODE')
+    url = "https://labengsoftcenterfit.azurewebsites.net/api/Tarifacao?code="+os.environ.get('TARIFA_URL_CODE')
 
     payload = json.dumps({
         "valorBruto": valor

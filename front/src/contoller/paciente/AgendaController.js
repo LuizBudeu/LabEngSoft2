@@ -52,7 +52,6 @@ export const GetAppointments = () => {
     }
 
     const payAppointment = async (appointment_id, ocupacao) => {
-        console.log(ocupacao)
         const response = await axios.post(API_PROTOCOL_HOSTNAME_PORT + "/api/paciente/pay_consulta", {
             user_id: user_id,
             appointment_id: appointment_id,
