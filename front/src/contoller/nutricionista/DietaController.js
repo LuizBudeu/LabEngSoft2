@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import { useAxiosWithToken } from "../../utils/useAxiosWithToken";
+import { useAxiosWithTokenNutricionista } from "../../utils/useAxiosWithToken";
 import { API_PROTOCOL_HOSTNAME_PORT } from "../../utils/utils";
 
 export const GetDieta = (consulta_id) => {
 
     const [dieta, setDieta] = useState();
-    const axios = useAxiosWithToken();
+    const axios = useAxiosWithTokenNutricionista();
 
     useEffect(() => {
         axios.get(API_PROTOCOL_HOSTNAME_PORT + "/api/nutricionista/perfil", {
@@ -25,7 +25,7 @@ export const GetDieta = (consulta_id) => {
 };
 
 export const SalvaDieta = async (dieta_object) => {
-    const axios = useAxiosWithToken();
+    const axios = useAxiosWithTokenNutricionista();
 
     try{
         const response = await axios.post(API_PROTOCOL_HOSTNAME_PORT + "/api/nutricionista/salva_dieta", dieta_object); 

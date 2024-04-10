@@ -1,8 +1,8 @@
-import { useAxiosWithToken } from "../../utils/useAxiosWithToken";
+import { useAxiosWithTokenNutricionista } from "../../utils/useAxiosWithToken";
 import { API_PROTOCOL_HOSTNAME_PORT } from "../../utils/utils";
 
 export const SaveAvaliacao = async (nutricionista_id, paciente_id, tipo_exame) => {
-    const axios = useAxiosWithToken();
+    const axios = useAxiosWithTokenNutricionista();
 
     try{
         const response = await axios.post(API_PROTOCOL_HOSTNAME_PORT + "/api/nutricionista/update_perfil", 
