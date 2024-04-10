@@ -15,10 +15,10 @@ import { Column } from "../../components/column";
 import { FinalizarConsulta } from "../../contoller/preparador/ConsultaController";
 import { GetPacienteExtraInfo } from "../../contoller/preparador/ConsultaController";
 import { TipoDiabetesNumberToString } from "../../utils/utils";
-import { useAxiosWithToken } from "../../utils/useAxiosWithToken";
+import { ScrollContainer } from "../../components/scrollContainer";
 
 export const AgendaTab = () => {
-    const { agenda } = GetAgenda("2024-03-20", "2024-12-30");
+    const { agenda } = GetAgenda("2024-04-10", "2024-12-30");
 
     const [selectedAppointment, setSelectedAppointment] = useState("");
     
@@ -26,21 +26,23 @@ export const AgendaTab = () => {
         <>
             <Row>
                 <RowItem grow noPadding>
-                    <div style={{width: "100%"}}>
-                        <h2>Suas consultas</h2>
-                        {agenda &&
-                            <AgendaList
+                    <ScrollContainer>
+                        <div style={{width: "100%"}}>
+                            <h2>Suas consultas</h2>
+                            {agenda &&
+                                <AgendaList
                                 appointments={agenda}
                                 selectedAppointment={selectedAppointment}
                                 onItemClick={(itemId) => setSelectedAppointment(itemId)}
-                            />
-                        }
-                    </div>
+                                />
+                            }
+                        </div>
+                    </ScrollContainer>
                 </RowItem>
-                <RowItem>
+                <RowItem noPadding>
                     <VerticalLine noPadding />
                 </RowItem>
-                <RowItem grow noPadding>
+                <RowItem grow>
                     {selectedAppointment ? (
                             <AppointmentInfo appointment={selectedAppointment} />
                         ) : (
