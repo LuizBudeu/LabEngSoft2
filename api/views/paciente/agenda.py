@@ -9,7 +9,7 @@ import json
 from dotenv import load_dotenv, find_dotenv
 import os
 
-load_dotenv(find_dotenv('.env'))
+load_dotenv(find_dotenv('api.env'))
 
 @api_view(['GET'])
 def agenda(request):

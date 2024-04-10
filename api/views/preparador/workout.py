@@ -74,4 +74,7 @@ def treino_paciente(request):
         'treino_fisico__titulo',
     ).order_by('-created_at').first()
 
-    return Response(treino)
+    if(treino==None):
+        return Response({}, 400)
+    else:
+        return Response(treino)
