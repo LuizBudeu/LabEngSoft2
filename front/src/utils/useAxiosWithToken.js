@@ -12,6 +12,10 @@ export const useAxiosWithTokenMedico = () => {
     return useAxiosWithToken("medico");
 }
 
+export const useAxiosWithTokenNutricionista = () => {
+    return useAxiosWithToken("nutricionista");
+}
+
 export const useAxiosWithTokenPreparador = () => {
     return useAxiosWithToken("preparador");
 }

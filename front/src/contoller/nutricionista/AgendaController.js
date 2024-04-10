@@ -1,12 +1,12 @@
 import { GroupByDate } from "../../utils/group";
 import { useState, useEffect } from "react";
-import { useAxiosWithToken } from "../../utils/useAxiosWithToken";
+import { useAxiosWithTokenNutricionista } from "../../utils/useAxiosWithToken";
 import { API_PROTOCOL_HOSTNAME_PORT } from "../../utils/utils";
 
 export const GetConsultas = (user_id, start_date, end_date) => {
 
     const [consultas, setConsultas] = useState([]);
-    const [axios] = useAxiosWithToken();
+    const [axios] = useAxiosWithTokenNutricionista();
     
     const consultasTeste = [
         {id: "001", paciente__nome: "Fulano", horario: "2024-03-21 15:00:00", duracao: 60},

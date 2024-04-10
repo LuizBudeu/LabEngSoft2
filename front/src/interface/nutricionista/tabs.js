@@ -8,6 +8,7 @@ import { useLogout } from "../../utils/useLogout";
 import { useLogin } from "../../utils/useLogin";
 import { ENVIRONMENT } from "../../utils/utils";
 import { AnonymousPage } from "../../components/AnonymousPage";
+import { TopBar } from "../../components/TopBar";
 
 const LOGIN_URL = process.env.REACT_APP_NUTRICIONISTA_LOGIN_URL;
 const AUTH_SECRET = process.env.REACT_APP_NUTRICIONISTA_AUTH_SECRET;
@@ -15,7 +16,6 @@ const AUTH_SECRET = process.env.REACT_APP_NUTRICIONISTA_AUTH_SECRET;
 const Tabs = () => {
     const [activeTab, setActiveTab] = useState("tab1");
     const loggedIn = useLogin(AUTH_SECRET, "nutricionista");
-    const logout = useLogout();
 
     const tabs = [{
         id: "tab1",
@@ -36,6 +36,7 @@ const Tabs = () => {
 
     return (
         <BackgroundContainer>
+            <TopBar type="nutricionista"/>
             <SecondaryNavBar
                 tabs={tabs}
                 activeTab={activeTab}
@@ -47,7 +48,6 @@ const Tabs = () => {
                     {activeTab === "tab2" && <PerfilTab />}
                 </MainContainer>
             </div>
-            <button onClick={logout}>Logout</button>
         </BackgroundContainer>
     );
 };
