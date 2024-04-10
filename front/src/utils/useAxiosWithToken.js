@@ -20,7 +20,7 @@ export const useAxiosWithTokenPreparador = () => {
     return useAxiosWithToken("preparador");
 }
 
-export const useAxiosWithToken = (client_type) => {
+const useAxiosWithToken = (client_type) => {
     const [cookies] = useCookies();
     const loggedIn = useIsLoggedIn(client_type);
     const [hasToken, setHasToken] = useState(false);
