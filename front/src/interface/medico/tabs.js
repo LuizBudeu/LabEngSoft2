@@ -38,7 +38,7 @@ const Tabs = () => {
 
     return (
         <BackgroundContainer>
-            <TopBar/>
+            <TopBar type="medico"/>
             <SecondaryNavBar tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
             <MainContainer>
                 {activeTab === "tab1" && <AgendaTab />}
