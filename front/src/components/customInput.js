@@ -22,6 +22,7 @@ export const CustomInput = ({name, onChange, value, placeholder, type, disabled,
       onChange={onChange}
       disabled={disabled}
       mask={mask}
+      maskChar=""
     />
   );
 };

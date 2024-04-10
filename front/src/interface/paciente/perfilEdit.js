@@ -118,6 +118,7 @@ export const EditPerfil = ({closePopUp, userProfile, setUserProfile, submitProfi
                   onChange={(e) => setUserProfile({...userProfile, alergias:e.target.value})}
                   value={userProfile?.alergias}
                   type="text"
+                  notRequired
                 />
               </Column>
             </RowItem>

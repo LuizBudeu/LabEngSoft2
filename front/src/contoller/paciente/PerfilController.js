@@ -90,16 +90,25 @@ export const GetProfile = () => {
 
     const submitProfile = async (e) => {
         e.preventDefault(); 
-        const response = await axios.post(API_PROTOCOL_HOSTNAME_PORT + "/api/paciente/update_perfil", 
-            {...userProfile, user_id: user_id}
-        ); 
-        if(response.status != 200){
-            console.log(response.data);
-            alert("Erro ao salvar os dados")
-        }else{
-            refreshUserInfo();
-            setShowPopUp(false);
+        if((userProfile.cep.length == 8 && userProfile.cep.indexOf('-') == -1) || (userProfile.cep.length == 9 && userProfile.cep.indexOf('-') > -1)){
+            let customUserProfile = userProfile;
+            customUserProfile.cep = customUserProfile.cep.replace("-", "")
+
+            const response = await axios.post(API_PROTOCOL_HOSTNAME_PORT + "/api/paciente/update_perfil", 
+                {...customUserProfile, user_id: user_id}
+            ); 
+            if(response.status != 200){
+                console.log(response.data);
+                alert("Erro ao salvar os dados")
+            }else{
+                refreshUserInfo();
+                setShowPopUp(false);
+            }
+            return;
         }
+        alert("Erro nas informações submentidas");
+        return;
+        
     };
 
     return [
