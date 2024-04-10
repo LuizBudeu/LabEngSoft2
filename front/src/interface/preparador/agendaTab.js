@@ -31,9 +31,10 @@ export const AgendaTab = () => {
                             <h2>Suas consultas</h2>
                             {agenda &&
                                 <AgendaList
-                                appointments={agenda}
-                                selectedAppointment={selectedAppointment}
-                                onItemClick={(itemId) => setSelectedAppointment(itemId)}
+                                    professionalType={3}
+                                    appointments={agenda}
+                                    selectedAppointment={selectedAppointment}
+                                    onItemClick={(itemId) => setSelectedAppointment(itemId)}
                                 />
                             }
                         </div>

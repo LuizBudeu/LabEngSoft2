@@ -21,7 +21,7 @@ const AgendaTab = () => {
                 <RowItem grow noPadding>
                     <div style={{ width: "100%" }}>
                         <h2>Suas consultas</h2>
-                        {agenda && <AgendaList appointments={agenda} selectedAppointment={selectedAppointment} onItemClick={(itemId) => setSelectedAppointment(itemId)} />}
+                        {agenda && <AgendaList professionalType={1} appointments={agenda} selectedAppointment={selectedAppointment} onItemClick={(itemId) => setSelectedAppointment(itemId)} />}
                     </div>
                 </RowItem>
                 <RowItem>
