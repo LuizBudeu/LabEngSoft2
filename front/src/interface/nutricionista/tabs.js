@@ -14,7 +14,7 @@ const AUTH_SECRET = process.env.REACT_APP_NUTRICIONISTA_AUTH_SECRET;
 
 const Tabs = () => {
     const [activeTab, setActiveTab] = useState("tab1");
-    const loggedIn = useLogin(AUTH_SECRET);
+    const loggedIn = useLogin(AUTH_SECRET, "nutricionista");
     const logout = useLogout();
 
     const tabs = [{

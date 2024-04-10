@@ -18,7 +18,7 @@ const AUTH_SECRET = process.env.REACT_APP_PREPARADOR_AUTH_SECRET;
 
 export const PreparadorHome = () => {
     const [activeTab, setActiveTab] = useState("tab1");
-    const loggedIn = useLogin(AUTH_SECRET);
+    const loggedIn = useLogin(AUTH_SECRET, "preparador");
     const logout = useLogout();
     const auth = Auth();
     
