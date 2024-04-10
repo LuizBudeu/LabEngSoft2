@@ -43,6 +43,7 @@ from .views.preparador.perfil import lista_profissionais as preparador_lista_pro
 from .views.preparador.agenda import horarios_profissional as preparador_horarios_profissional
 from .views.preparador.workout import treino_paciente as preparador_treino_paciente
 from .views.preparador.perfil import informacao_bancaria as preparador_informacao_bancaria
+from .views.preparador.consulta import informacoes_fisicas_paciente
 
 from .views.nutricionista.agenda import agenda as nutricionista_agenda
 from .views.nutricionista.avaliacao import avaliacao as avaliacao_nutricional
@@ -101,6 +102,7 @@ urlpatterns = [
     path('preparador/horarios_profissional', preparador_horarios_profissional, name='preparador_horarios_profissional'),
     path('preparador/treino_paciente', preparador_treino_paciente, name='preparador_treino_paciente'),
     path('preparador/informacao_bancaria', preparador_informacao_bancaria, name='preparador_informacao_bancaria'),
+    path('preparador/informacoes_fisicas_paciente', informacoes_fisicas_paciente, name='informacoes_fisicas_paciente'),
 
     path('nutricionista/agenda', nutricionista_agenda, name='nutricionista_agenda'),
     path('nutricionista/avaliacao', avaliacao_nutricional, name='avaliacao_nutricional'),
