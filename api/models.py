@@ -63,6 +63,7 @@ class Consulta(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 class ExtUsuario(models.Model):
+    ocupacao = models.IntegerField(choices=OCUPACAO_CHOICES)
     ext_id = models.CharField(max_length=100)
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, blank=True, null=True)
 
@@ -113,7 +114,7 @@ class Dieta(models.Model):
 
 class RelatorioNutricionista(models.Model):
     consulta = models.ForeignKey(Consulta, on_delete=models.CASCADE)
-    dieta = models.ForeignKey(Dieta, on_delete=models.CASCADE)
+    dieta = models.ForeignKey(Dieta, on_delete=models.CASCADE, blank=True, null=True)
     detalhes_adicionais = models.CharField(max_length=300, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

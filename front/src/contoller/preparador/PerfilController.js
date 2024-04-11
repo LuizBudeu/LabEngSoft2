@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { API_PROTOCOL_HOSTNAME_PORT } from "../../utils/utils";
-import { useAxiosWithToken } from "../../utils/useAxiosWithToken";
+import { useAxiosWithTokenPreparador } from "../../utils/useAxiosWithToken";
 import { useSearchParams } from "react-router-dom";
 
 export const Auth = () => {
-    const [axios, hasToken] = useAxiosWithToken();
+    const [axios, hasToken] = useAxiosWithTokenPreparador();
     const [, setSearchParams] = useSearchParams();
 
     useEffect(() => {
@@ -24,7 +24,7 @@ export const Auth = () => {
 export const GetProfile = () => {
 
     const [userProfile, setUserProfile] = useState();
-    const [axios] = useAxiosWithToken();
+    const [axios] = useAxiosWithTokenPreparador();
     const [searchParams] = useSearchParams();
 
     const user_id = searchParams.get("id");
@@ -55,7 +55,7 @@ export const GetProfile = () => {
 };
 
 export const UpdateProfile = (userProfile) => {
-    const [axios] = useAxiosWithToken();
+    const [axios] = useAxiosWithTokenPreparador();
     const [searchParams] = useSearchParams();
 
     const user_id = searchParams.get("id");

@@ -1,4 +1,5 @@
 // Import the react JS packages
+import axios from "axios";
 import { useState, useHook } from "react"; // Define the Login function.
 import { GetProfile, UpdateProfile } from "../../contoller/nutricionista/PerfilController";
 import { CustomInput } from "../../components/customInput";
@@ -8,10 +9,8 @@ import { Row } from "../../components/row";
 import { RowItem } from "../../components/rowItem";
 import { Column } from "../../components/column";
 import { GenderOptions } from "../../utils/options";
-import { useNavigate } from 'react-router-dom';
 
 export const EditPerfil = ({closePopUp, mainUserId, setMainUserProfile}) => {
-  const navigate = useNavigate();
   const [userProfile, setUserProfile] = GetProfile(mainUserId);
 
   const submit = async (e) => {

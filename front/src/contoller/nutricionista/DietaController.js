@@ -2,43 +2,40 @@ import { useState, useEffect } from "react";
 import { useAxiosWithTokenNutricionista } from "../../utils/useAxiosWithToken";
 import { API_PROTOCOL_HOSTNAME_PORT } from "../../utils/utils";
 
-export const GetProfile = (user_id) => {
+export const GetDieta = (consulta_id) => {
 
-    const [userProfile, setUserProfile] = useState();
-    const [axios] = useAxiosWithTokenNutricionista();
+    const [dieta, setDieta] = useState();
+    const axios = useAxiosWithTokenNutricionista();
 
     useEffect(() => {
         axios.get(API_PROTOCOL_HOSTNAME_PORT + "/api/nutricionista/perfil", {
             params: {
-                user_id: user_id
+                consulta_id: consulta_id
             }
         },
         ).then((response) => {
-            setUserProfile(response.data);
+            setDieta(response.data);
         }).catch((e) => {
             console.log(e);
         });
     }, [])
 
-    return [userProfile, setUserProfile];
+    return [dieta, setDieta];
     
 };
 
-export const UpdateProfile = async (user_id, userProfile) => {
-    const [axios] = useAxiosWithTokenNutricionista();
+export const SalvaDieta = async (dieta_object) => {
+    const axios = useAxiosWithTokenNutricionista();
 
     try{
-        const response = await axios.post(API_PROTOCOL_HOSTNAME_PORT + "/api/nutricionista/update_perfil", 
-            {...userProfile, user_id: user_id}
-        ); 
+        const response = await axios.post(API_PROTOCOL_HOSTNAME_PORT + "/api/nutricionista/salva_dieta", dieta_object); 
         if(response.status != 200){
             console.log(response.data);
             return false;
         }
-        return true;
+        return response.data.dieta_id;
     }catch(e) {
         console.log(e);
         return false;
     }
-    
 };

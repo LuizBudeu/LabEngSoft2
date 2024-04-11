@@ -18,7 +18,7 @@ const AUTH_SECRET = process.env.REACT_APP_MEDICO_AUTH_SECRET;
 
 const Tabs = () => {
     const [activeTab, setActiveTab] = useState("tab1");
-    const loggedIn = useLogin(AUTH_SECRET);
+    const loggedIn = useLogin(AUTH_SECRET, "medico");
     const auth = Auth();
     const logout = useLogout();
 
@@ -38,7 +38,7 @@ const Tabs = () => {
 
     return (
         <BackgroundContainer>
-            <TopBar/>
+            <TopBar type="medico"/>
             <SecondaryNavBar tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
             <MainContainer>
                 {activeTab === "tab1" && <AgendaTab />}

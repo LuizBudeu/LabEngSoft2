@@ -47,7 +47,7 @@ def agenda(request: HttpRequest) -> Response:
         'status'       
     )
 
-    return Response({'message': consultas.values()})
+    return Response(consultas)
 
 @api_view(['GET'])
 def consulta_paciente(request):

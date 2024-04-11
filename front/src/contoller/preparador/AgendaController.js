@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { GroupByDate } from "../../utils/group";
 import { API_PROTOCOL_HOSTNAME_PORT } from "../../utils/utils";
-import { useAxiosWithToken } from "../../utils/useAxiosWithToken";
+import { useAxiosWithTokenPreparador } from "../../utils/useAxiosWithToken";
 import { useSearchParams } from "react-router-dom";
 
 export const GetAgenda = (start_date, end_date) => {
     const [agenda, setAgenda] = useState();
-    const [axios] = useAxiosWithToken();
+    const [axios] = useAxiosWithTokenPreparador();
     const [searchParams] = useSearchParams();
 
     const user_id = searchParams.get("id");

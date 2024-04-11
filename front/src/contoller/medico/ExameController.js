@@ -1,11 +1,10 @@
 import {useEffect, useState} from "react";
 import {API_PROTOCOL_HOSTNAME_PORT} from "../../utils/utils";
-import {useAxiosWithToken} from "../../utils/useAxiosWithToken";
+import {useAxiosWithTokenMedico} from "../../utils/useAxiosWithToken";
 import {useSearchParams} from "react-router-dom";
 
-
 export const PedirExameMedico = (paciente_id, titulo) => {
-    const [axios] = useAxiosWithToken();
+    const [axios] = useAxiosWithTokenMedico();
     const [searchParams] = useSearchParams();
 
     const medico_id = searchParams.get("id");
@@ -32,7 +31,7 @@ export const GetPedidosExames = () => {
 
     const user_id = searchParams.get("id");
     const [pedidosExames, setPedidosExames] = useState([]);
-    const [axios] = useAxiosWithToken();
+    const [axios] = useAxiosWithTokenMedico();
 
     const fetchPedidosExames = () => {
         axios
@@ -55,14 +54,13 @@ export const GetPedidosExames = () => {
 
     const refetch = () => {
         fetchPedidosExames();
-        console.log('AQUIIIIIIIIIIIIII')
     }
 
     return {pedidosExames, refetch};
 };
 
 export const FinalizaExameMedico = (exame_id) => {
-    const [axios] = useAxiosWithToken()
+    const [axios] = useAxiosWithTokenMedico()
     const path = API_PROTOCOL_HOSTNAME_PORT + "/api/medico/finalizar_exame";
 
     const finalizar = ({onSuccess, onError}) => {

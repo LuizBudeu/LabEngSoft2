@@ -63,10 +63,10 @@ const AppointmentInfo = ({appointment}) => {
     const [showPopUpExame, setShowPopUpExame] = useState(false);
 
     const {extraInfo} = GetPacienteExtraInfo(appointment.id);
-    const {finalizarConsulta} = FinalizarConsulta(appointment.id);
+    const {finalizar} = FinalizarConsulta(appointment.id);
 
     const handleSubmitConsulta = () => {
-        finalizarConsulta();
+        finalizar();
         setShowPopUpConsulta(false);
     }
 
