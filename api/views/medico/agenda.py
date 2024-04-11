@@ -42,6 +42,7 @@ def agenda(request: HttpRequest) -> Response:
     ).order_by('horario').values(
         'id',
         'paciente__nome',
+        'paciente__id',
         'horario',
         'duracao_em_minutos',
         'status'       

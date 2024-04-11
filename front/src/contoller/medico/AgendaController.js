@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
-import { GroupByDate } from "../../utils/group";
-import { API_PROTOCOL_HOSTNAME_PORT } from "../../utils/utils";
-import { useAxiosWithToken } from "../../utils/useAxiosWithToken";
+import {useState, useEffect} from "react";
+import {GroupByDate} from "../../utils/group";
+import {API_PROTOCOL_HOSTNAME_PORT} from "../../utils/utils";
+import {useAxiosWithToken} from "../../utils/useAxiosWithToken";
 import {useSearchParams} from "react-router-dom";
 
 export const GetAgenda = (start_date, end_date) => {
