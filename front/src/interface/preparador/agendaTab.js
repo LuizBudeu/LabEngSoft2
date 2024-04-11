@@ -60,7 +60,7 @@ export const AgendaTab = () => {
 
 const AppointmentInfo = ({appointment, onFormClick}) => {
     const [showPopUp, setShowPopUp] = useState(false);
-    const { extraInfo } = GetPacienteExtraInfo(appointment.id);
+    const [ extraInfo ] = GetPacienteExtraInfo(appointment.id);
     const { finalizar } = FinalizarConsulta(appointment.id);
 
     const handleSubmit = () => {
@@ -89,13 +89,13 @@ const AppointmentInfo = ({appointment, onFormClick}) => {
                 {extraInfo && (
                     <>
                         <h3>Informações médicas</h3>
-                        <p><b>Alergias: </b>{extraInfo.medical?.alergias}</p>
-                        <p><b>Diabetes: </b>{TipoDiabetesNumberToString[extraInfo.medical?.tipo_diabetes]}</p>
+                        <p><b>Alergias: </b>{extraInfo?.medical?.alergias}</p>
+                        <p><b>Diabetes: </b>{TipoDiabetesNumberToString[extraInfo?.medical?.tipo_diabetes]}</p>
                         <h3>Informações nutricionais</h3>
-                        <p><b>Descrição curta:</b> {extraInfo.nutrition?.dieta__descricao_curta}</p>
-                        <p><b>Descrição:</b> {extraInfo.nutrition?.dieta__descricao}</p>
-                        <p><b>Calorias:</b> {extraInfo.nutrition?.dieta__calorias}</p>
-                        <p><b>Detalhes adicionas:</b> {extraInfo.nutrition?.detalhes_adicionais}</p>
+                        <p><b>Descrição curta:</b> {extraInfo?.nutrition?.dieta__descricao_curta}</p>
+                        <p><b>Descrição:</b> {extraInfo?.nutrition?.dieta__descricao}</p>
+                        <p><b>Calorias:</b> {extraInfo?.nutrition?.dieta__calorias}</p>
+                        <p><b>Detalhes adicionas:</b> {extraInfo?.nutrition?.detalhes_adicionais}</p>
                     </>
                 )}
             </Column>

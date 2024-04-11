@@ -11,6 +11,7 @@ import { PerfilTab } from "./perfilTab";
 import { TopBar } from "../../components/TopBar";
 import { Auth } from "../../contoller/preparador/PerfilController";
 import { AnonymousPage } from "../../components/AnonymousPage";
+import { CenterContent } from "../../components/centerContent";
 
 const LOGIN_URL = process.env.REACT_APP_PREPARADOR_LOGIN_URL;
 const AUTH_SECRET = process.env.REACT_APP_PREPARADOR_AUTH_SECRET;
@@ -18,7 +19,7 @@ const AUTH_SECRET = process.env.REACT_APP_PREPARADOR_AUTH_SECRET;
 export const PreparadorHome = () => {
     const [activeTab, setActiveTab] = useState("tab1");
     const loggedIn = useLogin(AUTH_SECRET, "preparador");
-    const auth = Auth();
+    const [userId] = Auth();
     
     const tabs = [
         {id: 'tab1', displayName: 'Agenda'},
@@ -33,21 +34,32 @@ export const PreparadorHome = () => {
                 url={LOGIN_URL}
             />
         );
+    } else if (ENVIRONMENT === "prod" && !userId) {
+        return (
+            <BackgroundContainer>
+                <TopBar />
+                <MainContainer>
+                    <CenterContent>
+                        <h2>Usuário não encontrado, tente novamente</h2>
+                    </CenterContent>
+                </MainContainer>
+            </BackgroundContainer>
+        );
+    } else {     
+        return (
+            <BackgroundContainer>
+                <TopBar type="preparador"/>
+                <SecondaryNavBar
+                    tabs={tabs}
+                    activeTab={activeTab}
+                    setActiveTab={setActiveTab}
+                    />
+                <MainContainer>
+                    {activeTab === "tab1" && <AgendaTab />}
+                    {activeTab === "tab2" && <TreinosTab />}
+                    {activeTab === "tab3" && <PerfilTab />}
+                </MainContainer>
+            </BackgroundContainer>
+        );
     }
-
-    return (
-        <BackgroundContainer>
-            <TopBar type="preparador"/>
-            <SecondaryNavBar
-                tabs={tabs}
-                activeTab={activeTab}
-                setActiveTab={setActiveTab}
-            />
-            <MainContainer>
-                {activeTab === "tab1" && <AgendaTab />}
-                {activeTab === "tab2" && <TreinosTab />}
-                {activeTab === "tab3" && <PerfilTab />}
-            </MainContainer>
-        </BackgroundContainer>
-    );
 };

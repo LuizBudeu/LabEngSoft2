@@ -59,40 +59,28 @@ def consulta_request(request: HttpRequest, consulta_id) -> Response:
     else:
         return finalizar_consulta(consulta_id)
 
-
-mockInfo_UserNutrion = {'dieta': 'Consome 2500 kcal', 'detalhes_adicionais': 'Não consegue comer farinha'}
-mockInfo_UserMedical = {'alergias': 'Amendoim', 'tipo_diabetes': '0'}
-
 def informacoes_usuario(consulta_id) -> Response:
     try: 
-        id = Consulta.objects.values('paciente__id').filter(id=consulta_id).first()
+        consulta = Consulta.objects.values('paciente__id').get(id=consulta_id)
     except Usuario.DoesNotExist:
-        raise ParseError(f"Usuário com id={id} não foi encontrado")
+        raise ParseError(f"Usuário com id={consulta['paciente__id']} não foi encontrado")
     
-    payload = {'user_id': id['paciente__id']}
+    payload = {'user_id': consulta['paciente__id']}
 
-    response_nutrition = requests.get(
-        'http://127.0.0.1:8000/api/nutricionista/informacoes_nutricionais_paciente',
-        params=payload
-    )
+    nutrition = None
+    resp = requests.get('http://127.0.0.1:8000/api/nutricionista/informacoes_nutricionais_paciente', params=payload)
+    if(resp.status_code == 200):
+        nutrition = resp.json()
 
-    response_medical = requests.get(
-        'http://127.0.0.1:8000/api/paciente/informacoes_medicas',
-        params=payload
-    )
+    medical = None
+    resp = requests.get('http://127.0.0.1:8000/api/paciente/informacoes_medicas', params=payload)
+    if(resp.status_code == 200):
+        medical = resp.json()
 
-    userData = {
-        'medical': {},
-        'nutrition': {}
-    }
-
-    if(response_nutrition.status_code == 200):
-        userData['nutrition'] = response_nutrition.json()
-
-    if(response_medical.status_code == 200):
-        userData['medical'] = response_medical.json()
-
-    return Response(userData)
+    return Response({
+        "medical": medical,
+        "nutrition": nutrition
+    })
 
 
 def finalizar_consulta (consulta_id) -> Response:
