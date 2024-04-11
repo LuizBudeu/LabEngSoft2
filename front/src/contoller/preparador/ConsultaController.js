@@ -38,16 +38,11 @@ export const GetPacienteExtraInfo = (consulta_id) => {
 
     const path = `${API_PROTOCOL_HOSTNAME_PORT}/api/preparador/consultas/${consulta_id}`
     
-    const fetchData = () => {
+    useEffect(() => {
         axios.get(path)
             .then((response) => setExtraInfo(response.data))
             .catch((e) => console.log(e));
-    };
-    console.log(path, extraInfo);
+    }, [path]);
 
-    useEffect(() => {
-        fetchData();
-    }, []);
-
-    return { extraInfo };
+    return [extraInfo];
 }
