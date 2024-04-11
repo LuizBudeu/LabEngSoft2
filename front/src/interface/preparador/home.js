@@ -37,7 +37,7 @@ export const PreparadorHome = () => {
     } else if (ENVIRONMENT === "prod" && !userId) {
         return (
             <BackgroundContainer>
-                <TopBar />
+                <TopBar type="preparador"/>
                 <MainContainer>
                     <CenterContent>
                         <h2>Usuário não encontrado, tente novamente</h2>
