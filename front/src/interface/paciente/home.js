@@ -24,7 +24,7 @@ const AUTH_SECRET = process.env.REACT_APP_PACIENTE_AUTH_SECRET;
 export const PacienteHome = () => {
     let navigate = useNavigate(); 
     const [activeTab, setActiveTab] = useState("tab1");
-    const loggedIn = useLogin(AUTH_SECRET);
+    const loggedIn = useLogin(AUTH_SECRET, "paciente");
     const [userId, createProfile, userProfile, setUserProfile] = Auth();
 
     const tabs = [
@@ -64,7 +64,7 @@ export const PacienteHome = () => {
     }else if(ENVIRONMENT === "prod" && !userId){
         return (
             <BackgroundContainer>
-                <TopBar/>
+                <TopBar type="paciente"/>
                 <MainContainer>
                     <CreatePerfil 
                         submitProfile={createProfile} 
@@ -77,7 +77,7 @@ export const PacienteHome = () => {
     }else{
         return (
             <BackgroundContainer>
-                <TopBar/>
+                <TopBar type="paciente"/>
                 <SecondaryNavBar
                     tabs={tabs}
                     activeTab={activeTab}

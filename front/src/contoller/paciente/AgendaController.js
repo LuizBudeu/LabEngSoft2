@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { formatNumber, API_PROTOCOL_HOSTNAME_PORT } from "../../utils/utils";
-import { useAxiosWithToken } from "../../utils/useAxiosWithToken";
+import { useAxiosWithTokenPaciente } from "../../utils/useAxiosWithToken";
 import { useSearchParams } from "react-router-dom";
 
 export const GetAppointments = () => {
@@ -10,7 +10,7 @@ export const GetAppointments = () => {
     const [cardNumber, setCardNumber] = useState();
     const [showNewAppointmentPopUp, setShowNewAppointmentPopUp] = useState(false);
     const [showPayAppointmentPopUp, setPayNewAppointmentPopUp] = useState(false);
-    const [axios] = useAxiosWithToken();
+    const [axios] = useAxiosWithTokenPaciente();
     const [searchParams, setSearchParams] = useSearchParams();
 
     const user_id = searchParams.get("id");
@@ -95,7 +95,7 @@ export const GetProfessionals = (onSuccess) => {
     const [selectedProfessional, setSelectedProfessional] = useState();
     const [professionalType, setProfessionalType] = useState(1);
     const [professionalName, setProfessionalName] = useState("");
-    const [axios] = useAxiosWithToken();
+    const [axios] = useAxiosWithTokenPaciente();
     const [searchParams, setSearchParams] = useSearchParams();
 
     const user_id = searchParams.get("id");

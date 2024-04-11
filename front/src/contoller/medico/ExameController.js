@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { API_PROTOCOL_HOSTNAME_PORT } from "../../utils/utils";
-import { useAxiosWithToken } from "../../utils/useAxiosWithToken";
+import { useAxiosWithTokenMedico } from "../../utils/useAxiosWithToken";
 import {useSearchParams} from "react-router-dom";
 
 export const PedirExameMedico = async (paciente_id, titulo) => {
-    const [axios] = useAxiosWithToken();
+    const [axios] = useAxiosWithTokenMedico();
     const [searchParams] = useSearchParams();
     const medico_id = searchParams.get("id");
 
@@ -28,7 +28,7 @@ export const GetPedidosExames = () => {
 
     const user_id = searchParams.get("id");
     const [pedidosExames, setPedidosExames] = useState([]);
-    const [axios] = useAxiosWithToken();
+    const [axios] = useAxiosWithTokenMedico();
 
     const fetchPedidosExames = () => {
         axios

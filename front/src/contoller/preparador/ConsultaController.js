@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { API_PROTOCOL_HOSTNAME_PORT } from "../../utils/utils";
-import { useAxiosWithToken } from "../../utils/useAxiosWithToken";
+import { useAxiosWithTokenPreparador } from "../../utils/useAxiosWithToken";
 
 export const RegistrarFormulario = (consulta_id, pacientInfo) => {
-    const [axios] = useAxiosWithToken();
+    const [axios] = useAxiosWithTokenPreparador();
     const path = `${API_PROTOCOL_HOSTNAME_PORT}/api/preparador/consultas/${consulta_id}/formulario`
     
     const registerForm = ({onSuccess, onError}) => {
@@ -19,7 +19,7 @@ export const RegistrarFormulario = (consulta_id, pacientInfo) => {
 };
 
 export const FinalizarConsulta = (consulta_id) => {
-    const [axios] = useAxiosWithToken();
+    const [axios] = useAxiosWithTokenPreparador();
     const path = `${API_PROTOCOL_HOSTNAME_PORT}/api/preparador/consultas/${consulta_id}`
 
     const finalizar = () => {
@@ -34,7 +34,7 @@ export const FinalizarConsulta = (consulta_id) => {
 
 export const GetPacienteExtraInfo = (consulta_id) => {
     const [extraInfo, setExtraInfo] = useState({});
-    const [axios] = useAxiosWithToken();
+    const [axios] = useAxiosWithTokenPreparador();
 
     const path = `${API_PROTOCOL_HOSTNAME_PORT}/api/preparador/consultas/${consulta_id}`
     

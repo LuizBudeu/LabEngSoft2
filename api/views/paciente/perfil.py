@@ -25,11 +25,15 @@ def user_id(request):
         user_id = None
 
         try: 
-            ext_usuario = ExtUsuario.objects.get(ext_id=token_decoded)
+            ext_usuario = ExtUsuario.objects.get(
+                ext_id=token_decoded,
+                ocupacao=0
+                )
             user_id = ext_usuario.usuario_id
         except ExtUsuario.DoesNotExist:
             ext_usuario = ExtUsuario.objects.create(
                 ext_id=token_decoded,
+                ocupacao=0
             )
         return Response({
             'user_id': user_id

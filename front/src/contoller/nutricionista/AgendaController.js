@@ -1,13 +1,13 @@
 import { GroupByDate } from "../../utils/group";
 import { useState, useEffect } from "react";
-import { useAxiosWithToken } from "../../utils/useAxiosWithToken";
+import { useAxiosWithTokenNutricionista } from "../../utils/useAxiosWithToken";
 import { API_PROTOCOL_HOSTNAME_PORT } from "../../utils/utils";
 import { useSearchParams } from "react-router-dom";
 
 export const GetConsultas = (start_date, end_date) => {
 
     const [consultas, setConsultas] = useState([]);
-    const [axios] = useAxiosWithToken();
+    const [axios] = useAxiosWithTokenNutricionista();
     const [searchParams, setSearchParams] = useSearchParams();
 
     const user_id = searchParams.get("id");
@@ -44,7 +44,7 @@ export const GetConsultas = (start_date, end_date) => {
 export const GetProfile = (user_id) => {
 
     const [userProfile, setUserProfile] = useState();
-    const [axios] = useAxiosWithToken();
+    const [axios] = useAxiosWithTokenNutricionista();
 
     useEffect(() => {
         axios.get(API_PROTOCOL_HOSTNAME_PORT + "/api/paciente/perfil", {

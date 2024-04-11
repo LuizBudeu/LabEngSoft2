@@ -9,8 +9,8 @@ import { useLogout } from "../utils/useLogout";
 import { CustomButton } from "./customButton";
 
 
-export const TopBar = ({tabs, activeTab, setActiveTab}) => {
-    const logout = useLogout();
+export const TopBar = ({type}) => {
+    const logout = useLogout(type);
     const BackgroundStyle = styled.div`
         background-color: ${Colors.CenterFitBlue};
     `;

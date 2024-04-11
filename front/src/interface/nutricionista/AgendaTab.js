@@ -11,6 +11,7 @@ import { CenterContent } from "../../components/centerContent";
 import { PopUpContainer } from "../../components/popUpContainer";
 import { MainContainer } from "../../components/mainContainer";
 import { EditPerfil } from "./DietaForm";
+import { ScrollContainer } from "../../components/scrollContainer";
 
 export const AgendaTab = () => {
     const [agenda] = GetConsultas("2024-01-01", "3024-01-01");
@@ -18,23 +19,25 @@ export const AgendaTab = () => {
     const [selectedAppointment, setSelectedAppointment] = useState("");
     
     return(
-        <div>
+        <div style={{height: "100%"}}>
             <Row>
                 <RowItem grow noPadding>
-                    <div style={{width: "100%"}}>
-                        <h2>Suas consultas</h2>
-                        {agenda &&
-                            <AgendaList
-                                professionalType={2}
-                                appointments={agenda}
-                                selectedAppointment={selectedAppointment}
-                                onItemClick={(itemId) => setSelectedAppointment(itemId)}
-                            />
-                        }
-                    </div>
+                    <ScrollContainer>
+                        <div style={{width: "100%"}}>
+                            <h2>Suas consultas</h2>
+                            {agenda &&
+                                <AgendaList
+                                    professionalType={2}
+                                    appointments={agenda}
+                                    selectedAppointment={selectedAppointment}
+                                    onItemClick={(itemId) => setSelectedAppointment(itemId)}
+                                />
+                            }
+                        </div>
+                    </ScrollContainer>
                 </RowItem>
-                <RowItem>
-                    <VerticalLine noPadding />
+                <RowItem noPadding>
+                    <VerticalLine />
                 </RowItem>
                 <RowItem grow noPadding>
                     {selectedAppointment ? (
@@ -65,8 +68,8 @@ const ConsultaInfo = ({consulta}) => {
             </PopUpContainer>
 
             <div style={{flexGrow: 1, width: "100%", padding: "16px"}}>
-                <body>Paciente: {consulta.paciente__nome}</body>
-                <body>Horário da consulta: {GetHourMinute(consulta.horario, consulta.duracao)}</body>
+                <text>Paciente: {consulta.paciente__nome}</text>
+                <text>Horário da consulta: {GetHourMinute(consulta.horario, consulta.duracao)}</text>
             </div>
             <Row>
                 <CustomButton title="Realizar consulta" onClick={() => setShowConsultaPopUp(true)} type="primary" />

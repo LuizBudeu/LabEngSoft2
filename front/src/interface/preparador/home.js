@@ -17,7 +17,7 @@ const AUTH_SECRET = process.env.REACT_APP_PREPARADOR_AUTH_SECRET;
 
 export const PreparadorHome = () => {
     const [activeTab, setActiveTab] = useState("tab1");
-    const loggedIn = useLogin(AUTH_SECRET);
+    const loggedIn = useLogin(AUTH_SECRET, "preparador");
     const auth = Auth();
     
     const tabs = [
@@ -37,7 +37,7 @@ export const PreparadorHome = () => {
 
     return (
         <BackgroundContainer>
-            <TopBar/>
+            <TopBar type="preparador"/>
             <SecondaryNavBar
                 tabs={tabs}
                 activeTab={activeTab}

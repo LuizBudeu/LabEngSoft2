@@ -8,10 +8,10 @@ import { useAxiosWithToken } from "./useAxiosWithToken";
 
 const TOKEN_URL = process.env.REACT_APP_TOKEN_URL;
 
-export const useLogin = (clientSecret) => {
+export const useLogin = (clientSecret, client_type) => {
 
     const [searchParams, setSearchParams] = useSearchParams();
-    const loggedIn = useIsLoggedIn();
+    const loggedIn = useIsLoggedIn(client_type);
     const setCookie = useCookies()[1];
 
     const authorization_code = searchParams.get("code")
@@ -28,7 +28,8 @@ export const useLogin = (clientSecret) => {
                 }
             })
                 .then(response => {
-                    setCookie("access_token", response.data.access_token);
+                    console.log(client_type);
+                    setCookie("access_token_"+client_type, response.data.access_token);
                 })
                 .catch(error => {
                     console.log(error);
