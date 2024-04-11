@@ -4,6 +4,7 @@ import { useAxiosWithTokenPreparador } from "../../utils/useAxiosWithToken";
 import { useSearchParams } from "react-router-dom";
 
 export const Auth = () => {
+    const [userId, setUserId] = useState();
     const [axios, hasToken] = useAxiosWithTokenPreparador();
     const [, setSearchParams] = useSearchParams();
 
@@ -13,12 +14,15 @@ export const Auth = () => {
             ).then((response) => {
                 let resp = response.data['user_id'];
                 if(resp != null)
+                    setUserId(resp);
                     setSearchParams({'id': resp});
             }).catch((e) => {
                 console.log(e);
             });
         }
     }, [hasToken]);
+
+    return [userId]
 };
 
 export const GetProfile = () => {

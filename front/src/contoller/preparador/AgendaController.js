@@ -24,7 +24,7 @@ export const GetAgenda = (start_date, end_date) => {
         }).catch((e) => {
             console.log(e);
         });
-    }
+    };
 
     useEffect(() => {
         fetchAgenda();
