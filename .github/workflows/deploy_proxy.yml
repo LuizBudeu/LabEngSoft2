@@ -1,4 +1,4 @@
-name: Deploy API
+name: Deploy Proxy
 
 on: 
   workflow_dispatch:
@@ -19,24 +19,26 @@ jobs:
           username: rafnak1
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Extract metadata (tags, labels) for Docker (app1)
+      - name: Extract metadata (tags, labels) for Docker
         id: metadata
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
         with:
-          images: rafnak1/labengsoft:api
+          images: rafnak1/labengsoft:proxy
 
-      - name: Build and push Docker image api
+      - name: Create TLS certificate and key
+        working-directory: ./proxy
+        run: |
+          echo ${{ secrets.TLS_CRT_BASE64 }} | base64 --decode > tls.crt
+          echo ${{ secrets.TLS_KEY_BASE64 }} | base64 --decode > tls.key
+
+      - name: Build and push Docker image proxy
         uses: docker/build-push-action@v5
         with:
-          context: .
-          file: ./Dockerfile
+          context: ./proxy
+          file: ./proxy/Dockerfile
           push: true
-          tags: rafnak1/labengsoft:api
+          tags: rafnak1/labengsoft:proxy
           labels: ${{ steps.metadata.outputs.labels }}
-          secrets: |
-            "DB_PASSWORD=${{ secrets.SQL_PASSWORD }}"
-            "TARIFA_URL_CODE=${{ secrets.TARIFA_URL_CODE }}"
-            "PAGAMENTO_URL_CODE=${{ secrets.PAGAMENTO_URL_CODE }}"
 
   deploy:
     runs-on: ubuntu-latest
@@ -65,7 +67,7 @@ jobs:
           script: |
             cd $HOME/deploy
             docker login -u rafnak1 -p ${{ secrets.DOCKER_PASSWORD }}
-            docker pull rafnak1/labengsoft:api
-            docker compose down api
-            docker compose up -d api
+            docker pull rafnak1/labengsoft:proxy
+            docker compose down proxy
+            docker compose up -d proxy
             
