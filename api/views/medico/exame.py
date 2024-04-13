@@ -1,13 +1,14 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.exceptions import ParseError
-from rest_framework.parsers import JSONParser 
+from datetime import datetime, date
 
 from django.http import HttpRequest
 import json
 
 from api.models import PedidoExameMedico
 from api.models import Usuario
+
 
 @api_view(http_method_names=['POST'])
 def pedir_exame(request: HttpRequest):
@@ -18,15 +19,15 @@ def pedir_exame(request: HttpRequest):
         medico_id: ID usuário do médico
         titulo: Título do exame
     """
-    
+
     data = json.loads(request.body.decode('utf-8'))
 
     print(data)
-    
+
     try:
         paciente = Usuario.objects.get(id=data.get('paciente_id'))
         medico = Usuario.objects.get(id=data.get('medico_id'))
-        
+
         pedido_exame = PedidoExameMedico.objects.create(
             paciente=paciente,
             medico=medico,
@@ -35,8 +36,9 @@ def pedir_exame(request: HttpRequest):
         )
     except Exception as e:
         raise ParseError(f"Erro ao criar pedido de exame: {e}")
-    
+
     return Response({'message': f"Pedido de exame médico {pedido_exame.id} criado."})
+
 
 @api_view(http_method_names=['PUT'])
 def finalizar_exame(request: HttpRequest):
@@ -45,39 +47,46 @@ def finalizar_exame(request: HttpRequest):
     Body parameters:
         exame_id: ID do exame
     """
-    
+
     data = request.data
-        
+
     try:
         exame = PedidoExameMedico.objects.get(id=data.get('exame_id'))
         exame.status = 1  # Finalizada
         exame.save()
     except Exception as e:
         raise ParseError(f"Erro ao finalizar exame: {e}")
-    
+
     return Response({'message': f"Exame {exame.id} finalizado."})
+
 
 @api_view(['GET'])
 def pegar_exames(request: HttpRequest) -> Response:
     """
     Pega os pedidos de exames de um médico. Retorna todas os pedidos de exames
-    entre uma data inicial e final.
+    criados a partir de start_date.
 
     Query parameters:
         user_id: ID usuário do médico
-        start_date: Data inicial, no formato YYYY-mm-dd
-        end_date: Data final, no formato YYYY-mm-dd
+        start_date: pega exames só de hoje
     """
-    
+
     data = request.GET
 
-    try: 
+    # Validations
+    try:
+        start_date = datetime.strptime(data.get('start_date'), '%Y-%m-%d') if data.get('start_date') else date.today()
+    except ValueError:
+        raise ParseError('Datas inical e final precisam estar no formato YYYY-mm-dd')
+
+    try:
         usuario = Usuario.objects.get(id=data.get('user_id'))
     except Usuario.DoesNotExist:
         raise ParseError(f"Usuário com id={data.get('user_id')} não foi encontrado")
 
-    treinos = PedidoExameMedico.objects.filter(
+    pedidosExames = PedidoExameMedico.objects.filter(
         medico=usuario,
+        created_at__gte=start_date
     ).values(
         'id',
         'titulo',
@@ -86,7 +95,8 @@ def pegar_exames(request: HttpRequest) -> Response:
         'status'
     )
 
-    return Response(treinos)
+    return Response(pedidosExames)
+
 
 @api_view(['GET'])
 def exames_paciente(request):
