@@ -33,11 +33,15 @@ export const GetPedidosExames = () => {
     const [pedidosExames, setPedidosExames] = useState([]);
     const [axios] = useAxiosWithTokenMedico();
 
+    // const start_date = '2024-01-01';
+    const start_date = new Date().toISOString().slice(0, 10);
+
     const fetchPedidosExames = () => {
         axios
             .get(API_PROTOCOL_HOSTNAME_PORT + "/api/medico/pegar_exames", {
                 params: {
                     user_id,
+                    start_date
                 },
             })
             .then((response) => {

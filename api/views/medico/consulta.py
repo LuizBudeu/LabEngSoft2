@@ -9,6 +9,36 @@ import requests
 from api.models import Consulta, Usuario, Medico, RelatorioMedico
 
 
+@api_view(['GET'])
+def pega_ultimo_relatorio(request: HttpRequest) -> Response:
+    """
+    Pega o último relatório médico de um paciente.
+
+    Query params:
+        paciente_id: Id do paciente
+    """
+
+    data = request.GET
+
+    try:
+        relatorio = RelatorioMedico.objects.filter(
+            consulta__paciente__id=data.get('paciente_id')
+        ).order_by('-created_at').values(
+            'consulta__id',
+            'massa',
+            'altura',
+            'nivel_de_acucar_no_sangue',
+            'gordura_no_figado',
+            'hemoglobina_glicada',
+            'producao_de_insulina',
+            'created_at'
+        )[0]
+    except RelatorioMedico.DoesNotExist:
+        relatorio = {}
+
+    return Response(relatorio)
+
+
 @api_view(['POST'])
 def registrar_formulario(request: HttpRequest, consulta_id) -> Response:
     """
@@ -18,7 +48,6 @@ def registrar_formulario(request: HttpRequest, consulta_id) -> Response:
         treino_id, altura, massa, nivel_de_atividade_fisica,
         porcentagem_de_gordura, porcentage_de_musculo, metabolismo_basal,
         gasto_calorico, treino_fisico
-
     """
 
     body = json.loads(request.body.decode('utf-8'))
@@ -31,12 +60,12 @@ def registrar_formulario(request: HttpRequest, consulta_id) -> Response:
     try:
         relatorio = RelatorioMedico(
             consulta=consulta,
-            massa=body["massa"],
-            altura=body["altura"],
-            nivel_de_acucar_no_sangue=body["nivel_de_acucar_no_sangue"],
-            gordura_no_figado=body["gordura_no_figado"],
-            hemoglobina_glicada=body["hemoglobina_glicada"],
-            producao_de_insulina=body["producao_de_insulina"]
+            massa=body.get("massa"),
+            altura=body.get("altura"),
+            nivel_de_acucar_no_sangue=body.get("nivel_de_acucar_no_sangue"),
+            gordura_no_figado=body.get("gordura_no_figado"),
+            hemoglobina_glicada=body.get("hemoglobina_glicada"),
+            producao_de_insulina=body.get("producao_de_insulina")
         )
         relatorio.save()
     except:
