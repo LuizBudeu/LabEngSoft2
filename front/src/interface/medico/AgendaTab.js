@@ -118,16 +118,16 @@ const AppointmentInfo = ({appointment}) => {
             <br></br>
             {lastReport && (<>
                 <h3>Último relatório do paciente ({FormatDate(lastReport.created_at)}):</h3>
-                {lastReport.massa ? <text><b>Massa: </b>{lastReport.massa}</text> : ''}
-                {lastReport.altura ? <text><b>Altura: </b>{lastReport.altura}</text> : ''}
+                {lastReport.massa ? <text><b>Massa [kg]: </b>{lastReport.massa}</text> : ''}
+                {lastReport.altura ? <text><b>Altura [cm]: </b>{lastReport.altura}</text> : ''}
                 {lastReport.nivel_de_acucar_no_sangue ?
-                    <text><b>Nível de açúcar no sangue: </b>{lastReport.nivel_de_acucar_no_sangue}</text> : ''}
+                    <text><b>Nível de açúcar no sangue [mg/dl]: </b>{lastReport.nivel_de_acucar_no_sangue}</text> : ''}
                 {lastReport.gordura_no_figado ?
                     <text><b>Gordura no fígado: </b>{lastReport.gordura_no_figado}</text> : ''}
                 {lastReport.hemoglobina_glicada ?
-                    <text><b>Hemoglobina glicada: </b>{lastReport.hemoglobina_glicada}</text> : ''}
+                    <text><b>Hemoglobina glicada [%]: </b>{lastReport.hemoglobina_glicada}</text> : ''}
                 {lastReport.producao_de_insulina ?
-                    <text><b>Produção de insulina: </b>{lastReport.producao_de_insulina}</text> : ''}
+                    <text><b>Produção de insulina [ml]: </b>{lastReport.producao_de_insulina}</text> : ''}
             </>)}
         </Column>
         <br></br>
