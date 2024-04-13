@@ -15,8 +15,8 @@ def create(request: HttpRequest) -> Response:
 
     Query parameters:
         user_id: ID usuário do preparador
-        title: título do treino,
-        workout: descrição completa do treino
+        titulo: título do treino,
+        treino: descrição completa do treino
     """
 
     body = json.loads(request.body.decode('utf-8'))
@@ -27,12 +27,27 @@ def create(request: HttpRequest) -> Response:
         raise ParseError(f"Usuário com id={body['user_id']} não foi encontrado")
 
     try:
-        treino = TreinoFisico(profissional=usuario, titulo=body['title'], treino=body['workout'])
+        treino = TreinoFisico(profissional=usuario, titulo=body['titulo'], treino=body['treino'])
         treino.save()
     except :
         raise ParseError(f"Ocorreu um erro durante a criação do treino.")
 
     return Response("Treino criado")
+
+@api_view(['PUT'])
+def update(request: HttpRequest, workout_id) -> Response:
+    
+    body = json.loads(request.body.decode('utf-8'))
+
+    try:
+        treino = TreinoFisico.objects.get(id=workout_id)
+        treino.titulo = body['title']
+        treino.treino = body['workout']
+        treino.save()
+    except:
+        raise ParseError(f"Ocorreu um erro durante a atualizacão do treino {workout_id}")
+
+    return Response(f"Treino {workout_id} atualizado")    
 
 @api_view(['GET'])
 def workouts(request: HttpRequest) -> Response:

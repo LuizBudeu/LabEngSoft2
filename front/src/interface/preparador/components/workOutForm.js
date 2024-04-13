@@ -3,38 +3,29 @@ import { CustomButton } from "../../../components/customButton";
 import { Column } from "../../../components/column";
 import { CustomInput } from "../../../components/customInput";
 import { CustomTextArea } from "../../../components/customTextArea";
-import { CreateWorkOut } from "../../../contoller/preparador/WorkOutController";
 
-export const WorkOutForm = ({onSubmit}) => {
-    const [workOut, setWorkOut] = useState({title: "", workout: ""});
-    const { create } = CreateWorkOut(workOut);
-  
-    const submit = async (e) => {
-      e.preventDefault(); 
-      create({
-        onSuccess: () => onSubmit(),
-        onError: () => console.log("Erro ao salvar")
-      });
-    };
+export const WorkOutForm = ({workOut, onSubmit}) => {
+    const [workOutFielData, setWorkOutData] = useState({id: workOut?.id, titulo: workOut?.titulo, treino: workOut?.treino});
+    console.log("form ",workOut)
 
     return(
-        <form onSubmit={submit}>
+        <form onSubmit={(e) => onSubmit(e, workOutFielData)}>
             <Column>  
                 <Column>
                   <text>Título do treino</text>
                   <CustomInput
-                    name="title"
-                    onChange={(e) => setWorkOut({...workOut, title:e.target.value})}
-                    value={workOut.title}
+                    name="titulo"
+                    onChange={(e) => setWorkOutData({...workOutFielData, titulo:e.target.value})}
+                    value={workOutFielData.titulo}
                     type="text"
                   />
                 </Column>
                 <Column>
                   <text>Descrição do treino</text>
                   <CustomTextArea
-                    name="workout"
-                    onChange={(e) => setWorkOut({...workOut, workout:e.target.value})}
-                    value={workOut.workout}
+                    name="treino"
+                    onChange={(e) => setWorkOutData({...workOutFielData, treino:e.target.value})}
+                    value={workOutFielData.treino}
                     type="text"
                     required
                   />
