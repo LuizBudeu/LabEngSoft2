@@ -34,7 +34,7 @@ export const AppointmentInfo = ({appointment, cancelAppointment, payAppointment}
             />
           </RowItem>
         }
-        {appointment.status != AppointmentStatus.cancelada &&
+        {appointment.status != AppointmentStatus.cancelada && appointment.status != AppointmentStatus.realizada &&
           <RowItem grow center noPadding>
             <CustomButton
               type="cancel"
