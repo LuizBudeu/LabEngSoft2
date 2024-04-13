@@ -40,7 +40,7 @@ const ExamesTab = () => {
             <Row>
                 <RowItem grow noPadding>
                     <div style={{width: "100%"}}>
-                        <h2>Seus exames</h2>
+                        <h2>Exames de hoje</h2>
 
                         {
                             <>
