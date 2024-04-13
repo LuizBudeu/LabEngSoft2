@@ -39,6 +39,7 @@ from .views.paciente.perfil import informacoes_medicas
 from .views.preparador.agenda import agenda as preparador_agenda
 from .views.preparador.workout import workouts
 from .views.preparador.workout import create as workout_create
+from .views.preparador.workout import update as update_workout
 from .views.preparador.perfil import perfil as preparador_perfil
 from .views.preparador.perfil import update_perfil as preparador_update_perfil
 from .views.preparador.perfil import user_id as preparador_id
@@ -108,6 +109,7 @@ urlpatterns = [
     path('preparador/id', preparador_id, name='preparador_id'),
     path('preparador/agenda', preparador_agenda, name='preparador_agenda'),
     path('preparador/create_workout', workout_create, name='workout_create'),
+    path('preparador/update_workout/<int:workout_id>', update_workout, name='update_workout'),
     path('preparador/workouts', workouts, name='workouts'),
     path('preparador/perfil', preparador_perfil, name='preparador_perfil'),
     path('preparador/update_perfil', preparador_update_perfil, name='preparador_update_perfil'),
