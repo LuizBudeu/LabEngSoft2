@@ -4,8 +4,39 @@ from django.http import HttpRequest
 from rest_framework.exceptions import ParseError
 from rest_framework.parsers import JSONParser
 import json
+import requests
 
 from api.models import Consulta, Usuario, Medico, RelatorioMedico
+
+
+@api_view(['GET'])
+def pega_ultimo_relatorio(request: HttpRequest) -> Response:
+    """
+    Pega o último relatório médico de um paciente.
+
+    Query params:
+        paciente_id: Id do paciente
+    """
+
+    data = request.GET
+
+    try:
+        relatorio = RelatorioMedico.objects.filter(
+            consulta__paciente__id=data.get('paciente_id')
+        ).order_by('-created_at').values(
+            'consulta__id',
+            'massa',
+            'altura',
+            'nivel_de_acucar_no_sangue',
+            'gordura_no_figado',
+            'hemoglobina_glicada',
+            'producao_de_insulina',
+            'created_at'
+        )[0]
+    except RelatorioMedico.DoesNotExist:
+        relatorio = {}
+
+    return Response(relatorio)
 
 
 @api_view(['POST'])
@@ -17,7 +48,6 @@ def registrar_formulario(request: HttpRequest, consulta_id) -> Response:
         treino_id, altura, massa, nivel_de_atividade_fisica,
         porcentagem_de_gordura, porcentage_de_musculo, metabolismo_basal,
         gasto_calorico, treino_fisico
-
     """
 
     body = json.loads(request.body.decode('utf-8'))
@@ -30,12 +60,12 @@ def registrar_formulario(request: HttpRequest, consulta_id) -> Response:
     try:
         relatorio = RelatorioMedico(
             consulta=consulta,
-            massa=body["massa"],
-            altura=body["altura"],
-            nivel_de_acucar_no_sangue=body["nivel_de_acucar_no_sangue"],
-            gordura_no_figado=body["gordura_no_figado"],
-            hemoglobina_glicada=body["hemoglobina_glicada"],
-            producao_de_insulina=body["producao_de_insulina"]
+            massa=body.get("massa"),
+            altura=body.get("altura"),
+            nivel_de_acucar_no_sangue=body.get("nivel_de_acucar_no_sangue"),
+            gordura_no_figado=body.get("gordura_no_figado"),
+            hemoglobina_glicada=body.get("hemoglobina_glicada"),
+            producao_de_insulina=body.get("producao_de_insulina")
         )
         relatorio.save()
     except:
@@ -44,7 +74,7 @@ def registrar_formulario(request: HttpRequest, consulta_id) -> Response:
     return Response("Formulario registrado")
 
 
-@api_view(['GET','PATCH'])
+@api_view(['GET', 'PATCH'])
 def consulta_request(request: HttpRequest, consulta_id) -> Response:
     if request.method == 'GET':
         return informacoes_usuario(consulta_id)
@@ -52,19 +82,31 @@ def consulta_request(request: HttpRequest, consulta_id) -> Response:
         return finalizar_consulta(consulta_id)
 
 
-mockInfo_UserNutrion = {'dieta': 'Consome 2500 kcal', 'detalhes_adicionais': 'Não consegue comer farinha'}
-mockInfo_UserMedical = {'alergias': 'Amendoim', 'tipo_diabetes': '0'}
-
-
 def informacoes_usuario(consulta_id) -> Response:
-    mockResponse = {
-        'medical': mockInfo_UserMedical,
-        'nutrition': mockInfo_UserNutrion
-    }
-    return Response(mockResponse)
+    try:
+        consulta = Consulta.objects.values('paciente__id').get(id=consulta_id)
+    except Usuario.DoesNotExist:
+        raise ParseError(f"Usuário com id={consulta['paciente__id']} não foi encontrado")
+
+    payload = {'user_id': consulta['paciente__id']}
+
+    nutrition = {}
+    resp = requests.get('http://127.0.0.1:8000/api/nutricionista/informacoes_nutricionais_paciente', params=payload)
+    if (resp.status_code == 200):
+        nutrition = resp.json()
+
+    medical = {}
+    resp = requests.get('http://127.0.0.1:8000/api/paciente/informacoes_medicas', params=payload)
+    if (resp.status_code == 200):
+        medical = resp.json()
+
+    return Response({
+        "medical": medical,
+        "nutrition": nutrition
+    })
 
 
-def finalizar_consulta (consulta_id) -> Response:
+def finalizar_consulta(consulta_id) -> Response:
     """
     Atualiza o status da consulta para "Realizada"
 
@@ -80,60 +122,3 @@ def finalizar_consulta (consulta_id) -> Response:
     consulta.save()
 
     return Response("Consulta finalizada")
-
-
-#
-# @api_view(['GET'])
-# def consulta(request: HttpRequest):
-#
-#     return Response({'message': 'Connected.'})
-#
-#
-# @api_view(http_method_names=['POST'])
-# def comeca_consulta(request: HttpRequest):
-#     """
-#     Começa uma consulta médica.
-#     """
-#
-#     data = request.POST
-#
-#     try:
-#         paciente = Usuario.objects.get(id=data.get('paciente'))
-#         profissional = Usuario.objects.get(id=data.get('profissional'))
-#         consulta = Consulta.objects.create(
-#             paciente=paciente,
-#             profissional=profissional,
-#             horario=data.get('horario'),
-#             status=4,  # Pendente
-#         )
-#     except Exception as e:
-#         raise ParseError(f"Erro ao criar consulta: {e}")
-#
-#     return Response({'message': f"Consulta {consulta.id} criada."})
-#
-#
-# @api_view(http_method_names=['PUT'])
-# def finaliza_consulta(request: HttpRequest):
-#     """
-#     Finaliza uma consulta médica.
-#     """
-#
-#     data = JSONParser().parse(request)
-#
-#     try:
-#         consulta = Consulta.objects.get(id=data.get('consulta_id'))
-#         consulta.status = 2  # Realizada
-#         consulta.save()
-#     except Exception as e:
-#         raise ParseError(f"Erro ao criar consulta: {e}")
-#
-#     return Response({'message': f"Consulta {consulta.id} finalizada."})
-#
-#
-# @api_view(['POST'])
-# def salva_relatorio(request: HttpRequest):
-#     """
-#     Salva um relatório médico.
-#     """
-#
-#     return Response({'message': 'Connected.'})

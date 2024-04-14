@@ -1,22 +1,22 @@
-
 from django.urls import path, include
 
 from .views.hello_world import hello_world
 from .views.home import home
 from .views.usuario import create as usuario_create
 
+from .views.medico.medico import create_medico
+from .views.medico.medico import lista_profissionais as medico_lista_profissionais
+from .views.medico.medico import informacao_bancaria as medico_informacao_bancaria
 from .views.medico.consulta import registrar_formulario as medico_registrar_formulario
 from .views.medico.consulta import consulta_request as medico_consulta_request
-from .views.medico.medico import create_medico
+from .views.medico.consulta import pega_ultimo_relatorio as medico_consulta_ultimo_relatorio
 from .views.medico.exame import pedir_exame as medico_pedir_exame
 from .views.medico.exame import pegar_exames as medico_pegar_exames
 from .views.medico.exame import finalizar_exame as medico_finalizar_exame
+from .views.medico.exame import exames_paciente as medico_exames_paciente
 from .views.medico.agenda import agenda as medico_agenda
 from .views.medico.agenda import consulta_paciente as medico_consulta_paciente
-from .views.medico.medico import lista_profissionais as medico_lista_profissionais
 from .views.medico.agenda import horarios_profissional as medico_horarios_profissional
-from .views.medico.exame import exames_paciente as medico_exames_paciente
-from .views.medico.medico import informacao_bancaria as medico_informacao_bancaria
 from .views.medico.perfil import perfil as medico_perfil
 from .views.medico.perfil import update_perfil as medico_update_perfil
 from .views.medico.perfil import user_id as medico_id
@@ -39,6 +39,7 @@ from .views.paciente.perfil import informacoes_medicas
 from .views.preparador.agenda import agenda as preparador_agenda
 from .views.preparador.workout import workouts
 from .views.preparador.workout import create as workout_create
+from .views.preparador.workout import update as update_workout
 from .views.preparador.perfil import perfil as preparador_perfil
 from .views.preparador.perfil import update_perfil as preparador_update_perfil
 from .views.preparador.perfil import user_id as preparador_id
@@ -78,9 +79,12 @@ urlpatterns = [
 
     path('medico/id', medico_id, name='medico_id'),
     path('medico/agenda', medico_agenda, name='medico_agenda'),
-    path('medico/consultas/<int:consulta_id>/formulario', medico_registrar_formulario, name='finalizar_consulta'),
-    path('medico/consultas/<int:consulta_id>', medico_consulta_request, name='consulta_request'),
-    path('medico/consulta_paciente', medico_consulta_paciente, name='preparador_consulta_paciente'),
+    path('medico/consultas/<int:consulta_id>/formulario', medico_registrar_formulario,
+         name='medico_finalizar_consulta'),
+    path('medico/consultas/<int:consulta_id>', medico_consulta_request, name='medico_consulta_request'),
+    path('medico/consultas/ultimo_relatorio', medico_consulta_ultimo_relatorio,
+         name='medico_consulta_ultimo_relatorio'),
+    path('medico/consulta_paciente', medico_consulta_paciente, name='medico_consulta_paciente'),
     path('medico/pedir_exame', medico_pedir_exame, name='medico_pedir_exame'),
     path('medico/pegar_exames', medico_pegar_exames, name='medico_pegar_exames'),
     path('medico/finalizar_exame', medico_finalizar_exame, name='medico_finalizar_exame'),
@@ -109,6 +113,7 @@ urlpatterns = [
     path('preparador/id', preparador_id, name='preparador_id'),
     path('preparador/agenda', preparador_agenda, name='preparador_agenda'),
     path('preparador/create_workout', workout_create, name='workout_create'),
+    path('preparador/update_workout/<int:workout_id>', update_workout, name='update_workout'),
     path('preparador/workouts', workouts, name='workouts'),
     path('preparador/perfil', preparador_perfil, name='preparador_perfil'),
     path('preparador/update_perfil', preparador_update_perfil, name='preparador_update_perfil'),
@@ -133,12 +138,16 @@ urlpatterns = [
     path('nutricionista/perfil', nutricionista_perfil, name='nutricionista_perfil'),
     path('nutricionista/update_perfil', nutricionista_update_perfil, name='nutricionista_update_perfil'),
     path('nutricionista/consulta_paciente', nutricionista_consulta_paciente, name='nutricionista_consulta_paciente'),
-    path('nutricionista/lista_profissionais', nutricionista_lista_profissionais, name='nutricionista_lista_profissionais'),
-    path('nutricionista/horarios_profissional', nutricionista_horarios_profissional, name='nutricionista_horarios_profissional'),
+    path('nutricionista/lista_profissionais', nutricionista_lista_profissionais,
+         name='nutricionista_lista_profissionais'),
+    path('nutricionista/horarios_profissional', nutricionista_horarios_profissional,
+         name='nutricionista_horarios_profissional'),
     path('nutricionista/dieta_paciente', nutricionista_dieta_paciente, name='nutricionista_dieta_paciente'),
     path('nutricionista/exames_paciente', nutricionista_exames_paciente, name='nutricionista_exames_paciente'),
-    path('nutricionista/informacao_bancaria', nutricionista_informacao_bancaria, name='nutricionista_informacao_bancaria'),
-    path('nutricionista/informacoes_nutricionais_paciente', informacoes_nutricionais_paciente, name='informacoes_nutricionais_paciente'),
+    path('nutricionista/informacao_bancaria', nutricionista_informacao_bancaria,
+         name='nutricionista_informacao_bancaria'),
+    path('nutricionista/informacoes_nutricionais_paciente', informacoes_nutricionais_paciente,
+         name='informacoes_nutricionais_paciente'),
 
     # path('logout/', views.LogoutView.as_view(), name ='logout')
 ]

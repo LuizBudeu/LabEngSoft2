@@ -3,7 +3,7 @@ import { FormatDate, GetHourMinute } from "../utils/date";
 import { AppointmentItem } from "./appointmentItem";
 
 export const AgendaList = ({professionalType, appointments, selectedAppointment, onItemClick}) => {
-    
+    console.log(appointments)
     const appointmentItem = (item) => (
         <AppointmentItem
             type={professionalType}
