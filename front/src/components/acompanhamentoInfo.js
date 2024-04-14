@@ -29,14 +29,14 @@ export const AcompanhamentoInfo = ({acompanhamento, type, scheduleAppointment}) 
             <text>Duração: {acompanhamento.dieta__duracao_em_dias} dias</text>
             <text>Calorias: {acompanhamento.dieta__calorias} kcal</text>
             <br/>
-            <text>{acompanhamento.dieta__descricao}</text>
+            <text style={{"white-space": "pre-line"}}>{acompanhamento.dieta__descricao}</text>
           </Column>
         </div>
       ) : (
         type == "treino" ? (
           <div>
             <h4>{acompanhamento.treino_fisico__title}</h4>
-            <text>{acompanhamento.treino_fisico__treino}</text>
+            <text style={{"white-space": "pre-line"}}>{acompanhamento.treino_fisico__treino}</text>
           </div>
         ) : (
           <div>
@@ -45,7 +45,7 @@ export const AcompanhamentoInfo = ({acompanhamento, type, scheduleAppointment}) 
                 <text>{acompanhamento.titulo}</text>
               </div>
             ) : (
-              <text>{acompanhamento.tipo_exame}</text>
+              <text style={{"white-space": "pre-line"}}>{acompanhamento.tipo_exame}</text>
             )}
             <Row>
               <RowItem grow center>
