@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Column } from "../../../components/column";
 import { CustomButton } from "../../../components/customButton";
 import { CustomInput } from "../../../components/customInput";
@@ -8,8 +8,8 @@ import { GetWorkOuts } from "../../../contoller/preparador/WorkOutController";
 import { RegistrarFormulario } from "../../../contoller/preparador/ConsultaController";
 
 export const AppointmentForm = ({consultaId, onSubmit, onCancel}) => {
-    const [pacienteInfo, setPacientInfo] = useState({nivel_de_atividade_fisica: 0, treino_fisico: 1});
     const { workOuts } = GetWorkOuts();
+    const [pacienteInfo, setPacientInfo] = useState({nivel_de_atividade_fisica: 0, treino_fisico: null});
     const { registerForm } = RegistrarFormulario(consultaId, pacienteInfo);
 
     const submit = (e) => {
@@ -19,6 +19,10 @@ export const AppointmentForm = ({consultaId, onSubmit, onCancel}) => {
             onError: (error) => console.log(error)
         });
     }
+
+    useEffect(() => {
+      setPacientInfo({...pacienteInfo, treino_fisico: workOuts?.[0]?.id ?? null})
+    }, [workOuts]);
     
     const workOutsToSelector = (workouts) => {
         const workOutOptions = {}

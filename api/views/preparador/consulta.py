@@ -31,8 +31,8 @@ def registrar_formulario (request: HttpRequest, consulta_id) -> Response:
     
     try:
         treino = TreinoFisico.objects.get(id=body['treino_fisico'])
-    except Consulta.DoesNotExist:
-        raise ParseError(f"Treino com id={consulta_id} não encontrado")
+    except TreinoFisico.DoesNotExist:
+        treino = None
 
     try:
         relatorio = RelatorioPreparadorFisico(
