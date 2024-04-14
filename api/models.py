@@ -164,7 +164,7 @@ class RelatorioPreparadorFisico(models.Model):
     ]
 
     consulta = models.ForeignKey(Consulta, on_delete=models.CASCADE)
-    treino_fisico = models.ForeignKey(TreinoFisico, on_delete=models.CASCADE)
+    treino_fisico = models.ForeignKey(TreinoFisico, on_delete=models.CASCADE, blank=True, null=True)
     massa = models.FloatField(blank=True, null=True)
     altura = models.FloatField(blank=True, null=True)
     nivel_de_atividade_fisica = models.IntegerField(choices=NIVEL_DE_ATIVIDADE_FISICA_CHOICES, blank=True, null=True)

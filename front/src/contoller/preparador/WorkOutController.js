@@ -68,4 +68,3 @@ export const GetWorkOuts = () => {
 
     return { workOuts, refetch };
 }
-
