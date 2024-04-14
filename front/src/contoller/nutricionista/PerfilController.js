@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { useAxiosWithTokenNutricionista } from "../../utils/useAxiosWithToken";
 import { API_PROTOCOL_HOSTNAME_PORT } from "../../utils/utils";
+import { useSearchParams } from "react-router-dom";
 
 
 export const Auth = () => {
-    const [axios, hasToken] = useAxiosWithToken();
-    const [, setSearchParams] = useSearchParams();
+    const [axios, hasToken] = useAxiosWithTokenNutricionista();
+    const [searchParams, setSearchParams] = useSearchParams();
 
     useEffect(() => {
         if(hasToken){
