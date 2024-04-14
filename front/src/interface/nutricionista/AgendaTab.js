@@ -14,8 +14,7 @@ import { EditPerfil } from "./DietaForm";
 import { ScrollContainer } from "../../components/scrollContainer";
 
 export const AgendaTab = () => {
-    const test_id = 4 // TODO substituir por user_id do usuário logado na integração
-    const [agenda] = GetConsultas(test_id, "2024-01-01", "3024-01-01");
+    const [agenda] = GetConsultas("2024-01-01", "3024-01-01");
 
     const [selectedAppointment, setSelectedAppointment] = useState("");
     

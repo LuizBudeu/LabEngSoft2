@@ -1,13 +1,47 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.exceptions import ParseError
+from django.http import HttpRequest
 import json
+import jwt
 
-from api.models import Usuario, Nutricionista, DadosBancariosRecebimento
+from api.models import ExtUsuario, Usuario, Nutricionista, DadosBancariosRecebimento
 
 
 @api_view(['GET'])
-def perfil(request):
+def user_id(request: HttpRequest) -> Response:
+    """
+        Pega id do nutricionista.
+    """
+    token = request.headers.get('Authorization')
+
+    if(token != ""):
+        token = token.split(" ",1)[1]
+
+        token_decoded = jwt.decode(token, options={"verify_signature": False})["oid"]
+
+        user_id = None
+
+        try: 
+            ext_usuario = ExtUsuario.objects.get(
+                ext_id=token_decoded,
+                ocupacao=2
+            )
+            user_id = ext_usuario.usuario.pk
+        except ExtUsuario.DoesNotExist:
+            ext_usuario = ExtUsuario.objects.create(
+                ext_id=token_decoded,
+                ocupacao=2
+            )
+        return Response({
+            'user_id': user_id
+        })
+    else:
+        return Response("Token inválido", 401)
+
+
+@api_view(['GET'])
+def perfil(request: HttpRequest) -> Response:
     """
     Pega informações de perfil do nutricionista.
 
@@ -55,7 +89,7 @@ def perfil(request):
     return Response(resp)
 
 @api_view(['POST'])
-def update_perfil(request):
+def update_perfil(request: HttpRequest) -> Response:
     """
     Atualiza informações de perfil do nutricionista.
 
@@ -97,10 +131,10 @@ def update_perfil(request):
     return Response("Nutricionista atualizado")
 
 @api_view(['GET'])
-def lista_profissionais(request):
+def lista_profissionais(request: HttpRequest) -> Response:
     
     """
-    Lista médicos.
+    Lista nutricionistas.
 
     Query parameters:
         name: Nome do prifissional. (opcional)
@@ -123,7 +157,7 @@ def lista_profissionais(request):
     return Response(profissionais)
 
 @api_view(['GET'])
-def informacao_bancaria(request):
+def informacao_bancaria(request: HttpRequest) -> Response:
     
     """
     Retorna o número da conta do profissional.
@@ -140,4 +174,4 @@ def informacao_bancaria(request):
         )
         return Response(conta.conta)
     except Usuario.DoesNotExist:
-        raise ParseError(f"Conta para profissional com id={body['user_id']} não foi encontrado")
+        raise ParseError(f"Conta para profissional com id={data['user_id']} não foi encontrado")

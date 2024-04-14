@@ -65,6 +65,7 @@ from .views.nutricionista.dieta import salvaDieta
 from .views.nutricionista.dieta import dieta_paciente as nutricionista_dieta_paciente
 from .views.nutricionista.dieta import exames_paciente as nutricionista_exames_paciente
 from .views.nutricionista.exame import pedirExame as nutricionista_exame
+from .views.nutricionista.perfil import user_id as nutricionista_id
 from .views.nutricionista.perfil import perfil as nutricionista_perfil
 from .views.nutricionista.perfil import update_perfil as nutricionista_update_perfil
 from .views.nutricionista.perfil import lista_profissionais as nutricionista_lista_profissionais
@@ -125,6 +126,7 @@ urlpatterns = [
     path('preparador/informacao_bancaria', preparador_informacao_bancaria, name='preparador_informacao_bancaria'),
     path('preparador/informacoes_fisicas_paciente', informacoes_fisicas_paciente, name='informacoes_fisicas_paciente'),
 
+    path('nutricionista/id', nutricionista_id, name='nutricionista_id'),
     path('nutricionista/agenda', nutricionista_agenda, name='nutricionista_agenda'),
     path('nutricionista/avaliacao', avaliacao_nutricional, name='avaliacao_nutricional'),
     path('nutricionista/consulta', nutricionista_consulta, name='nutricionista_consulta'),
