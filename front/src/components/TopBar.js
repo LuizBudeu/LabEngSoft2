@@ -17,6 +17,8 @@ export const TopBar = ({type}) => {
 
     const LogoStyle = styled.text`
         color: ${Colors.White};
+        font-family: "Georgia", serif;
+        font-size: 40px;
     `;
 
     return (
