@@ -18,14 +18,15 @@ export const RegistrarFormulario = (consulta_id, pacientInfo) => {
     return { registerForm };
 };
 
-export const FinalizarConsulta = (consulta_id) => {
+export const FinalizarConsulta = () => {
     const [axios] = useAxiosWithTokenPreparador();
-    const path = `${API_PROTOCOL_HOSTNAME_PORT}/api/preparador/consultas/${consulta_id}`
 
-    const finalizar = () => {
-        axios.patch(path,
-        ).catch((e) =>
-            console.log(e)
+    const finalizar = ({consulta_id, onSuccess, onError}) => {
+        axios.patch(`${API_PROTOCOL_HOSTNAME_PORT}/api/preparador/consultas/${consulta_id}`,
+        ).then(() =>
+            onSuccess()
+        ).catch((error) =>
+            onError(error)
         );
     }
 

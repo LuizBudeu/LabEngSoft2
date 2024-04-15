@@ -11,6 +11,7 @@ import { PopUpContainer } from "../../components/popUpContainer";
 import { FormContainer } from "../../components/formContainer";
 import { CustomImage } from "../../components/customImage";
 import { ProfissionalIcons } from "../../utils/utils";
+import { VSpace } from "../../components/vSpace";
 
 export const TreinosTab = () => {
     const { workOuts, refetch } = GetWorkOuts();
@@ -78,7 +79,8 @@ export const TreinosTab = () => {
                     <div style={{width: "100%"}}>
                         <h2>Seus treinos</h2>
                         <CustomButton title="Novo treino" onClick={() => setShowCreateModal(true)} type="primary" />
-                        <div style={{marginTop: 10}}>
+                        <VSpace />
+                        <div>
                             {workOuts && workOuts.map(workOutItem)}
                         </div>
                     </div>
@@ -92,7 +94,8 @@ export const TreinosTab = () => {
                             <div style={{width: "100%"}}>
                                 <h2>{selectedWorkOut.titulo}</h2>
                                 <text style={{whiteSpace: "pre-line"}}>{selectedWorkOut.treino}</text>
-                                <div style={{ marginTop: 10}}>
+                                <VSpace />
+                                <div>
                                     <CustomButton title="Editar treino" onClick={() => setShowUpdateModal(true)} />
                                 </div>
                             </div>

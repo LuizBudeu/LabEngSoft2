@@ -5,6 +5,7 @@ import { CustomButton } from "../../components/customButton";
 import { PerfilForm } from "./components/perfilForm";
 import { FormContainer } from "../../components/formContainer";
 import { ProfileFieldToLabel } from "../../utils/utils";
+import { VSpace } from "../../components/vSpace";
 
 export const PerfilTab = () => {
     const { userProfile, refetch } = GetProfile();
@@ -26,7 +27,11 @@ export const PerfilTab = () => {
             {userProfile && (
                 <>
                     {Object.entries(userProfile).map(userInfo => (
-                        <div style={{margin: "10px 0"}}><b>{ProfileFieldToLabel[userInfo[0]] + ": "}</b><text>{userInfo[1]}</text></div>
+                        <div>
+                            <b>{ProfileFieldToLabel[userInfo[0]] + ": "}</b>
+                            <text>{userInfo[1]}</text>
+                            <VSpace />
+                        </div>
                     ))}
                 </>
             )}
