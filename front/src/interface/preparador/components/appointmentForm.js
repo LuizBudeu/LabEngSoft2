@@ -6,6 +6,10 @@ import { CustomSelect } from "../../../components/customSelect";
 import { NivelAtividade } from "../../../utils/options";
 import { GetWorkOuts } from "../../../contoller/preparador/WorkOutController";
 import { RegistrarFormulario } from "../../../contoller/preparador/ConsultaController";
+import { VSpace } from "../../../components/vSpace";
+import { Row } from "../../../components/row";
+import { RowItem } from "../../../components/rowItem";
+import { HSpace } from "../../../components/hSpace";
 
 export const AppointmentForm = ({consultaId, onSubmit, onCancel}) => {
     const { workOuts } = GetWorkOuts();
@@ -34,7 +38,8 @@ export const AppointmentForm = ({consultaId, onSubmit, onCancel}) => {
 
     return(
         <form onSubmit={submit}>
-            <Column>  
+            <Column>
+                <h2>Formulário de Consulta</h2>
                 <Column>
                   <text>Altura</text>
                   <CustomInput
@@ -45,6 +50,7 @@ export const AppointmentForm = ({consultaId, onSubmit, onCancel}) => {
                     required
                   />
                 </Column>
+                <VSpace />
 
                 <Column>
                   <text>Peso</text>
@@ -56,6 +62,7 @@ export const AppointmentForm = ({consultaId, onSubmit, onCancel}) => {
                     required
                   />
                 </Column>
+                <VSpace />
 
                 <Column>
                     <text>Nível de atividade física</text>
@@ -65,6 +72,7 @@ export const AppointmentForm = ({consultaId, onSubmit, onCancel}) => {
                         onChange={(e) => setPacientInfo({...pacienteInfo, nivel_de_atividade_fisica:e.target.value})}
                     />
                 </Column>
+                <VSpace />
 
                 <Column>
                   <text>Percentual de gordura</text>
@@ -76,6 +84,7 @@ export const AppointmentForm = ({consultaId, onSubmit, onCancel}) => {
                     required
                   />
                 </Column>
+                <VSpace />
 
                 <Column>
                   <text>Percentual de massa magra</text>
@@ -87,6 +96,7 @@ export const AppointmentForm = ({consultaId, onSubmit, onCancel}) => {
                     required
                   />
                 </Column>
+                <VSpace />
 
                 <Column>
                   <text>Metabolismo basal</text>
@@ -98,6 +108,7 @@ export const AppointmentForm = ({consultaId, onSubmit, onCancel}) => {
                     required
                   />
                 </Column>
+                <VSpace />
 
                 <Column>
                   <text>Gasto calórico</text>
@@ -109,6 +120,7 @@ export const AppointmentForm = ({consultaId, onSubmit, onCancel}) => {
                     required
                   />
                 </Column>
+                <VSpace />
 
                 {workOuts && (
                     <Column>
@@ -121,8 +133,16 @@ export const AppointmentForm = ({consultaId, onSubmit, onCancel}) => {
                     </Column>
                 )}
             </Column>
-            <CustomButton title="Finalizar" isSubmit type="primary" />
-            <CustomButton title="Cancelar" onClick={onCancel}/>
+            <VSpace />
+            <Row>
+              <RowItem noPadding>
+                <CustomButton title="Finalizar" isSubmit type="primary" />
+              </RowItem>
+              <HSpace />
+              <RowItem grow noPadding>
+                <CustomButton title="Cancelar" onClick={onCancel}/>
+              </RowItem>
+            </Row>
         </form>
     );
 }

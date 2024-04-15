@@ -4,6 +4,7 @@ import { CustomInput } from "../../../components/customInput";
 import { CustomButton } from "../../../components/customButton";
 import { UpdateProfile } from "../../../contoller/preparador/PerfilController";
 import { ProfileFieldToLabel } from "../../../utils/utils";
+import { VSpace } from "../../../components/vSpace";
 
 export const PerfilForm = ({perfil, onSubmit}) => {
     const [userInfo, setUserInfo] = useState({...perfil});
@@ -13,7 +14,7 @@ export const PerfilForm = ({perfil, onSubmit}) => {
     const perfilItem = (infoKey) => {
         return(
             <Column>
-                <b style={{marginTop: 10}}>{ProfileFieldToLabel[infoKey]}</b>
+                <text>{ProfileFieldToLabel[infoKey]}</text>
                 <CustomInput
                     name={infoKey}
                     onChange={(e) => setUserInfo({...userInfo, [infoKey]:e.target.value})}
@@ -21,6 +22,7 @@ export const PerfilForm = ({perfil, onSubmit}) => {
                     type="text"
                     required
                 />
+                <VSpace />
             </Column>
         );
     };
@@ -35,6 +37,7 @@ export const PerfilForm = ({perfil, onSubmit}) => {
 
     return(
         <form onSubmit={submit}>
+            <h2>Editar Perfil</h2>
             <Column>
                 {Object.keys(userInfo).map(perfilItem)}
             </Column>
