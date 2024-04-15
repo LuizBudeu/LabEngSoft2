@@ -14,16 +14,41 @@ import { AppointmentForm } from "./components/appointmentForm";
 import { Column } from "../../components/column";
 import { FinalizarConsulta } from "../../contoller/preparador/ConsultaController";
 import { GetPacienteExtraInfo } from "../../contoller/preparador/ConsultaController";
-import { TipoDiabetesNumberToString } from "../../utils/utils";
+import { AppointmentStatus, TipoDiabetesNumberToString } from "../../utils/utils";
 import { ScrollContainer } from "../../components/scrollContainer";
 
 export const AgendaTab = () => {
-    const { agenda } = GetAgenda();
-
+    const { agenda, refetch } = GetAgenda();
     const [selectedAppointment, setSelectedAppointment] = useState("");
+    const { finalizar } = FinalizarConsulta();
+    const [showPopUp, setShowPopUp] = useState(false);
+    
+    const handleSubmit = () => {
+        finalizar({
+            consulta_id: selectedAppointment.id,
+            onSuccess: () => {
+                refetch();
+                setSelectedAppointment({...selectedAppointment, status:2});
+                setShowPopUp(false);
+            },
+            onError: (error) => console.log(error)
+        });
+    }
+
     
     return(
         <>
+            <PopUpContainer showPopUp={showPopUp} closePopUp={() => setShowPopUp(false)}>
+                <CenterContent>
+                    <FormContainer>
+                        <AppointmentForm 
+                            consultaId={selectedAppointment.id}
+                            onSubmit={handleSubmit}
+                            onCancel={() => setShowPopUp(false)}
+                        />
+                    </FormContainer>
+                </CenterContent>
+            </PopUpContainer>
             <Row>
                 <RowItem grow noPadding>
                     <ScrollContainer>
@@ -45,7 +70,7 @@ export const AgendaTab = () => {
                 </RowItem>
                 <RowItem grow>
                     {selectedAppointment ? (
-                            <AppointmentInfo appointment={selectedAppointment} />
+                            <AppointmentInfo appointment={selectedAppointment} onStartClick={() => setShowPopUp(true)} />
                         ) : (
                             <CenterContent>
                                 <span>Selecione uma consulta</span>
@@ -58,29 +83,11 @@ export const AgendaTab = () => {
     );
 };
 
-const AppointmentInfo = ({appointment, onFormClick}) => {
-    const [showPopUp, setShowPopUp] = useState(false);
+const AppointmentInfo = ({appointment, onStartClick}) => {
     const [ extraInfo ] = GetPacienteExtraInfo(appointment.id);
-    const { finalizar } = FinalizarConsulta(appointment.id);
-
-    const handleSubmit = () => {
-        finalizar();
-        setShowPopUp(false);
-    }
 
     return (
         <div>
-            <PopUpContainer showPopUp={showPopUp} closePopUp={() => setShowPopUp(false)}>
-                <CenterContent>
-                    <FormContainer>
-                        <AppointmentForm 
-                            consultaId={appointment.id}
-                            onSubmit={handleSubmit}
-                            onCancel={() => setShowPopUp(false)}
-                        />
-                    </FormContainer>
-                </CenterContent>
-            </PopUpContainer>
             <Column>
                 <h2>Dados Básicos</h2>
                 <text>Paciente: {appointment.paciente__nome}</text>
@@ -111,7 +118,12 @@ const AppointmentInfo = ({appointment, onFormClick}) => {
                 )}
             </Column>
             <Row>
-                <CustomButton title="Realizar consulta" onClick={() => setShowPopUp(true)} type="primary" />
+                <CustomButton
+                    title="Realizar consulta"
+                    onClick={onStartClick}
+                    type="primary"
+                    disabled={appointment.status !== AppointmentStatus.agendada}
+                />
             </Row>
         </div>
     );
