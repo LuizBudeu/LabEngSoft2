@@ -40,7 +40,7 @@ const ExamesTab = () => {
             <Row>
                 <RowItem grow noPadding>
                     <div style={{width: "100%"}}>
-                        <h2>Exames de hoje</h2>
+                        <h2>Exames pendentes</h2>
 
                         {
                             <>
@@ -53,7 +53,7 @@ const ExamesTab = () => {
                                                 setSelectedPedidoExame(pedidoExame);
                                             }}
                                         >
-                                            <b>{pedidoExame.titulo}</b> {` (${STATUS[pedidoExame.status]})`}
+                                            <b>{pedidoExame.titulo}</b>
                                         </div>
                                     ))}
                             </>
@@ -68,9 +68,9 @@ const ExamesTab = () => {
                         {selectedPedidoExame ? (
                             <div style={{width: "100%"}}>
                                 <h2>{selectedPedidoExame.titulo}</h2>
-                                <p>Paciente: {selectedPedidoExame.paciente__nome}</p>
-                                <p>Status: {STATUS[selectedPedidoExame.status]}</p>
-                                <p>Data: {FormatDate(selectedPedidoExame.created_at)}</p>
+                                <p><b>Paciente:</b> {selectedPedidoExame.paciente__nome}</p>
+                                <p><b>Status:</b> {STATUS[selectedPedidoExame.status]}</p>
+                                <p><b>Data da consulta:</b> {FormatDate(selectedPedidoExame.created_at)}</p>
 
                                 <CustomButton title="Finalizar pedido" isSubmit type="primary"
                                               onClick={handleFinalizarExame}/>

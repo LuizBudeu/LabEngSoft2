@@ -69,6 +69,7 @@ def pegar_exames(request: HttpRequest) -> Response:
     Query parameters:
         user_id: ID usuário do médico
         start_date: pega exames só de hoje
+        status: status do exame
     """
 
     data = request.GET
@@ -84,10 +85,17 @@ def pegar_exames(request: HttpRequest) -> Response:
     except Usuario.DoesNotExist:
         raise ParseError(f"Usuário com id={data.get('user_id')} não foi encontrado")
 
+    status = data.get('status')
+
     pedidosExames = PedidoExameMedico.objects.filter(
         medico=usuario,
         created_at__gte=start_date
-    ).values(
+    )
+
+    if status:
+        pedidosExames = pedidosExames.filter(status=status)
+
+    pedidosExames = pedidosExames.values(
         'id',
         'titulo',
         'created_at',
