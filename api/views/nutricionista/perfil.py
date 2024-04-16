@@ -61,7 +61,6 @@ def perfil(request: HttpRequest) -> Response:
     ).values('crn').first()
 
     resp = {
-        'email': usuario.email,
         'nome': usuario.nome,
         'cpf': usuario.cpf,
         'data_de_nascimento': usuario.data_de_nascimento,
