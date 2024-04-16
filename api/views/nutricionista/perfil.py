@@ -73,19 +73,6 @@ def perfil(request: HttpRequest) -> Response:
         'crn': nutricionista['crn']
     }
 
-    # resp_test = {
-    #     'email': 'a@b.c',
-    #     'nome': 'filipe arraia',
-    #     'cpf': '1',
-    #     'data_de_nascimento': '2002-04-30',
-    #     'genero': 'outro',
-    #     'cep': '00000-000',
-    #     'logradouro': 'Travessa do Politécnico',
-    #     'numero': '158',
-    #     'complemento': '---',
-    #     'crn': '12345678'
-    # }
-
     return Response(resp)
 
 @api_view(['POST'])

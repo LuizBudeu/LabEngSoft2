@@ -3,26 +3,82 @@ from rest_framework.response import Response
 from rest_framework.exceptions import ParseError
 from django.http import HttpRequest
 import requests
+import json
 
-from api.models import Usuario, Paciente, Consulta, RelatorioNutricionista, PedidoExameNutricionista
+from api.models import Usuario, Consulta, RelatorioNutricionista, PedidoExameNutricionista, Dieta
 
 
 @api_view(['GET'])
-def dieta(request):
+def dieta(request: HttpRequest) -> Response:
+    """
+    Pega uma dieta a partir da consulta em que ela foi feita.
+
+    Query Parameters:
+        consulta_id: ID da consulta referente à requisição.
+    """
     
-    return Response({'message': 'Connected.'})
+    data = request.GET
+
+    # Validação necessária
+    try:
+        consulta = Consulta.objects.get(id=data.get('consulta_id'))
+        relatorio = RelatorioNutricionista.objects.get(consulta=consulta)
+        dieta = relatorio.dieta
+    except Consulta.DoesNotExist:
+        raise ParseError(f"Consulta com id={data.get('consulta_id')} não foi encontrada.")
+    except RelatorioNutricionista.DoesNotExist:
+        return Response({'found': False, 'message': f"Consulta com id={data.get('consulta_id')} não possui relatório, ainda."})
+    
+    if not dieta:
+        return Response({'found': False, 'message': f"Relatório da consulta com id={data.get('consulta_id')} não possui dieta, ainda."})
+    
+    return Response({
+        'found': True,
+        'descricao_curta': dieta.descricao_curta,
+        'descricao': dieta.descricao,
+        'duracao_em_dias': dieta.duracao_em_dias,
+        'calorias': dieta.calorias
+    })
 
 
 @api_view(['POST'])
-def salvaDieta(request):
+def salvaDieta(request: HttpRequest) -> Response:
     """
     Salva uma dieta receitada pelo nutricionista.
+    
+    Body parameters:
+        relatorio_id (int): ID do relatório de nutricionista ao qual será associada a dieta.
+        descricao_curta (str): descrição resumida da dieta, como: "Dieta hipertrofia sem glúten".
+        descricao (str): descrição completa da rotina da dieta.
+        duracao_em_dias (int): Duração da dieta receitada, em dias.
+        calorias (int): número de calorias da dieta, em kcal
     """
     
-    return Response({'message': 'Connected.'})
+    body: dict = json.loads(request.body.decode('utf-8'))
+
+    # Validação necessária
+    try:
+        relatorio = RelatorioNutricionista.objects.get(id=body.get('relatorio_id'))
+    except RelatorioNutricionista.DoesNotExist:
+        raise ParseError(f"Relatório de nutricionista com id={body.get('relatorio_id')} não foi encontrado.")
+
+    try:    
+        dieta = Dieta.objects.create(
+            descricao_curta=body.get('descricao_curta'),
+            descricao=body.get('descricao'),
+            duracao_em_dias=body.get('duracao_em_dias'),
+            calorias=body.get('calorias')
+        )
+    except Exception as e:
+        raise ParseError(f"Erro ao criar dieta: \"{e}\"")
+    
+    relatorio.dieta = dieta
+    relatorio.save()
+
+    return Response({'dieta_id': dieta.pk})
 
 @api_view(['GET'])
-def dieta_paciente(request):
+def dieta_paciente(request: HttpRequest) -> Response:
     """
     Retorna a dieta mais recente do usuário.
 
@@ -48,10 +104,8 @@ def dieta_paciente(request):
         return Response(dieta)
 
 
-    return Response(dieta)
-
 @api_view(['GET'])
-def exames_paciente(request):
+def exames_paciente(request: HttpRequest) -> Response:
     """
     Retorna os exames abertos do usuário.
 
