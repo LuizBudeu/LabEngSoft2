@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useAuth, useAxiosWithToken, useIsLoggedIn, useLogout } from "tarifacao-lib";
 
+const TARIFACAO_LOGIN_URL = import.meta.env.VITE_TARIFACAO_LOGIN_URL
+
 function App() {
   useAuth();
   const loggedIn = useIsLoggedIn();
@@ -17,16 +19,16 @@ function App() {
     <>
       <p>Você está logado.</p>
       <button onClick={logout}>Logout</button>
-      <p>Início da contagem: {clientDisplayData.inicioContagem}</p>
-      <p>Valor acumulado desde o início da contagem: {clientDisplayData.acumulado}</p>
-      <p>Preço por requisição: {clientDisplayData.precoPorRequisicao}</p>
+      <p>Início da contagem: {clientDisplayData.countStart}</p>
+      <p>Valor acumulado desde o início da contagem: {clientDisplayData.accumulatedPrice}</p>
+      <p>Preço por requisição: {clientDisplayData.pricePerRequest}</p>
     </>
   )
 
   return (
     <>
       <p>Bem vindo ao portal de tarifagem</p>
-      <a href=''>Fazer Login</a>
+      <a href={TARIFACAO_LOGIN_URL}>Fazer Login</a>
     </>
   )
 }
