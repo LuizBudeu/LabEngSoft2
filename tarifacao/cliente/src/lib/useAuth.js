@@ -4,7 +4,7 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 
 const TOKEN_URL = import.meta.env.VITE_TOKEN_URL;
-const CLIENT_SECRET = import.meta.env.VITE_CLIENT_SECRET;
+const CLIENT_SECRET = import.meta.env.VITE_TARIFACAO_CLIENT_SECRET;
 
 export const useAuth = () => {
     const [searchParams, setSearchParams] = useSearchParams();
