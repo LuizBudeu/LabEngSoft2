@@ -20,8 +20,8 @@ function App() {
       <p>Você está logado.</p>
       <button onClick={logout}>Logout</button>
       <p>Início da contagem: {clientDisplayData.countStart}</p>
-      <p>Valor acumulado desde o início da contagem: {clientDisplayData.accumulatedPrice}</p>
-      <p>Preço por requisição: {clientDisplayData.pricePerRequest}</p>
+      <p>Valor acumulado desde o início da contagem: R${clientDisplayData.accumulatedPrice}</p>
+      <p>Preço por requisição: R${clientDisplayData.pricePerRequest}</p>
     </>
   )
 

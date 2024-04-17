@@ -12,8 +12,9 @@ export const useAxiosWithToken = () => {
 
     if (loggedIn) {
         axiosWithToken.interceptors.request.use(config => {
-            config.headers.Authorization = 'Bearer ' + cookies["access_token"]
+            config.headers.Authorization = 'Bearer ' + cookies["access_token"];
             config.baseURL = API_PROTOCOL_HOSTNAME_PORT;
+            config.withCredentials = true;
             return config;
         });
     }
