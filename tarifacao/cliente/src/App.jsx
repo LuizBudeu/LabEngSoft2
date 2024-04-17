@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
-import { useAuth, useAxiosWithToken, useIsLoggedIn, useLogout } from "tarifacao-lib";
+import { useLogout } from "./lib/useLogout"
+import { useIsLoggedIn } from "./lib/useIsLoggedIn"
+import { useAxiosWithToken } from "./lib/useAxiosWithToken"
+import { useAuth } from "./lib/useAuth";
 
 const TARIFACAO_LOGIN_URL = import.meta.env.VITE_TARIFACAO_LOGIN_URL
 
