@@ -34,6 +34,7 @@ jobs:
         echo VITE_TOKEN_URL="$TOKEN_URL" >> .env
         echo VITE_TARIFACAO_LOGIN_URL="$TARIFACAO_LOGIN_URL" >> .env
         echo VITE_TARIFACAO_CLIENT_SECRET="$TARIFACAO_CLIENT_SECRET" >> .env
+        echo "$TARIFACAO_CLIENT_SECRET" | base64
         npm install
         npm run build
         
