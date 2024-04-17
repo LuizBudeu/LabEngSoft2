@@ -9,9 +9,9 @@ import { Column } from "../../components/column";
 import { GenderOptions } from "../../utils/options";
 import { useNavigate } from 'react-router-dom';
 
-export const EditPerfil = ({closePopUp, mainUserId, onSubmit}) => {
+export const EditPerfil = ({closePopUp, userProfile, setUserProfile, onSubmit}) => {
   const navigate = useNavigate();
-  const [userProfile, setUserProfile] = GetProfile(mainUserId);
+  // const [userProfile, setUserProfile] = GetProfile(mainUserId);
 
   return (
     <div>
@@ -26,7 +26,7 @@ export const EditPerfil = ({closePopUp, mainUserId, onSubmit}) => {
                   <CustomInput
                     name="nome"
                     onChange={(e) => setUserProfile({...userProfile, nome:e.target.value})}
-                    value={userProfile.nome}
+                    value={userProfile?.nome}
                     type="text"
                   />
                 </Column>
@@ -36,7 +36,7 @@ export const EditPerfil = ({closePopUp, mainUserId, onSubmit}) => {
                   <text>Email</text>
                   <CustomInput
                     name="email"
-                    value={userProfile.email}
+                    value={userProfile?.email}
                     type="email"
                     disabled
                   />
@@ -47,7 +47,7 @@ export const EditPerfil = ({closePopUp, mainUserId, onSubmit}) => {
                   <text>CPF</text>
                   <CustomInput
                     name="cpf"
-                    value={userProfile.cpf}
+                    value={userProfile?.cpf}
                     type="text"
                     disabled
                   />
@@ -61,7 +61,7 @@ export const EditPerfil = ({closePopUp, mainUserId, onSubmit}) => {
                   <CustomInput
                     name="data_de_nascimento"
                     onChange={(e) => setUserProfile({...userProfile, data_de_nascimento:e.target.value})}
-                    value={userProfile.data_de_nascimento}
+                    value={userProfile?.data_de_nascimento}
                     type="date"
                   />
                 </Column>
@@ -71,7 +71,7 @@ export const EditPerfil = ({closePopUp, mainUserId, onSubmit}) => {
                   <text>Gênero</text>
                   <CustomSelect 
                     list={GenderOptions}
-                    value={userProfile.genero}
+                    value={userProfile?.genero}
                     onChange={(e) => setUserProfile({...userProfile, genero:e.target.value})}
                   />
                 </Column>
@@ -85,7 +85,7 @@ export const EditPerfil = ({closePopUp, mainUserId, onSubmit}) => {
                   <CustomInput
                     name="cep"
                     onChange={(e) => setUserProfile({...userProfile, cep:e.target.value})}
-                    value={userProfile.cep}
+                    value={userProfile?.cep}
                     type="text"
                   />
                 </Column>
@@ -96,7 +96,7 @@ export const EditPerfil = ({closePopUp, mainUserId, onSubmit}) => {
                   <CustomInput
                     name="logradouro"
                     onChange={(e) => setUserProfile({...userProfile, logradouro:e.target.value})}
-                    value={userProfile.logradouro}
+                    value={userProfile?.logradouro}
                     type="text"
                   />
                 </Column>
@@ -107,7 +107,7 @@ export const EditPerfil = ({closePopUp, mainUserId, onSubmit}) => {
                   <CustomInput
                     name="numero"
                     onChange={(e) => setUserProfile({...userProfile, numero:e.target.value})}
-                    value={userProfile.numero}
+                    value={userProfile?.numero}
                     type="text"
                   />
                 </Column>
@@ -118,7 +118,7 @@ export const EditPerfil = ({closePopUp, mainUserId, onSubmit}) => {
                   <CustomInput
                     name="complemento"
                     onChange={(e) => setUserProfile({...userProfile, complemento:e.target.value})}
-                    value={userProfile.complemento}
+                    value={userProfile?.complemento}
                     type="text"
                   />
                 </Column>
@@ -131,7 +131,7 @@ export const EditPerfil = ({closePopUp, mainUserId, onSubmit}) => {
                   <CustomInput
                     name="crn"
                     onChange={(e) => setUserProfile({...userProfile, crn:e.target.value})}
-                    value={userProfile.crn}
+                    value={userProfile?.crn}
                     type="text"
                   />
                 </Column>

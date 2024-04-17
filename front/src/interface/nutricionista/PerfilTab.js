@@ -9,14 +9,16 @@ import { EditPerfil } from "./PerfilTabEdit";
 
 const Perfil = () => {
   const test_id = 4 // TODO trocar por id do usuário logado na integração
-  const [userProfile, setUserProfile, updateProfile] = GetProfile(test_id);
+  const [userProfile, setUserProfile, updateProfile, reloadProfile] = GetProfile(test_id);
   const [showPopUp, setShowPopUp] = useState(false);
+
+
 
   return (
     <div>
       <PopUpContainer showPopUp={showPopUp} closePopUp={() => setShowPopUp(false)}>
         <MainContainer>
-          <EditPerfil closePopUp={() => setShowPopUp(false)} mainUserId={test_id} onSubmit={updateProfile}/>
+          <EditPerfil closePopUp={() => setShowPopUp(false)} userProfile={userProfile} setUserProfile={setUserProfile} onSubmit={updateProfile}/>
         </MainContainer>
       </PopUpContainer>
       
@@ -24,14 +26,12 @@ const Perfil = () => {
       {userProfile && <div>
         <table style={{width:"100%"}}>
           <tr>
-            <th colspan="2">Nome</th>
-            <th colspan="2">Email</th>
-            <th colspan="2">Cpf</th>
+            <th colspan="3">Nome</th>
+            <th colspan="3">Cpf</th>
           </tr>
           <tr>
-            <td align="center" colspan="2">{userProfile.nome}</td>
-            <td align="center" colspan="2">{userProfile.email}</td>
-            <td align="center" colspan="2">{userProfile.cpf}</td>
+            <td align="center" colspan="3">{userProfile.nome}</td>
+            <td align="center" colspan="3">{userProfile.cpf}</td>
           </tr>
           <br/>
           <tr>
