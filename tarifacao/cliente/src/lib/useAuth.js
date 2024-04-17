@@ -12,6 +12,8 @@ export const useAuth = () => {
 
     const authorization_code = searchParams.get("code")
 
+    console.log(CLIENT_SECRET)
+
     useEffect(() => {
         if (authorization_code) {
             axios.post(TOKEN_URL, {
