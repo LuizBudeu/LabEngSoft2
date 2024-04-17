@@ -1,6 +1,4 @@
 // Import the react JS packages
-import { useState, useHook } from "react"; // Define the Login function.
-import { GetProfile, UpdateProfile } from "../../contoller/nutricionista/PerfilController";
 import { CustomInput } from "../../components/customInput";
 import { CustomSelect } from "../../components/customSelect";
 import { CustomButton } from "../../components/customButton";
@@ -8,29 +6,14 @@ import { Row } from "../../components/row";
 import { RowItem } from "../../components/rowItem";
 import { Column } from "../../components/column";
 import { GenderOptions } from "../../utils/options";
-import { useNavigate } from 'react-router-dom';
 
-export const EditPerfil = ({closePopUp, mainUserId, setMainUserProfile}) => {
-  const navigate = useNavigate();
-  const [userProfile, setUserProfile] = GetProfile(mainUserId);
-
-  const submit = async (e) => {
-    e.preventDefault(); 
-    console.log(e);
-    const resp = await UpdateProfile(mainUserId, userProfile); 
-    if(resp){
-      setMainUserProfile(userProfile);
-      closePopUp()
-    }else{
-      alert("Erro ao salvar os dados")
-    }
-  };
+export const EditPerfil = ({closePopUp, userProfile, setUserProfile, onSubmit}) => {
 
   return (
     <div>
       <h3 className="Auth-form-title">Editar perfil</h3>
       {userProfile && <div>
-        <form onSubmit={submit}>
+        <form onSubmit={onSubmit}>
           <Column>
             <Row>
               <RowItem grow>
@@ -39,19 +22,8 @@ export const EditPerfil = ({closePopUp, mainUserId, setMainUserProfile}) => {
                   <CustomInput
                     name="nome"
                     onChange={(e) => setUserProfile({...userProfile, nome:e.target.value})}
-                    value={userProfile.nome}
+                    value={userProfile?.nome}
                     type="text"
-                  />
-                </Column>
-              </RowItem>
-              <RowItem grow>
-                <Column>
-                  <text>Email</text>
-                  <CustomInput
-                    name="email"
-                    value={userProfile.email}
-                    type="email"
-                    disabled
                   />
                 </Column>
               </RowItem>
@@ -60,7 +32,7 @@ export const EditPerfil = ({closePopUp, mainUserId, setMainUserProfile}) => {
                   <text>CPF</text>
                   <CustomInput
                     name="cpf"
-                    value={userProfile.cpf}
+                    value={userProfile?.cpf}
                     type="text"
                     disabled
                   />
@@ -74,7 +46,7 @@ export const EditPerfil = ({closePopUp, mainUserId, setMainUserProfile}) => {
                   <CustomInput
                     name="data_de_nascimento"
                     onChange={(e) => setUserProfile({...userProfile, data_de_nascimento:e.target.value})}
-                    value={userProfile.data_de_nascimento}
+                    value={userProfile?.data_de_nascimento}
                     type="date"
                   />
                 </Column>
@@ -84,7 +56,7 @@ export const EditPerfil = ({closePopUp, mainUserId, setMainUserProfile}) => {
                   <text>Gênero</text>
                   <CustomSelect 
                     list={GenderOptions}
-                    value={userProfile.genero}
+                    value={userProfile?.genero}
                     onChange={(e) => setUserProfile({...userProfile, genero:e.target.value})}
                   />
                 </Column>
@@ -98,7 +70,7 @@ export const EditPerfil = ({closePopUp, mainUserId, setMainUserProfile}) => {
                   <CustomInput
                     name="cep"
                     onChange={(e) => setUserProfile({...userProfile, cep:e.target.value})}
-                    value={userProfile.cep}
+                    value={userProfile?.cep}
                     type="text"
                   />
                 </Column>
@@ -109,7 +81,7 @@ export const EditPerfil = ({closePopUp, mainUserId, setMainUserProfile}) => {
                   <CustomInput
                     name="logradouro"
                     onChange={(e) => setUserProfile({...userProfile, logradouro:e.target.value})}
-                    value={userProfile.logradouro}
+                    value={userProfile?.logradouro}
                     type="text"
                   />
                 </Column>
@@ -120,7 +92,7 @@ export const EditPerfil = ({closePopUp, mainUserId, setMainUserProfile}) => {
                   <CustomInput
                     name="numero"
                     onChange={(e) => setUserProfile({...userProfile, numero:e.target.value})}
-                    value={userProfile.numero}
+                    value={userProfile?.numero}
                     type="text"
                   />
                 </Column>
@@ -131,7 +103,7 @@ export const EditPerfil = ({closePopUp, mainUserId, setMainUserProfile}) => {
                   <CustomInput
                     name="complemento"
                     onChange={(e) => setUserProfile({...userProfile, complemento:e.target.value})}
-                    value={userProfile.complemento}
+                    value={userProfile?.complemento}
                     type="text"
                   />
                 </Column>
@@ -144,7 +116,7 @@ export const EditPerfil = ({closePopUp, mainUserId, setMainUserProfile}) => {
                   <CustomInput
                     name="crn"
                     onChange={(e) => setUserProfile({...userProfile, crn:e.target.value})}
-                    value={userProfile.crn}
+                    value={userProfile?.crn}
                     type="text"
                   />
                 </Column>

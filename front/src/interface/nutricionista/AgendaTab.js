@@ -5,12 +5,13 @@ import { Row } from "../../components/row";
 import { RowItem } from "../../components/rowItem";
 import { VerticalLine } from "../../components/verticalLine";
 import { GetConsultas, GetProfile } from "../../contoller/nutricionista/AgendaController";
+import { SalvaRelatorio } from "../../contoller/nutricionista/RelatorioController";
 import { GetHourMinute } from "../../utils/date";
 import { CustomButton } from "../../components/customButton";
 import { CenterContent } from "../../components/centerContent";
 import { PopUpContainer } from "../../components/popUpContainer";
 import { MainContainer } from "../../components/mainContainer";
-import { EditPerfil } from "./DietaForm";
+import { ConsultaForm } from "./RelatorioForm";
 import { ScrollContainer } from "../../components/scrollContainer";
 
 export const AgendaTab = () => {
@@ -20,6 +21,7 @@ export const AgendaTab = () => {
     
     return(
         <div style={{height: "100%"}}>
+
             <Row>
                 <RowItem grow noPadding>
                     <ScrollContainer>
@@ -57,32 +59,50 @@ export const AgendaTab = () => {
 const ConsultaInfo = ({consulta}) => {
     const test_id = 4 // TODO trocar por id do usuário logado na integração
     const [userProfile, setUserProfile] = GetProfile(test_id);
-    const [showConsultaPopUp, setShowConsultaPopUp] = useState(false);
+    const [relatorio, setRelatorio] = useState({})
+    const [realizada, setRealizada] = useState(false)
+    const [avaliada, setAvaliada] = useState(false)
+    const [dietado, setDietado] = useState(false)
+
+    const [showRelatorioPopUp, setShowRelatorioPopUp] = useState(false);
+    const [showAvaliacaoPopUp, setShowAvaliacaoPopUp] = useState(false);
+    const [showDietaPopUp, setShowDietaPopUp] = useState(false);
+
+    const lidarComSubmitRelatorio = (event) => {
+        event.preventDefault();
+        setShowRelatorioPopUp(false);
+        setRealizada(true);
+    }
+
+    const lidarComSubmitAvaliacao = (event) => {
+        event.preventDefault();
+        setShowAvaliacaoPopUp(false);
+        setAvaliada(true);
+    }
 
     return (
         <div>
-            <PopUpContainer showPopUp={showConsultaPopUp} closePopUp={() => setShowConsultaPopUp(false)}>
+            <PopUpContainer showPopUp={showRelatorioPopUp} closePopUp={() => setShowRelatorioPopUp(false)}>
                 <MainContainer>
-                    <EditPerfil closePopUp={() => setShowConsultaPopUp(false)} mainUserId={test_id} setMainUserProfile={setUserProfile}/>
+                    <ConsultaForm closePopUp={() => setShowRelatorioPopUp(false)} relatorio={relatorio} setRelatorio={setRelatorio} onSubmit={lidarComSubmitRelatorio}/>
                 </MainContainer>
             </PopUpContainer>
 
             <div style={{flexGrow: 1, width: "100%", padding: "16px"}}>
-                <text>Paciente: {consulta.paciente__nome}</text>
-                <text>Horário da consulta: {GetHourMinute(consulta.horario, consulta.duracao)}</text>
+                <par>Paciente: {consulta.paciente__nome}</par>
+                <br/>
+                <par>Horário da consulta: {GetHourMinute(consulta.horario, consulta.duracao)}</par>
             </div>
             <Row>
-                <CustomButton title="Realizar consulta" onClick={() => setShowConsultaPopUp(true)} type="primary" />
+                <CustomButton title="Finalizar consulta" onClick={() => setShowRelatorioPopUp(true)} type="primary" disabled={realizada}/>
             </Row>
             <br/>
             <Row>
-                <CustomButton title="Realizar avaliação" onClick={() => console.log("Avaliação Nutricional")} type="primary" />
-                <CustomButton title="Prescrever dieta" onClick={() => console.log("Prescreve dieta prescreve dieta")} type="primary" />
+                <CustomButton title="Realizar avaliação nutricional" onClick={() => console.log("Avaliação Nutricional")} type="primary" disabled={realizada && !avaliada}/> <br/>
             </Row>
             <br/>
             <Row>
-                <CustomButton title="Solicitar exame" onClick={() => console.log("Pedido de exame")} type="primary" />
-                <CustomButton title="Detalhes do paciente" onClick={() => console.log("Detalhes, detalhes")} type="primary" />
+                <CustomButton title="Prescrever dieta" onClick={() => console.log("Prescreve dieta prescreve dieta")} type="primary" disabled={realizada && !dietado}/>
             </Row>
         </div>
     );

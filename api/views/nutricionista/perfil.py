@@ -61,7 +61,6 @@ def perfil(request: HttpRequest) -> Response:
     ).values('crn').first()
 
     resp = {
-        'email': usuario.email,
         'nome': usuario.nome,
         'cpf': usuario.cpf,
         'data_de_nascimento': usuario.data_de_nascimento,
@@ -72,19 +71,6 @@ def perfil(request: HttpRequest) -> Response:
         'complemento': usuario.complemento,
         'crn': nutricionista['crn']
     }
-
-    # resp_test = {
-    #     'email': 'a@b.c',
-    #     'nome': 'filipe arraia',
-    #     'cpf': '1',
-    #     'data_de_nascimento': '2002-04-30',
-    #     'genero': 'outro',
-    #     'cep': '00000-000',
-    #     'logradouro': 'Travessa do Politécnico',
-    #     'numero': '158',
-    #     'complemento': '---',
-    #     'crn': '12345678'
-    # }
 
     return Response(resp)
 

@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { TopBar } from "../../components/TopBar";
+import React from "react";
 import Tabs from "./tabs";
 
 export const NutricionistaHome = () => {

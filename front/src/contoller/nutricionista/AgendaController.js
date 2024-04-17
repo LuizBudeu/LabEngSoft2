@@ -10,15 +10,7 @@ export const GetConsultas = (start_date, end_date) => {
     const [axios] = useAxiosWithTokenNutricionista();
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const user_id = searchParams.get("id");
-    
-    // const consultasTeste = [
-    //     {id: "001", paciente__nome: "Fulano", horario: "2024-03-21 15:00:00", duracao: 60},
-    //     {id: "002", paciente__nome: "Sicrano", horario: "2024-03-21 16:00:00", duracao: 120},
-    //     {id: "003", paciente__nome: "Beltrano", horario: "2024-03-22 13:00:00", duracao: 45},
-    //     {id: "004", paciente__nome: "Felipe", horario: "2024-03-23 10:00:00", duracao: 15},
-    //     {id: "005", paciente__nome: "Risco", horario: "2024-03-23 11:00:00", duracao: 60},
-    // ];
+    const user_id = API_PROTOCOL_HOSTNAME_PORT.includes("localhost") ? "4" : searchParams.get("id"); // Para testes locais, usa o id 4
 
     useEffect(() => {
         axios.get(API_PROTOCOL_HOSTNAME_PORT + "/api/nutricionista/agenda", {

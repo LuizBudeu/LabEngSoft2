@@ -6,7 +6,7 @@ import { useSearchParams } from "react-router-dom";
 
 export const Auth = () => {
     const [axios, hasToken] = useAxiosWithTokenNutricionista();
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [, setSearchParams] = useSearchParams();
 
     useEffect(() => {
         if(hasToken){
@@ -19,16 +19,36 @@ export const Auth = () => {
                 console.log(e);
             });
         }
-    }, [hasToken]);
+    }, [hasToken, axios, setSearchParams]);
 };
 
 
-export const GetProfile = (user_id) => {
+export const GetProfile = () => {
 
     const [userProfile, setUserProfile] = useState();
     const [axios] = useAxiosWithTokenNutricionista();
+    const [searchParams, ] = useSearchParams();
 
-    useEffect(() => {
+    const user_id = API_PROTOCOL_HOSTNAME_PORT.includes("localhost") ? "4" : searchParams.get("id"); // Usa id=4 para testes locais
+
+    const updateProfile = async (e) => {
+        e.preventDefault();
+        try{
+            const response = await axios.post(API_PROTOCOL_HOSTNAME_PORT + "/api/nutricionista/update_perfil", 
+            {...userProfile, user_id: user_id}
+            ); 
+            if(response.status !== 200){
+                console.log(response.data);
+                return false;
+            }
+            return true;
+        }catch(e) {
+            console.log(e);
+            return false;
+        }
+    };
+
+    const reloadProfile = () => {
         axios.get(API_PROTOCOL_HOSTNAME_PORT + "/api/nutricionista/perfil", {
             params: {
                 user_id: user_id
@@ -39,27 +59,13 @@ export const GetProfile = (user_id) => {
         }).catch((e) => {
             console.log(e);
         });
-    }, [])
+    };
 
-    return [userProfile, setUserProfile];
+    useEffect(() => {
+        reloadProfile();
+    }, []);
+
+    return [userProfile, setUserProfile, updateProfile, reloadProfile];
     
 };
 
-export const UpdateProfile = async (user_id, userProfile) => {
-    const [axios] = useAxiosWithTokenNutricionista();
-
-    try{
-        const response = await axios.post(API_PROTOCOL_HOSTNAME_PORT + "/api/nutricionista/update_perfil", 
-            {...userProfile, user_id: user_id}
-        ); 
-        if(response.status != 200){
-            console.log(response.data);
-            return false;
-        }
-        return true;
-    }catch(e) {
-        console.log(e);
-        return false;
-    }
-    
-};
