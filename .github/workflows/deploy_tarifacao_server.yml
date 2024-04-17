@@ -5,7 +5,7 @@ on:
   push:
     branches: [ main ]
     paths:
-      - tarifacao/servidor/**
+      - tarifacao/servidor_tarifacao/**
 
 jobs:
   push_to_registry:
@@ -30,8 +30,8 @@ jobs:
       - name: Build and push Docker image proxy
         uses: docker/build-push-action@v5
         with:
-          context: ./tarifacao/servidor
-          file: ./tarifacao/servidor/Dockerfile
+          context: ./tarifacao/servidor_tarifacao
+          file: ./tarifacao/servidor_tarifacao/Dockerfile
           push: true
           tags: rafnak1/labengsoft:tarifacao
           labels: ${{ steps.metadata.outputs.labels }}
