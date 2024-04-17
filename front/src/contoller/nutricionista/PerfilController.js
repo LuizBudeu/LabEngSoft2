@@ -31,7 +31,8 @@ export const GetProfile = () => {
 
     const user_id = API_PROTOCOL_HOSTNAME_PORT.includes("localhost") ? "4" : searchParams.get("id"); // Usa id=4 para testes locais
 
-    const updateProfile = async () => {
+    const updateProfile = async (e) => {
+        e.preventDefault();
         try{
             const response = await axios.post(API_PROTOCOL_HOSTNAME_PORT + "/api/nutricionista/update_perfil", 
             {...userProfile, user_id: user_id}

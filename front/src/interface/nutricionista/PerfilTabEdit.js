@@ -33,17 +33,6 @@ export const EditPerfil = ({closePopUp, userProfile, setUserProfile, onSubmit}) 
               </RowItem>
               <RowItem grow>
                 <Column>
-                  <text>Email</text>
-                  <CustomInput
-                    name="email"
-                    value={userProfile?.email}
-                    type="email"
-                    disabled
-                  />
-                </Column>
-              </RowItem>
-              <RowItem grow>
-                <Column>
                   <text>CPF</text>
                   <CustomInput
                     name="cpf"

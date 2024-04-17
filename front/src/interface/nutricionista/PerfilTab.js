@@ -12,13 +12,16 @@ const Perfil = () => {
   const [userProfile, setUserProfile, updateProfile, reloadProfile] = GetProfile(test_id);
   const [showPopUp, setShowPopUp] = useState(false);
 
-
+  const lidarComSubmit = (event) => {
+    updateProfile(event);
+    setShowPopUp(false);
+  }
 
   return (
     <div>
       <PopUpContainer showPopUp={showPopUp} closePopUp={() => setShowPopUp(false)}>
         <MainContainer>
-          <EditPerfil closePopUp={() => setShowPopUp(false)} userProfile={userProfile} setUserProfile={setUserProfile} onSubmit={updateProfile}/>
+          <EditPerfil closePopUp={() => setShowPopUp(false)} userProfile={userProfile} setUserProfile={setUserProfile} onSubmit={lidarComSubmit}/>
         </MainContainer>
       </PopUpContainer>
       
@@ -57,10 +60,10 @@ const Perfil = () => {
           </tr>
           <br/>
           <tr>
-            <th colspan="1">CRN</th>
+            <th colspan="6">CRN</th>
           </tr>
           <tr>
-            <td align="center" colspan="1">{userProfile.crn}</td>
+            <td align="center" colspan="6">{userProfile.crn}</td>
           </tr>
         </table>
       </div>}
