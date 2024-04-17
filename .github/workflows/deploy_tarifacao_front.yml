@@ -27,13 +27,13 @@ jobs:
         API_PROTOCOL_HOSTNAME_PORT: ${{ secrets.API_PROTOCOL_HOSTNAME_PORT }}
         TOKEN_URL: ${{ secrets.TOKEN_URL }}
         TARIFACAO_LOGIN_URL: ${{ secrets.TARIFACAO_LOGIN_URL }}
-        TARIFACAO_AUTH_SECRET: ${{ secrets.TARIFACAO_AUTH_SECRET }}
+        TARIFACAO_CLIENT_SECRET: ${{ secrets.TARIFACAO_CLIENT_SECRET }}
       run: |
         touch .env
         echo VITE_PROTOCOL_HOSTNAME_PORT="$API_PROTOCOL_HOSTNAME_PORT" >> .env
         echo VITE_TOKEN_URL="$TOKEN_URL" >> .env
         echo VITE_TARIFACAO_LOGIN_URL="$TARIFACAO_LOGIN_URL" >> .env
-        echo VITE_TARIFACAO_AUTH_SECRET="$TARIFACAO_AUTH_SECRET" >> .env
+        echo VITE_TARIFACAO_CLIENT_SECRET="$TARIFACAO_CLIENT_SECRET" >> .env
         npm install
         npm run build
         
