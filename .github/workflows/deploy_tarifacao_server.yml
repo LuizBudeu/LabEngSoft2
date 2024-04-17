@@ -1,4 +1,4 @@
-name: Deploy do servidor de tarifacao
+name: Deploy do servidor de tarifacao 
 
 on: 
   workflow_dispatch:
