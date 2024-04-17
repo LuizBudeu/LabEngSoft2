@@ -9,7 +9,7 @@ import { EditPerfil } from "./PerfilTabEdit";
 
 const Perfil = () => {
   const test_id = 4 // TODO trocar por id do usuário logado na integração
-  const [userProfile, setUserProfile, updateProfile, reloadProfile] = GetProfile(test_id);
+  const [userProfile, setUserProfile, updateProfile, ] = GetProfile(test_id);
   const [showPopUp, setShowPopUp] = useState(false);
 
   const lidarComSubmit = (event) => {

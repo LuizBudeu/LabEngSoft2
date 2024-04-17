@@ -1,5 +1,4 @@
 // Import the react JS packages
-import { GetProfile } from "../../contoller/nutricionista/PerfilController";
 import { CustomInput } from "../../components/customInput";
 import { CustomSelect } from "../../components/customSelect";
 import { CustomButton } from "../../components/customButton";
@@ -7,11 +6,8 @@ import { Row } from "../../components/row";
 import { RowItem } from "../../components/rowItem";
 import { Column } from "../../components/column";
 import { GenderOptions } from "../../utils/options";
-import { useNavigate } from 'react-router-dom';
 
 export const EditPerfil = ({closePopUp, userProfile, setUserProfile, onSubmit}) => {
-  const navigate = useNavigate();
-  // const [userProfile, setUserProfile] = GetProfile(mainUserId);
 
   return (
     <div>
