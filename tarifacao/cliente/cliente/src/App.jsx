@@ -9,15 +9,16 @@ function App() {
   const [clientDisplayData, setClientDisplayData] = useState({});
 
   useEffect(() => {
-    axios.get('/tarifacao/cliente').then(response => setClientDisplayData(response.data));
-  }, [])
+    if (loggedIn)
+      axios.get('/tarifacao/cliente').then(response => setClientDisplayData(response.data));
+  }, [loggedIn])
 
   if (loggedIn) return (
     <>
       <p>Você está logado.</p>
       <button onClick={logout}>Logout</button>
-      <p>Valor acumulado deste mês: {clientDisplayData.acumuladoMesAtual}</p>
-      <p>Valor do último mês: {clientDisplayData.acumuladoMesPassado}</p>
+      <p>Início da contagem: {clientDisplayData.inicioContagem}</p>
+      <p>Valor acumulado desde o início da contagem: {clientDisplayData.acumulado}</p>
       <p>Preço por requisição: {clientDisplayData.precoPorRequisicao}</p>
     </>
   )
