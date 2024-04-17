@@ -1,3 +1,3 @@
 const fs = require('fs')
 
-exports.readFile = (filename) => JSON.parse(fs.readFileSync('./' + filename, {encoding: 'utf8'}))
+exports.loadSettings = () => JSON.parse(fs.readFileSync('./settings.json', { encoding: 'utf8' }))
