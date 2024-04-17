@@ -1,24 +1,22 @@
 import { useState } from "react"; // Define the Login function.
 import { GetProfile } from "../../contoller/nutricionista/PerfilController"; 
-import { useNavigate } from 'react-router-dom';
 import { CustomButton } from "../../components/customButton";
-import { GenderOptions, DiabetesOptions } from "../../utils/options";
+import { GenderOptions } from "../../utils/options";
 import { CenterContent } from "../../components/centerContent";
 import { PopUpContainer } from "../../components/popUpContainer";
 import { MainContainer } from "../../components/mainContainer";
 import { EditPerfil } from "./PerfilTabEdit";
 
 const Perfil = () => {
-  const navigate = useNavigate();
   const test_id = 4 // TODO trocar por id do usuário logado na integração
-  const [userProfile, setUserProfile] = GetProfile(test_id);
+  const [userProfile, setUserProfile, updateProfile] = GetProfile(test_id);
   const [showPopUp, setShowPopUp] = useState(false);
 
   return (
     <div>
       <PopUpContainer showPopUp={showPopUp} closePopUp={() => setShowPopUp(false)}>
         <MainContainer>
-          <EditPerfil closePopUp={() => setShowPopUp(false)} mainUserId={test_id} setMainUserProfile={setUserProfile}/>
+          <EditPerfil closePopUp={() => setShowPopUp(false)} mainUserId={test_id} onSubmit={updateProfile}/>
         </MainContainer>
       </PopUpContainer>
       

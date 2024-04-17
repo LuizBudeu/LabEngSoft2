@@ -1,6 +1,5 @@
 // Import the react JS packages
-import { useState, useHook } from "react"; // Define the Login function.
-import { GetProfile, UpdateProfile } from "../../contoller/nutricionista/PerfilController";
+import { GetProfile } from "../../contoller/nutricionista/PerfilController";
 import { CustomInput } from "../../components/customInput";
 import { CustomSelect } from "../../components/customSelect";
 import { CustomButton } from "../../components/customButton";
@@ -10,27 +9,15 @@ import { Column } from "../../components/column";
 import { GenderOptions } from "../../utils/options";
 import { useNavigate } from 'react-router-dom';
 
-export const EditPerfil = ({closePopUp, mainUserId, setMainUserProfile}) => {
+export const EditPerfil = ({closePopUp, mainUserId, onSubmit}) => {
   const navigate = useNavigate();
   const [userProfile, setUserProfile] = GetProfile(mainUserId);
-
-  const submit = async (e) => {
-    e.preventDefault(); 
-    console.log(e);
-    const resp = await UpdateProfile(mainUserId, userProfile); 
-    if(resp){
-      setMainUserProfile(userProfile);
-      closePopUp()
-    }else{
-      alert("Erro ao salvar os dados")
-    }
-  };
 
   return (
     <div>
       <h3 className="Auth-form-title">Editar perfil</h3>
       {userProfile && <div>
-        <form onSubmit={submit}>
+        <form onSubmit={onSubmit}>
           <Column>
             <Row>
               <RowItem grow>

@@ -10,13 +10,13 @@ import { RowItem } from "../../components/rowItem";
 import { Column } from "../../components/column";
 import { GenderOptions } from "../../utils/options";
 
-export const EditPerfil = ({closePopUp, mainUserId, setMainUserProfile}) => {
+export const EditPerfil = ({closePopUp, mainUserId, setMainUserProfile, updateProfile}) => {
   const [userProfile, setUserProfile] = GetProfile(mainUserId);
 
   const submit = async (e) => {
     e.preventDefault(); 
     console.log(e);
-    const resp = await UpdateProfile(mainUserId, userProfile); 
+    const resp = await updateProfile(mainUserId, userProfile); 
     if(resp){
       setMainUserProfile(userProfile);
       closePopUp()

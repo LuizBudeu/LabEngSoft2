@@ -41,25 +41,24 @@ export const GetProfile = (user_id) => {
         });
     }, [])
 
-    return [userProfile, setUserProfile];
-    
-};
-
-export const UpdateProfile = async (user_id, userProfile) => {
-    const [axios] = useAxiosWithTokenNutricionista();
-
-    try{
-        const response = await axios.post(API_PROTOCOL_HOSTNAME_PORT + "/api/nutricionista/update_perfil", 
-            {...userProfile, user_id: user_id}
-        ); 
-        if(response.status != 200){
-            console.log(response.data);
+    const updateProfile = async () => {
+        try{
+            const response = await axios.post(API_PROTOCOL_HOSTNAME_PORT + "/api/nutricionista/update_perfil", 
+                {...userProfile, user_id: user_id}
+            ); 
+            if(response.status != 200){
+                console.log(response.data);
+                return false;
+            }
+            return true;
+        }catch(e) {
+            console.log(e);
             return false;
         }
-        return true;
-    }catch(e) {
-        console.log(e);
-        return false;
-    }
+        
+    };
+
+    return [userProfile, setUserProfile, updateProfile];
     
 };
+
