@@ -2,6 +2,11 @@ services:
   api:
     image: rafnak1/labengsoft:api
     hostname: api
+
+  tarifacao:
+    image: rafnak1/labengsoft:tarifacao
+    hostname: tarifacao
+
   proxy:
     image: rafnak1/labengsoft:proxy
     ports:
