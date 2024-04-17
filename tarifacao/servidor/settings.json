@@ -3,6 +3,24 @@
         "code": "paciente",
         "requestCount": 0,
         "pricePerRequest": 0.01,
-        "oid": "5cafec25-610c-4d18-80a8-75d6a949211e"
+        "oid": "c2e4bc8b-cb84-4505-a9be-34c1edcbe9bd"
+    },
+    {
+        "code": "medico",
+        "requestCount": 0,
+        "pricePerRequest": 0.01,
+        "oid": "320a4baa-357c-49a6-a31f-fe7eb2c5a7b8"
+    },
+    {
+        "code": "preparador",
+        "requestCount": 0,
+        "pricePerRequest": 0.01,
+        "oid": "5c26efa3-eb58-4810-8953-f199675fb0dc"
+    },
+    {
+        "code": "nutricionista",
+        "requestCount": 0,
+        "pricePerRequest": 0.01,
+        "oid": "2e588339-7fbc-4981-9c13-9d798406818d"
     }
 ]
