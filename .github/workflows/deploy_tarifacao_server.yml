@@ -33,7 +33,7 @@ jobs:
           context: ./tarifacao/servidor
           file: ./tarifacao/servidor/Dockerfile
           push: true
-          tags: rafnak1/labengsoft:servidor
+          tags: rafnak1/labengsoft:tarifacao
           labels: ${{ steps.metadata.outputs.labels }}
 
   deploy:
