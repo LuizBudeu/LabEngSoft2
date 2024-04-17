@@ -3,7 +3,7 @@ name: Deploy do servidor de tarifacao
 on: 
   workflow_dispatch:
   push:
-    branches: [ feature/tarifacao ]
+    branches: [ main ]
     paths:
       - tarifacao/servidor/**
 
